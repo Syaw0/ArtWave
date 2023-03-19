@@ -6,6 +6,7 @@ import { ArtistId } from "./artistId";
 import { ArtistName } from "./artistName";
 import { ArtistPassword } from "./artistPassword";
 import { ArtistProfilePicture } from "./artistProfilePicture";
+import { EmailVerificationToken } from "./EmailVerificationToken";
 
 interface ArtistProps {
   ArtistId: ArtistId;
@@ -14,6 +15,7 @@ interface ArtistProps {
   name: ArtistName;
   biography: ArtistBiography;
   profilePicture: ArtistProfilePicture;
+  emailVerificationToken: EmailVerificationToken;
   isEmailVerified?: boolean;
   isLogged: boolean;
 }
