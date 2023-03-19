@@ -40,4 +40,13 @@ export class Guard {
 
     return Result.ok<GuardResponse>();
   }
+
+  public static againstAtMost(
+    numChar: number,
+    text: string
+  ): Result<GuardResponse> {
+    return text.length <= numChar
+      ? Result.ok<GuardResponse>()
+      : Result.fail<GuardResponse>(`Text is greater than ${numChar} chars.`);
+  }
 }
