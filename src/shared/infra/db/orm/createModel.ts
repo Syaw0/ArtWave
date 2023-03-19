@@ -11,5 +11,7 @@ const createModels = () => {
     ),
   };
 };
+const models = createModels();
+export default models;
 
-export default createModels();
+export type OrmType = typeof models;

@@ -1,4 +1,4 @@
-interface DbConfig {}
+import { DbConfig, FindOneProps } from "./types";
 
 export abstract class ORM {
   constructor(
@@ -6,5 +6,5 @@ export abstract class ORM {
     protected database: string,
     protected config: DbConfig
   ) {}
-  abstract findOne(): any;
+  abstract findOne({ where }: FindOneProps): Promise<any>;
 }
