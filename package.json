@@ -1,0 +1,32 @@
+{
+  "name": "art.me",
+  "version": "0.0.0",
+  "description": "The Art Social Media .",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@syaw0.github.com:Syaw0/Art.me.git"
+  },
+  "keywords": [
+    "art",
+    "Art",
+    "nodejs",
+    "js",
+    "javascript",
+    "react",
+    "ddd",
+    "redux"
+  ],
+  "author": {
+    "email": "siamhb7@protonmail.com",
+    "name": "syaw0"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1"
+  }
+}
