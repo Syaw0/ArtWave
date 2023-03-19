@@ -21,14 +21,14 @@ export class Result<T> {
     Object.freeze(this);
   }
 
-  public getValue(): T | undefined {
+  public getValue(): T {
     if (!this.isSuccess) {
       console.error(this.error);
       throw new Error(
         "Can't get the value of an error result. Use 'errorValue' instead."
       );
     }
-    return this._value;
+    return this._value as T;
   }
   public getErrorValue(): T {
     return this.error as T;
