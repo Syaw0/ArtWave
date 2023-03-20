@@ -49,3 +49,39 @@ export class Result<T> {
     return Result.ok();
   }
 }
+
+export class Left<L, R> {
+  readonly value: L;
+  constructor(value: L) {
+    this.value = value;
+  }
+  isLeft(): this is Left<L, R> {
+    return true;
+  }
+  isRight(): this is Right<L, R> {
+    return false;
+  }
+}
+
+export type Either<L, R> = Left<L, R> | Right<L, R>;
+
+export class Right<L, R> {
+  readonly value: R;
+  constructor(value: R) {
+    this.value = value;
+  }
+  isRight(): this is Right<L, R> {
+    return true;
+  }
+  isLeft(): this is Left<L, R> {
+    return false;
+  }
+}
+
+export const left = <L, R>(l: L): Left<L, R> => {
+  return new Left<L, R>(l);
+};
+
+export const right = <L, R>(r: R): Right<L, R> => {
+  return new Right<L, R>(r);
+};
