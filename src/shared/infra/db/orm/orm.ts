@@ -7,4 +7,5 @@ export abstract class ORM {
     protected config: DbConfig
   ) {}
   abstract findOne({ where }: FindOneProps): Promise<any>;
+  abstract create({}: any): Promise<any>;
 }

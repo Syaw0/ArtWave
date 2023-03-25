@@ -15,4 +15,7 @@ export class Mariadb extends ORM {
   async findOne({ where }: FindOneProps): Promise<any> {
     return await (await this.connection).query("")[0];
   }
+  async create(raw: any): Promise<any> {
+    return await (await this.connection).query("")[0];
+  }
 }

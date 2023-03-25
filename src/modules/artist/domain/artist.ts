@@ -12,12 +12,12 @@ import { EmailVerificationToken } from "./EmailVerificationToken";
 import { JWTToken, RefreshToken } from "./jwt";
 
 interface ArtistProps {
-  ArtistId: ArtistId;
+  ArtistId?: ArtistId;
   password: ArtistPassword;
   email: ArtistEmail;
-  name: ArtistName;
-  biography: ArtistBiography;
-  profilePicture: ArtistProfilePicture;
+  name?: ArtistName;
+  biography?: ArtistBiography;
+  profilePicture?: ArtistProfilePicture;
 
   emailVerificationToken?: EmailVerificationToken;
   isEmailVerified?: boolean;
@@ -32,11 +32,11 @@ export class Artist extends AggregateRoot<ArtistProps> {
     return ArtistId.create(this._id).getValue();
   }
 
-  get name(): ArtistName {
+  get name(): ArtistName | undefined {
     return this.props.name;
   }
 
-  get biography(): ArtistBiography {
+  get biography(): ArtistBiography | undefined {
     return this.props.biography;
   }
 
@@ -48,7 +48,7 @@ export class Artist extends AggregateRoot<ArtistProps> {
     return this.props.password;
   }
 
-  get profilePicture(): ArtistProfilePicture {
+  get profilePicture(): ArtistProfilePicture | undefined {
     return this.props.profilePicture;
   }
   get EmailVerificationToken(): EmailVerificationToken | undefined {
