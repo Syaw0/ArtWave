@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "The Art Social Media .",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "server": "ts-node --esm ./src/shared/infra/http/app.ts",
+    "server:dev": "nodemon"
+  },
   "repository": {
     "type": "git",
     "url": "git@syaw0.github.com:Syaw0/Art.me.git"
@@ -26,10 +29,21 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "express": "^4.18.2",
     "mariadb": "^3.1.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.1"
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/uuid": "^9.0.1",
+    "nodemon": "^2.0.22"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "./src/shared/infra/http/**/*"
+    ],
+    "ext": ".ts",
+    "exec": "npm run server"
   }
 }
