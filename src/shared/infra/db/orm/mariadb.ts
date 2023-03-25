@@ -38,7 +38,12 @@ export class Mariadb extends ORM {
       `
       insert into ${this.database}.${this.table} (${keys}) Values(${values})
     `,
-      Object.values(raw)
+      Object.values(raw).map((v) => {
+        if (v == null) {
+          return "";
+        }
+        return v;
+      })
     );
   }
 }

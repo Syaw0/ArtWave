@@ -28,7 +28,10 @@ export class CreateArtistController extends BaseController {
           case CreateArtistErrors.EmailAlreadyExist:
             return this.conflict(res, error.getErrorValue().message);
           default:
-            return this.fail(res, error.getErrorValue().message);
+            return this.fail(
+              res,
+              error.getErrorValue().message || error.getErrorValue()
+            );
         }
       } else {
         return this.ok(res);

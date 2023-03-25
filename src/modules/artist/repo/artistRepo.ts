@@ -1,6 +1,7 @@
 import orm, { OrmType } from "../../../shared/infra/db/orm/createModel";
 import { Artist } from "../domain/artist";
 import { ArtistEmail } from "../domain/artistEmail";
+import { ArtistMapper } from "../mapper/artistMapper";
 
 export interface ArtistRepoProps {
   exists(email: ArtistEmail): Promise<boolean>;
@@ -27,7 +28,7 @@ export class ArtistRepo implements ArtistRepoProps {
     const artistModel = this.models.artistModel;
     const isExist = await this.exists(artist.email);
     if (!isExist) {
-      const rawArtist = artist;
+      const rawArtist = ArtistMapper.toPersistence(artist);
       await artistModel.create(rawArtist);
     }
 
