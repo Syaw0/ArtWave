@@ -39,7 +39,7 @@ const artistModel = {
     },
   },
   tableName: "artist",
-  databaseName: "artme",
+  databaseName: "art",
 };
 
 export default artistModel;

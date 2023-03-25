@@ -15,12 +15,12 @@ export class ArtistRepo implements ArtistRepoProps {
 
   async exists(email: ArtistEmail): Promise<boolean> {
     const artistModel = this.models.artistModel;
-    const artist = artistModel.findOne({
+    const artist = await artistModel.findOne({
       where: {
         artist_email: email.value,
       },
     });
-    return !!artist === true;
+    return !!artist[0] === true;
   }
 
   async save(artist: Artist): Promise<void> {

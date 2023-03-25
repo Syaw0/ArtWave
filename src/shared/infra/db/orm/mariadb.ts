@@ -13,9 +13,32 @@ export class Mariadb extends ORM {
     this.connection = createConnection({ ...config });
   }
   async findOne({ where }: FindOneProps): Promise<any> {
-    return await (await this.connection).query("");
+    const exception =
+      where == null
+        ? ""
+        : `WHERE ${Object.keys(where)
+            .map((k) => {
+              return ` ${k}="${where[k]}" `;
+            })
+            .join(" AND ")}`;
+    return await (
+      await this.connection
+    ).query(`
+    select * from ${this.database}.${this.table} ${exception}
+    `);
   }
   async create(raw: any): Promise<any> {
-    return await (await this.connection).query("");
+    const keys = Object.keys(raw).join(",");
+    const values = Object.keys(raw)
+      .map((k) => "?")
+      .join(",");
+    return await (
+      await this.connection
+    ).query(
+      `
+      insert into ${this.database}.${this.table} (${keys}) Values(${values})
+    `,
+      Object.values(raw)
+    );
   }
 }

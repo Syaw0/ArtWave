@@ -23,6 +23,7 @@ export class CreateArtistController extends BaseController {
       const result = await this.useCase.execute(dto);
       if (result.isLeft()) {
         const error = result.value;
+        console.log(error, result);
         switch (error.constructor) {
           case CreateArtistErrors.EmailAlreadyExist:
             return this.conflict(res, error.getErrorValue().message);
