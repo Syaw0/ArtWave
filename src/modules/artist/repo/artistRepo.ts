@@ -35,5 +35,5 @@ export class ArtistRepo implements ArtistRepoProps {
   }
 }
 
-const userRepo = new ArtistRepo(orm);
-export { userRepo };
+const artistRepo = new ArtistRepo(orm);
+export { artistRepo };
