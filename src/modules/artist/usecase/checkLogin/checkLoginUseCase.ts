@@ -3,6 +3,7 @@ import { UseCase } from "../../../../shared/core/usecase";
 import { ArtistEmail } from "../../domain/artistEmail";
 import { ArtistPassword } from "../../domain/artistPassword";
 import { ArtistRepoProps } from "../../repo/artistRepo";
+import { EmailVerificationService } from "../../service/emailVerificationService";
 import { CheckLoginDTO } from "./checkLoginDTO";
 import { CheckLoginResponse } from "./checkLoginResponse";
 
@@ -10,9 +11,13 @@ export class CheckLoginUseCase
   implements UseCase<CheckLoginDTO, CheckLoginResponse>
 {
   private artistRepo: ArtistRepoProps;
-
-  constructor(artistRepo: ArtistRepoProps) {
+  private emailVerificationService: EmailVerificationService;
+  constructor(
+    artistRepo: ArtistRepoProps,
+    emailVerificationService: EmailVerificationService
+  ) {
     this.artistRepo = artistRepo;
+    this.emailVerificationService = emailVerificationService;
   }
 
   async execute(request: CheckLoginDTO): Promise<CheckLoginResponse> {
@@ -50,7 +55,10 @@ export class CheckLoginUseCase
     } catch (err: any) {
       return left(Result.fail<void>(err));
     }
-    // here ,we send the email verification token to email
+    await this.emailVerificationService.sendToken(
+      artistEmailOrError.getValue().value
+    );
+
     return right(Result.ok<void>());
   }
 }

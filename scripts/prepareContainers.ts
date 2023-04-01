@@ -8,7 +8,9 @@ const MARIADB_USER = process.env.MARIADB_USER;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 const MARIADB_CONTAINER_NAME = "Maria";
 const REDIS_CONTAINER_NAME = "Redis";
-
+console.log(
+  `docker run -d -p 3232:6379 --rm --name=${REDIS_CONTAINER_NAME} -e REDIS_PASSWORD=${REDIS_PASSWORD} redis:latest`
+);
 const prepareRedisDBContainer = () => {
   console.log("initial the Redis DB container");
   execSync(

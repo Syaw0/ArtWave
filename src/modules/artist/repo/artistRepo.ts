@@ -45,7 +45,6 @@ export class ArtistRepo implements ArtistRepoProps {
       where: { artist_email: email },
     });
     if (!!artist === false) throw new Error("Artist Not Found!");
-
     return ArtistMapper.toDomain(artist[0]) as Artist;
   }
 }
