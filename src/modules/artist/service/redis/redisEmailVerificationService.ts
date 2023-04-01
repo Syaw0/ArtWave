@@ -20,19 +20,19 @@ export class RedisEmailVerificationService
     this.mailTransporter = mailTransporter;
   }
   public async sendToken(email: string): Promise<any> {
-    await this.checkConnection();
+    await this.checkConnection(1);
     const token = this.generateToken(1000, 9999);
     try {
       await this.client.set(email, token);
       await this.client.set(email + "_try", 0);
 
-      await this.client.expire(email, this.TOKEN_EXPIRE);
-      await this.client.expire(email + "_try", this.TOKEN_EXPIRE);
+      await this.client.expire(email, 10);
+      await this.client.expire(email + "_try", 10);
     } catch (err) {
       console.log(err);
       return null;
     }
-    await this.mailTransporter.sendMail({
+    this.mailTransporter.sendMail({
       from: CoEmail,
       to: email,
       subject: "Two Factor Authentication",
@@ -45,12 +45,10 @@ export class RedisEmailVerificationService
     email: string,
     token: string | number
   ): Promise<boolean> {
-    await this.checkConnection();
+    await this.checkConnection(1);
     await this.client.incr(email + "_try");
     const savedToken = await this.getOne(email);
-    if (await this.isTokenBurned(email)) {
-      throw new Error("Reach the Max Try.");
-    }
+
     if (token == savedToken) {
       return true;
     }
@@ -58,13 +56,19 @@ export class RedisEmailVerificationService
   }
 
   public async isTokenBurned(email: string): Promise<boolean> {
-    await this.checkConnection();
+    await this.checkConnection(1);
     await this.client.incr(email + "_try");
     const tries = await this.getOne(email + "_try");
     if (Number(tries) > this.TRY_NUMBER) {
       return true;
     }
     return false;
+  }
+
+  public async isTokenExist(email: string) {
+    await this.checkConnection(1);
+    const isExist = await this.client.exists(email);
+    return !!isExist;
   }
 
   private generateToken(min: number, max: number): number {

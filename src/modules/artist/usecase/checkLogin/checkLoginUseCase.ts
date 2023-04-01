@@ -59,6 +59,6 @@ export class CheckLoginUseCase
       artistEmailOrError.getValue().value
     );
 
-    return right(Result.ok<void>());
+    return right(Result.ok<any>());
   }
 }

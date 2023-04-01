@@ -7,5 +7,5 @@ export type CheckLoginResponse = Either<
   | CheckLoginError.NotFoundEmail
   | AppError.UnexpectedError
   | Result<any>,
-  Result<void>
+  Result<any>
 >;

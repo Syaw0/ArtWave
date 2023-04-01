@@ -1,28 +1,26 @@
 import { Request, Response } from "express";
 import { BaseController } from "../../../../shared/infra/http/models/baseController";
-import { CheckLoginDTO } from "./checkLoginDTO";
-import { CheckLoginError } from "./checkLoginError";
-import { CheckLoginUseCase } from "./checkLoginUseCase";
+import { CheckTokenDTO } from "./checkTokenDTO";
+import { CheckTokenError } from "./checkTokenError";
+import { CheckTokenUseCase } from "./checkTokenUseCase";
 
-export class CheckLoginController extends BaseController {
-  private useCase: CheckLoginUseCase;
-
-  constructor(useCase: CheckLoginUseCase) {
+export class CheckTokenController extends BaseController {
+  constructor(private checkTokenUseCase: CheckTokenUseCase) {
     super();
-    this.useCase = useCase;
   }
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    const dto: CheckLoginDTO = req.body as CheckLoginDTO;
+    const dto: CheckTokenDTO = req.body as CheckTokenDTO;
     try {
-      const result: any = await this.useCase.execute(dto);
-
+      const result = await this.checkTokenUseCase.execute(dto);
       if (result.isLeft()) {
         const error = result.value;
         console.log(error, result);
         switch (error.constructor) {
-          case CheckLoginError.NotFoundEmail:
+          case CheckTokenError.TokenIsBurned:
             return this.conflict(res, error.getErrorValue().message);
-          case CheckLoginError.EmailAndPasswordDoesNotMatch:
+          case CheckTokenError.TokenIsNotExist:
+            return this.conflict(res, error.getErrorValue().message);
+          case CheckTokenError.WrongToken:
             return this.conflict(res, error.getErrorValue().message);
           default:
             return this.fail(
@@ -30,8 +28,6 @@ export class CheckLoginController extends BaseController {
               error.getErrorValue().message || error.getErrorValue()
             );
         }
-      } else {
-        return this.ok(res, result.value.getValue());
       }
     } catch (err) {
       this.fail(res, err);

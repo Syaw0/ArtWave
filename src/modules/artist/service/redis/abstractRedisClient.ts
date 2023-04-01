@@ -19,9 +19,10 @@ export abstract class AbstractRedisClient {
   public async deleteOne(key: string): Promise<number> {
     return await this.client.del(key);
   }
-  protected async checkConnection() {
+  protected async checkConnection(dbNumber: number = 0) {
     if (!this.client.isOpen && !this.client.isReady) {
       await this.client.connect();
     }
+    await this.client.select(dbNumber);
   }
 }
