@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "server": "ts-node --esm ./src/shared/infra/http/app.ts",
-    "server:dev": "nodemon"
+    "server:dev": "nodemon",
+    "db:container": "ts-node --esm ./scripts/prepareContainers.ts"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mariadb": "^3.1.1",
     "uuid": "^9.0.0"

@@ -4,7 +4,6 @@ import { UseCase } from "../../../../shared/core/usecase";
 import { Artist } from "../../domain/artist";
 import { ArtistEmail } from "../../domain/artistEmail";
 import { ArtistPassword } from "../../domain/artistPassword";
-import { ArtistMapper } from "../../mapper/artistMapper";
 import { ArtistRepoProps } from "../../repo/artistRepo";
 import { CreateArtistDTO } from "./createArtistDTO";
 import { CreateArtistErrors } from "./createArtistError";
