@@ -14,6 +14,7 @@ const prepareRedisDBContainer = () => {
   execSync(
     `docker run -d -p 3232:6379 --rm --name=${REDIS_CONTAINER_NAME} -e REDIS_PASSWORD=${REDIS_PASSWORD} redis:latest`
   );
+  console.log("Created ✅");
 };
 
 const prepareMariaDBContainer = () => {
@@ -21,6 +22,7 @@ const prepareMariaDBContainer = () => {
   execSync(
     `docker run -d -p 3030:3306 --rm --name=${MARIADB_CONTAINER_NAME} -e MARIADB_ROOT_PASSWORD=${MARIADB_PASSWORD} mariadb:latest`
   );
+  console.log("Created ✅");
 };
 
 const stopContainerCmd = (name: string) => {
@@ -35,7 +37,7 @@ const killContainers = () => {
   } catch (err) {}
 };
 
-const initialDbContainer = () => {
+const initialDbContainer = async () => {
   console.log("start operation");
   try {
     console.log("Stop and Remove redis db container");
@@ -49,7 +51,5 @@ const initialDbContainer = () => {
   prepareMariaDBContainer();
   return { killContainers };
 };
-
-initialDbContainer();
 
 export default initialDbContainer;

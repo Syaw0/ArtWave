@@ -3,7 +3,7 @@ const artistModel = {
   column: {
     artist_id: {
       type: "varchar(200)",
-      defaultValue: uuid(),
+      // defaultValue: uuid(),
       allowNull: false,
       primaryKey: true,
     },
@@ -22,7 +22,7 @@ const artistModel = {
       type: "varchar(120)",
       allowNull: false,
     },
-    artist_profilePicture: {
+    artist_profile_picture: {
       type: "varchar(300)",
       allowNull: false,
       defaultValue: "",
@@ -32,7 +32,7 @@ const artistModel = {
       type: "char(64)", //sha256
       allowNull: false,
     },
-    artist_isEmailVerified: {
+    artist_is_email_verified: {
       type: "Boolean",
       allowNull: false,
       defaultValue: "0",
