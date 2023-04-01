@@ -9,7 +9,7 @@ export class ArtistName extends ValueObject<ArtistNameProps> {
   private constructor(props: ArtistNameProps) {
     super(props);
   }
-  public static create(name: string): Result<ArtistName> {
+  public static create(name: string = ""): Result<ArtistName> {
     const checkNameNullity = Guard.againstNullOrUndefined(name, "name");
     if (checkNameNullity.isFailure) {
       return Result.fail<ArtistName>(checkNameNullity.getErrorValue());

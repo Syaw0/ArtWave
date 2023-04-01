@@ -2,13 +2,13 @@ import { Guard } from "../../../shared/core/guard";
 import { Result } from "../../../shared/core/result";
 import { ValueObject } from "../../../shared/domain/valueObject";
 interface ArtistProfilePictureProps {
-  profileUrl: string;
+  profileUrl: string | null;
 }
 export class ArtistProfilePicture extends ValueObject<ArtistProfilePictureProps> {
   private constructor(props: ArtistProfilePictureProps) {
     super(props);
   }
-  public static create(profileUrl: string): Result<ArtistProfilePicture> {
+  public static create(profileUrl: string = ""): Result<ArtistProfilePicture> {
     const checkProfileNullity = Guard.againstNullOrUndefined(
       profileUrl,
       "profileUrl"

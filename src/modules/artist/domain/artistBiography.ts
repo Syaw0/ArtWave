@@ -2,14 +2,14 @@ import { Guard } from "../../../shared/core/guard";
 import { Result } from "../../../shared/core/result";
 import { ValueObject } from "../../../shared/domain/valueObject";
 interface ArtistBiographyProps {
-  biography: string;
+  biography: string | null;
 }
 export class ArtistBiography extends ValueObject<ArtistBiographyProps> {
   private static MAX_CHARACTER = 120;
   private constructor(props: ArtistBiographyProps) {
     super(props);
   }
-  public static create(biography: string): Result<ArtistBiography> {
+  public static create(biography: string = ""): Result<ArtistBiography> {
     const checkBioNullity = Guard.againstNullOrUndefined(
       biography,
       "biography"

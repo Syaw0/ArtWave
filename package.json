@@ -46,7 +46,7 @@
   },
   "nodemonConfig": {
     "watch": [
-      "./src/shared/infra/http/**/*"
+      "./src/**/*"
     ],
     "ext": ".ts",
     "exec": "npm run server"
