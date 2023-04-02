@@ -1,5 +1,5 @@
-import { artistRepo } from "../../repo/artistRepo";
-import { emailVerificationService } from "../../service";
+import { artistRepo } from "../../../repo/artistRepo";
+import { emailVerificationService } from "../../../service";
 import { CheckLoginController } from "./checkLoginController";
 import { CheckLoginUseCase } from "./checkLoginUseCase";
 

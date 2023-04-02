@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { BaseController } from "../../../../shared/infra/http/models/baseController";
-import { CheckLoginDTO } from "./checkLoginDTO";
-import { CheckLoginError } from "./checkLoginError";
-import { CheckLoginUseCase } from "./checkLoginUseCase";
+import { BaseController } from "../../../../../shared/infra/http/models/baseController";
+import { CheckSignupDTO } from "./checkSignupDTO";
+import { CheckSignupError } from "./checkSignupError";
+import { CheckSignupUseCase } from "./checkSignupUseCase";
 
-export class CheckLoginController extends BaseController {
-  private useCase: CheckLoginUseCase;
+export class CheckSignupController extends BaseController {
+  private useCase: CheckSignupUseCase;
 
-  constructor(useCase: CheckLoginUseCase) {
+  constructor(useCase: CheckSignupUseCase) {
     super();
     this.useCase = useCase;
   }
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    const dto: CheckLoginDTO = req.body as CheckLoginDTO;
+    const dto: CheckSignupDTO = req.body as CheckSignupDTO;
     try {
       const result: any = await this.useCase.execute(dto);
 
@@ -20,9 +20,7 @@ export class CheckLoginController extends BaseController {
         const error = result.value;
         console.log(error, result);
         switch (error.constructor) {
-          case CheckLoginError.NotFoundEmail:
-            return this.conflict(res, error.getErrorValue().message);
-          case CheckLoginError.EmailAndPasswordDoesNotMatch:
+          case CheckSignupError.EmailExist:
             return this.conflict(res, error.getErrorValue().message);
           default:
             return this.fail(

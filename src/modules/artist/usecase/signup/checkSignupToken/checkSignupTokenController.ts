@@ -1,8 +1,8 @@
 import { CookieOptions, Request, Response } from "express";
-import { BaseController } from "../../../../shared/infra/http/models/baseController";
-import { CheckTokenDTO } from "./checkTokenDTO";
-import { CheckTokenError } from "./checkTokenError";
-import { CheckTokenUseCase } from "./checkTokenUseCase";
+import { BaseController } from "../../../../../shared/infra/http/models/baseController";
+import { CheckTokenDTO } from "./checkSignupTokenDTO";
+import { CheckTokenError } from "./checkSignupTokenError";
+import { CheckTokenUseCase } from "./checkSignupTokenUseCase";
 
 export class CheckTokenController extends BaseController {
   constructor(private checkTokenUseCase: CheckTokenUseCase) {

@@ -1,8 +1,8 @@
-import { left, Result, right } from "../../../../shared/core/result";
-import { UseCase } from "../../../../shared/core/usecase";
-import { ArtistRepoProps } from "../../repo/artistRepo";
-import { EmailVerificationService } from "../../service/emailVerificationService";
-import { RedisAuthenticationService } from "../../service/redis/redisAuthenticationService";
+import { left, Result, right } from "../../../../../shared/core/result";
+import { UseCase } from "../../../../../shared/core/usecase";
+import { ArtistRepoProps } from "../../../repo/artistRepo";
+import { EmailVerificationService } from "../../../service/emailVerificationService";
+import { RedisAuthenticationService } from "../../../service/redis/redisAuthenticationService";
 import { CheckTokenDTO } from "./checkTokenDTO";
 import { CheckTokenError } from "./checkTokenError";
 import { CheckTokenResponse } from "./checkTokenResponse";
@@ -40,7 +40,6 @@ export class CheckTokenUseCase
     }
 
     const artist = await this.artistRepo.findByEmail(request.email);
-    console.log(artist);
 
     const accessToken = this.authService.signJWT({
       email: request.email,
@@ -49,7 +48,6 @@ export class CheckTokenUseCase
 
     const refreshToken = this.authService.createRefreshToken();
     artist.setAccessToken(accessToken, refreshToken);
-    console.log("hey");
     await this.authService.saveAuthenticateArtist(artist);
 
     return right(Result.ok<any>({ accessToken, refreshToken }));

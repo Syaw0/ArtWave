@@ -1,5 +1,5 @@
-import { AppError } from "../../../../shared/core/appError";
-import { Either, Result } from "../../../../shared/core/result";
+import { AppError } from "../../../../../shared/core/appError";
+import { Either, Result } from "../../../../../shared/core/result";
 import { CheckLoginError } from "./checkLoginError";
 
 export type CheckLoginResponse = Either<

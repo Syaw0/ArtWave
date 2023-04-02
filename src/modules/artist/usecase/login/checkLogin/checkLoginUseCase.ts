@@ -1,9 +1,9 @@
-import { left, Result, right } from "../../../../shared/core/result";
-import { UseCase } from "../../../../shared/core/usecase";
-import { ArtistEmail } from "../../domain/artistEmail";
-import { ArtistPassword } from "../../domain/artistPassword";
-import { ArtistRepoProps } from "../../repo/artistRepo";
-import { EmailVerificationService } from "../../service/emailVerificationService";
+import { left, Result, right } from "../../../../../shared/core/result";
+import { UseCase } from "../../../../../shared/core/usecase";
+import { ArtistEmail } from "../../../domain/artistEmail";
+import { ArtistPassword } from "../../../domain/artistPassword";
+import { ArtistRepoProps } from "../../../repo/artistRepo";
+import { EmailVerificationService } from "../../../service/emailVerificationService";
 import { CheckLoginDTO } from "./checkLoginDTO";
 import { CheckLoginResponse } from "./checkLoginResponse";
 

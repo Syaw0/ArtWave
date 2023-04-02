@@ -1,5 +1,5 @@
-import { Result } from "../../../../shared/core/result";
-import { UseCaseError } from "../../../../shared/core/usecaseError";
+import { Result } from "../../../../../shared/core/result";
+import { UseCaseError } from "../../../../../shared/core/usecaseError";
 
 export namespace CheckTokenError {
   export class WrongToken extends Result<UseCaseError> {

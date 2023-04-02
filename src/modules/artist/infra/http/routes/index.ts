@@ -1,18 +1,25 @@
 import express from "express";
-import { checkLoginController } from "../../../usecase/checkLogin";
-import { checkTokenController } from "../../../usecase/checkToken";
-import { createArtistController } from "../../../usecase/createArtist";
+import { checkLoginController } from "../../../usecase/login/checkLogin";
+import { checkLoginTokenController } from "../../../usecase/login/checkLoginToken";
+import { checkSignupController } from "../../../usecase/signup/checkSignup";
+import { checkSignupTokenController } from "../../../usecase/signup/checkSignupToken";
 
 const artistRouter = express.Router();
 
-artistRouter.post("/", (req, res) => createArtistController.execute(req, res));
+artistRouter.post("/checkSignup", (req, res) =>
+  checkSignupController.execute(req, res)
+);
+
+artistRouter.post("/checkSignupToken", (req, res) =>
+  checkSignupTokenController.execute(req, res)
+);
 
 artistRouter.post("/checkLogin", (req, res) =>
   checkLoginController.execute(req, res)
 );
 
-artistRouter.post("/checkToken", (req, res) =>
-  checkTokenController.execute(req, res)
+artistRouter.post("/checkLoginToken", (req, res) =>
+  checkLoginTokenController.execute(req, res)
 );
 
 export { artistRouter };
