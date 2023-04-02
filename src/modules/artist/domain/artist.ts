@@ -21,7 +21,6 @@ interface ArtistProps {
 
   emailVerificationToken?: EmailVerificationToken;
   isEmailVerified?: boolean;
-  isLogged?: boolean;
   accessToken?: JWTToken;
   refreshToken?: RefreshToken;
   lastLogin?: Date;
@@ -54,7 +53,7 @@ export class Artist extends AggregateRoot<ArtistProps> {
   get EmailVerificationToken(): EmailVerificationToken | undefined {
     return this.props.emailVerificationToken;
   }
-  get isLogged(): boolean | undefined {
+  isLogged(): boolean {
     return !!this.props.accessToken && !!this.props.refreshToken;
   }
   get isEmailVerified(): boolean | undefined {
@@ -62,6 +61,13 @@ export class Artist extends AggregateRoot<ArtistProps> {
   }
   get lastLogin(): Date | undefined {
     return this.props.lastLogin;
+  }
+  get accessToken(): string | undefined {
+    return this.props.accessToken;
+  }
+
+  get refreshToken(): string | undefined {
+    return this.props.refreshToken;
   }
   public setAccessToken(token: JWTToken, refreshToken: RefreshToken): void {
     this.props.accessToken = token;

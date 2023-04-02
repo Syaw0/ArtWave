@@ -26,8 +26,8 @@ export class RedisEmailVerificationService
       await this.client.set(email, token);
       await this.client.set(email + "_try", 0);
 
-      await this.client.expire(email, 10);
-      await this.client.expire(email + "_try", 10);
+      await this.client.expire(email, this.TOKEN_EXPIRE);
+      await this.client.expire(email + "_try", this.TOKEN_EXPIRE);
     } catch (err) {
       console.log(err);
       return null;

@@ -1,6 +1,5 @@
 export interface JWTClaims {
   artistId: string;
-  isEmailVerified: boolean;
   email: string;
 }
 
