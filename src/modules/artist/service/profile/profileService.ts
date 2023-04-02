@@ -17,7 +17,7 @@ export class ProfileService {
   }
 
   async retrieve(email: string): Promise<Buffer> {
-    const profPath = path.join(this.basePath, email);
+    const profPath = path.join(this.basePath, email ?? "");
     try {
       return await fs.readFile(profPath);
     } catch (err) {

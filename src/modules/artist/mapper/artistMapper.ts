@@ -12,7 +12,6 @@ export class ArtistMapper implements Mapper<Artist> {
   public static toDTO(artist: Artist): ArtistDTO {
     return {
       email: artist.email.value,
-      isEmailVerified: artist.isEmailVerified,
     };
   }
 
@@ -43,7 +42,6 @@ export class ArtistMapper implements Mapper<Artist> {
         profilePicture: artistProfilePictureOrError.getValue(),
         name: artistNameOrError.getValue(),
         biography: artistBiographyOrError.getValue(),
-        isEmailVerified: raw.is_email_verified,
       },
       new UniqueEntityID(raw.artist_id)
     );
@@ -56,7 +54,6 @@ export class ArtistMapper implements Mapper<Artist> {
     return {
       artist_id: artist.artistId.id.toString(),
       artist_email: artist.email.value,
-      artist_is_email_verified: artist.isEmailVerified,
       artist_name: artist.name?.props.name,
       artist_password: artist.password.props.password,
       artist_profile_picture: artist.profilePicture?.props.profileUrl,

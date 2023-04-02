@@ -36,6 +36,10 @@ export abstract class BaseController {
     }
   }
 
+  public sendFile(res: express.Response, buffer: Buffer) {
+    return res.status(200).send(buffer);
+  }
+
   public created(res: express.Response) {
     return res.sendStatus(201);
   }
