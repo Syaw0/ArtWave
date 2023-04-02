@@ -4,12 +4,14 @@ import { AuthenticationService } from "../authenticationService";
 import { AbstractRedisClient } from "./abstractRedisClient";
 import jwt from "jsonwebtoken";
 import { authConfig } from "../../../../config/authConfig";
-import { redisClient } from "./redisConnection";
 import randToken from "rand-token";
 import { Artist } from "../../domain/artist";
+import { redisClient } from "./redisConnection";
 
-export class RedisAuthenticationService extends AbstractRedisClient {
-  // implements AuthenticationService
+export class RedisAuthenticationService
+  extends AbstractRedisClient
+  implements AuthenticationService
+{
   public jwtHashName = "activeJWTClient";
   constructor(redisClient: RedisClientType) {
     super(redisClient);
@@ -47,11 +49,13 @@ export class RedisAuthenticationService extends AbstractRedisClient {
   }
 
   async isRefreshTokenExist(refreshToken: RefreshToken): Promise<boolean> {
+    await this.checkConnection();
     const keys = await this.client.keys(`*${refreshToken}*`);
     return keys.length != 0;
   }
 
   async getEmailFromRefreshToken(refreshToken: RefreshToken): Promise<string> {
+    await this.checkConnection();
     const keys = await this.client.keys(`*${refreshToken}*`);
     const isKeyExist = keys.length != 0;
 
@@ -66,6 +70,7 @@ export class RedisAuthenticationService extends AbstractRedisClient {
 
   async saveAuthenticateArtist(artist: Artist): Promise<void> {
     if (artist.isLogged()) {
+      await this.checkConnection();
       await this.addToken(
         artist.email.value,
         artist.refreshToken as string,
@@ -79,6 +84,7 @@ export class RedisAuthenticationService extends AbstractRedisClient {
   }
 
   async clearAllSession(email: string): Promise<any> {
+    await this.checkConnection();
     const keys = await this.client.keys(`*${this.jwtHashName}.${email}`);
     return Promise.all(keys.map((key) => this.client.del(key)));
   }
@@ -92,45 +98,50 @@ export class RedisAuthenticationService extends AbstractRedisClient {
   }
 
   async getToken(email: string, refreshToken: RefreshToken): Promise<string> {
+    await this.checkConnection();
     return (await this.client.get(
       this.constructKey(email, refreshToken)
     )) as string;
   }
 
   async clearToken(email: string, refreshToken: RefreshToken): Promise<any> {
+    await this.checkConnection();
     return await this.client.del(this.constructKey(email, refreshToken));
   }
 
   async getTokens(email: string): Promise<string[]> {
+    await this.checkConnection();
     return await this.client.keys(`*${this.jwtHashName}.${email}`);
   }
 
   async countSessions(email: string): Promise<number> {
+    await this.checkConnection();
     const keys = await this.client.keys(`*${this.jwtHashName}.${email}`);
     return keys.length;
   }
   async countTokens(): Promise<number> {
+    await this.checkConnection();
     const keys = await this.client.keys(`*${this.jwtHashName}*`);
     return keys.length;
   }
 }
 
-// const func = async () => {
-//   const x = new RedisAuthenticationService(redisClient as any);
+const func = async () => {
+  const x = new RedisAuthenticationService(redisClient as any);
 
-//   const email = "siaw0@gmail.com";
-//   const ss = x.signJWT({ artistId: "111", email });
-//   const re = x.createRefreshToken();
-//   // console.log(ss);
+  const email = "siaw0@gmail.com";
+  const ss = x.signJWT({ artistId: "111", email });
+  const re = x.createRefreshToken();
+  // console.log(ss);
 
-//   // const dd = x.decodeJWT("ss");
-//   // console.log(dd);
-//   console.log(await x.addToken(email, re, ss));
-//   // console.log(await x.isRefreshTokenExist(re));
-//   // console.log(await x.getEmailFromRefreshToken(re));
-//   // console.log(await x.deAuthenticateArtist(email));
-//   console.log(await x.isSessionExist(email, re));
-//   console.log(await x.clearToken(email, re));
-//   // process.exit(1);
-// };
-// func();
+  // const dd = x.decodeJWT("ss");
+  // console.log(dd);
+  // console.log(await x.addToken(email, re, ss));
+  // console.log(await x.isRefreshTokenExist(re));
+  // console.log(await x.getEmailFromRefreshToken(re));
+  // console.log(await x.deAuthenticateArtist(email));
+  // console.log(await x.isSessionExist(email, re));
+  console.log(await x.clearAllSession(email));
+  // process.exit(1);
+};
+func();

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { CookieOptions, Request, Response } from "express";
 import { BaseController } from "../../../../shared/infra/http/models/baseController";
 import { CheckTokenDTO } from "./checkTokenDTO";
 import { CheckTokenError } from "./checkTokenError";
@@ -12,7 +12,7 @@ export class CheckTokenController extends BaseController {
     const dto: CheckTokenDTO = req.body as CheckTokenDTO;
     try {
       const result = await this.checkTokenUseCase.execute(dto);
-      if (result.isLeft()) {
+      if (result.isLeft() == true) {
         const error = result.value;
         console.log(error, result);
         switch (error.constructor) {
@@ -28,6 +28,16 @@ export class CheckTokenController extends BaseController {
               error.getErrorValue().message || error.getErrorValue()
             );
         }
+      } else {
+        const value = result.value.getValue();
+        const cookieConfig: CookieOptions = {
+          httpOnly: true,
+          // secure: true,
+          sameSite: "strict",
+        };
+        res.cookie("access", value.accessToken, cookieConfig);
+        res.cookie("refresh", value.refreshToken, cookieConfig);
+        this.ok(res, value);
       }
     } catch (err) {
       this.fail(res, err);

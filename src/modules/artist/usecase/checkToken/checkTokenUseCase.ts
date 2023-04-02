@@ -1,6 +1,8 @@
 import { left, Result, right } from "../../../../shared/core/result";
 import { UseCase } from "../../../../shared/core/usecase";
+import { ArtistRepoProps } from "../../repo/artistRepo";
 import { EmailVerificationService } from "../../service/emailVerificationService";
+import { RedisAuthenticationService } from "../../service/redis/redisAuthenticationService";
 import { CheckTokenDTO } from "./checkTokenDTO";
 import { CheckTokenError } from "./checkTokenError";
 import { CheckTokenResponse } from "./checkTokenResponse";
@@ -8,7 +10,11 @@ import { CheckTokenResponse } from "./checkTokenResponse";
 export class CheckTokenUseCase
   implements UseCase<CheckTokenDTO, CheckTokenResponse>
 {
-  constructor(private emailVerificationService: EmailVerificationService) {}
+  constructor(
+    private emailVerificationService: EmailVerificationService,
+    private authService: RedisAuthenticationService,
+    private artistRepo: ArtistRepoProps
+  ) {}
 
   async execute(request: CheckTokenDTO): Promise<CheckTokenResponse> {
     const isExist = await this.emailVerificationService.isTokenExist(
@@ -33,6 +39,19 @@ export class CheckTokenUseCase
       return left(new CheckTokenError.WrongToken());
     }
 
-    return right(Result.ok<any>("its okay"));
+    const artist = await this.artistRepo.findByEmail(request.email);
+    console.log(artist);
+
+    const accessToken = this.authService.signJWT({
+      email: request.email,
+      artistId: artist.artistId.id.toString(),
+    });
+
+    const refreshToken = this.authService.createRefreshToken();
+    artist.setAccessToken(accessToken, refreshToken);
+    console.log("hey");
+    await this.authService.saveAuthenticateArtist(artist);
+
+    return right(Result.ok<any>({ accessToken, refreshToken }));
   }
 }

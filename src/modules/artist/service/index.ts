@@ -1,4 +1,5 @@
 import transporter from "./mailTransportaion";
+import { RedisAuthenticationService } from "./redis/redisAuthenticationService";
 import { redisClient } from "./redis/redisConnection";
 import { RedisEmailVerificationService } from "./redis/redisEmailVerificationService";
 
@@ -7,4 +8,8 @@ const emailVerificationService = new RedisEmailVerificationService(
   transporter
 );
 
-export { emailVerificationService };
+const authenticationService = new RedisAuthenticationService(
+  redisClient as any
+);
+
+export { emailVerificationService, authenticationService };
