@@ -75,6 +75,11 @@ export class Artist extends AggregateRoot<ArtistProps> {
     this.props.lastLogin = new Date();
   }
 
+  public removeAccessToken(): void {
+    this.props.accessToken = undefined;
+    this.props.refreshToken = undefined;
+  }
+
   private constructor(props: ArtistProps, id?: UniqueEntityID) {
     super(props, id);
   }
