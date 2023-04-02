@@ -2,6 +2,7 @@ import express from "express";
 import { checkLoginController } from "../../../usecase/login/checkLogin";
 import { checkLoginTokenController } from "../../../usecase/login/checkLoginToken";
 import { logoutController } from "../../../usecase/logout";
+import { changeProfController } from "../../../usecase/profile/changeProf";
 import { delProfController } from "../../../usecase/profile/delProf";
 import { getProfController } from "../../../usecase/profile/getProf";
 import { checkSignupController } from "../../../usecase/signup/checkSignup";
@@ -31,6 +32,10 @@ artistRouter.get("/getProf", (req, res) => getProfController.execute(req, res));
 
 artistRouter.delete("/delProf", (req, res) =>
   delProfController.execute(req, res)
+);
+
+artistRouter.patch("/changeProf", (req, res) =>
+  changeProfController.execute(req, res)
 );
 
 export { artistRouter };

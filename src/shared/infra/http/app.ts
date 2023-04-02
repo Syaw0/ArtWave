@@ -2,11 +2,13 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { v1Router } from "./api/v1";
+import fileUpload from "express-fileupload";
 
 const origin = {
   origin: "*",
 };
 const app = express();
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(origin));
