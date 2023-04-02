@@ -8,7 +8,7 @@ import { ArtistId } from "./artistId";
 import { ArtistName } from "./artistName";
 import { ArtistPassword } from "./artistPassword";
 import { ArtistProfilePicture } from "./artistProfilePicture";
-import { EmailVerificationToken } from "./EmailVerificationToken";
+
 import { JWTToken, RefreshToken } from "./jwt";
 
 interface ArtistProps {
@@ -18,9 +18,6 @@ interface ArtistProps {
   name?: ArtistName;
   biography?: ArtistBiography;
   profilePicture?: ArtistProfilePicture;
-
-  emailVerificationToken?: EmailVerificationToken;
-  isEmailVerified?: boolean;
   accessToken?: JWTToken;
   refreshToken?: RefreshToken;
   lastLogin?: Date;
@@ -50,14 +47,9 @@ export class Artist extends AggregateRoot<ArtistProps> {
   get profilePicture(): ArtistProfilePicture | undefined {
     return this.props.profilePicture;
   }
-  get EmailVerificationToken(): EmailVerificationToken | undefined {
-    return this.props.emailVerificationToken;
-  }
+
   isLogged(): boolean {
     return !!this.props.accessToken && !!this.props.refreshToken;
-  }
-  get isEmailVerified(): boolean | undefined {
-    return this.props.isEmailVerified;
   }
   get lastLogin(): Date | undefined {
     return this.props.lastLogin;
@@ -100,7 +92,6 @@ export class Artist extends AggregateRoot<ArtistProps> {
     const artist = new Artist(
       {
         ...props,
-        isEmailVerified: props.isEmailVerified ? props.isEmailVerified : false,
       },
       id
     );
