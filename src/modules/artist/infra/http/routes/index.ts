@@ -2,6 +2,7 @@ import express from "express";
 import { checkLoginController } from "../../../usecase/login/checkLogin";
 import { checkLoginTokenController } from "../../../usecase/login/checkLoginToken";
 import { logoutController } from "../../../usecase/logout";
+import { delProfController } from "../../../usecase/profile/delProf";
 import { getProfController } from "../../../usecase/profile/getProf";
 import { checkSignupController } from "../../../usecase/signup/checkSignup";
 import { checkSignupTokenController } from "../../../usecase/signup/checkSignupToken";
@@ -27,5 +28,9 @@ artistRouter.post("/checkLoginToken", (req, res) =>
 artistRouter.post("/logout", (req, res) => logoutController.execute(req, res));
 
 artistRouter.get("/getProf", (req, res) => getProfController.execute(req, res));
+
+artistRouter.delete("/delProf", (req, res) =>
+  delProfController.execute(req, res)
+);
 
 export { artistRouter };

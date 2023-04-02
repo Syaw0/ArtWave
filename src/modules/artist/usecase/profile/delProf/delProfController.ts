@@ -1,20 +1,24 @@
 import { Request, Response } from "express";
 import { BaseController } from "../../../../../shared/infra/http/models/baseController";
-import { GetProfDTO } from "./getProfDTO";
-import { GetProfUseCase } from "./getProfUseCase";
+import { DelProfDTO } from "./delProfDTO";
+import { DelProfError } from "./delProfError";
+import { DelProfUseCase } from "./delProfUseCase";
 
-export class GetProfController extends BaseController {
-  constructor(private getProfUseCase: GetProfUseCase) {
+export class DelProfController extends BaseController {
+  constructor(private delProfUseCase: DelProfUseCase) {
     super();
   }
 
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    const dto: GetProfDTO = req.query as any;
+    const dto: DelProfDTO = req.query as any;
     try {
-      const result = await this.getProfUseCase.execute(dto);
+      const result = await this.delProfUseCase.execute(dto);
       if (result.isLeft() == true) {
         const error = result.value;
         switch (error.constructor) {
+          case DelProfError.ProfNotFound:
+            return this.conflict(res, "Could not found the profile.");
+            break;
           default:
             this.fail(
               res,
@@ -22,8 +26,7 @@ export class GetProfController extends BaseController {
             );
         }
       } else {
-        const bufferProf = result.value.getValue() as Buffer;
-        return this.sendFile(res, bufferProf);
+        this.ok(res);
       }
     } catch (err) {
       this.fail(res, err);
