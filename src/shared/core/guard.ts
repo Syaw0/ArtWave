@@ -49,4 +49,12 @@ export class Guard {
       ? Result.ok<GuardResponse>()
       : Result.fail<GuardResponse>(`Text is greater than ${numChar} chars.`);
   }
+  public static againstAtLeast(
+    numChar: number,
+    text: string
+  ): Result<GuardResponse> {
+    return text.length >= numChar
+      ? Result.ok<GuardResponse>()
+      : Result.fail<GuardResponse>(`Text is lower than ${numChar} chars.`);
+  }
 }
