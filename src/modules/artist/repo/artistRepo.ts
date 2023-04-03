@@ -4,7 +4,7 @@ import { ArtistEmail } from "../domain/artistEmail";
 import { ArtistMapper } from "../mapper/artistMapper";
 
 export interface ArtistRepoProps {
-  exists(email: ArtistEmail): Promise<boolean>;
+  exists(email: ArtistEmail | string): Promise<boolean>;
   save(artist: Artist): Promise<void>;
   findByEmail(artistEmail: ArtistEmail | string): Promise<Artist>;
   updateArtist(artist: Artist): Promise<void>;
@@ -16,11 +16,12 @@ export class ArtistRepo implements ArtistRepoProps {
     this.models = models;
   }
 
-  async exists(email: ArtistEmail): Promise<boolean> {
+  async exists(email: ArtistEmail | string): Promise<boolean> {
     const artistModel = this.models.artistModel;
+    const emailValue = typeof email === "string" ? email : email.value;
     const artist = await artistModel.findOne({
       where: {
-        artist_email: email.value,
+        artist_email: emailValue,
       },
     });
     return !!artist[0] === true;

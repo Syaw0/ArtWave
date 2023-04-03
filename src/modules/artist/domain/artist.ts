@@ -11,7 +11,7 @@ import { ArtistProfilePicture } from "./artistProfilePicture";
 
 import { JWTToken, RefreshToken } from "./jwt";
 
-interface ArtistProps {
+export interface ArtistProps {
   ArtistId?: ArtistId;
   password: ArtistPassword;
   email: ArtistEmail;
