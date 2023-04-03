@@ -13,7 +13,7 @@ export class ArtistBiography extends ValueObject<ArtistBiographyProps> {
     const checkBioNullity = Guard.againstNullOrUndefined(
       biography,
       "biography"
-    );
+    ); // this check seems useless because we define the default value
     if (checkBioNullity.isFailure) {
       return Result.fail<ArtistBiography>(checkBioNullity.getErrorValue());
     }
