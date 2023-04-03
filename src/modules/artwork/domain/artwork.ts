@@ -5,6 +5,7 @@ import { ArtworkDescription } from "./artworkDescription";
 import { ArtworkId } from "./artworkId";
 import { ArtworkVote } from "./artworkVote";
 import { ArtworkVotes } from "./artworkVotes";
+import { Comments } from "./comments";
 
 interface ArtworkProps {
   artworkId: ArtworkId;
@@ -13,6 +14,7 @@ interface ArtworkProps {
   publishDate: Date;
   imageSrc: string;
   votes: ArtworkVotes;
+  comments: Comments;
 }
 
 export class Artwork extends AggregateRoot<ArtworkProps> {
@@ -33,6 +35,10 @@ export class Artwork extends AggregateRoot<ArtworkProps> {
   }
   get Votes(): ArtworkVotes {
     return this.props.votes;
+  }
+
+  get comments(): Comments {
+    return this.props.comments;
   }
 
   public addVote(vote: ArtworkVote): Result<void> {
