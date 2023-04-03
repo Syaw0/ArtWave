@@ -1,4 +1,5 @@
 import express from "express";
+import { changeInformationController } from "../../../usecase/changeInformation";
 import { checkLoginController } from "../../../usecase/login/checkLogin";
 import { checkLoginTokenController } from "../../../usecase/login/checkLoginToken";
 import { logoutController } from "../../../usecase/logout";
@@ -36,6 +37,10 @@ artistRouter.delete("/delProf", (req, res) =>
 
 artistRouter.patch("/changeProf", (req, res) =>
   changeProfController.execute(req, res)
+);
+
+artistRouter.patch("/changeInformation", (req, res) =>
+  changeInformationController.execute(req, res)
 );
 
 export { artistRouter };

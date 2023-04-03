@@ -5,7 +5,7 @@ interface ArtistNameProps {
   name: string;
 }
 export class ArtistName extends ValueObject<ArtistNameProps> {
-  private static MAX_CHARACTER = 40;
+  private static MAX_CHARACTER = 30;
   private constructor(props: ArtistNameProps) {
     super(props);
   }

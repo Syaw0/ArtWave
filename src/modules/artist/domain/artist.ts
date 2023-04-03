@@ -76,6 +76,14 @@ export class Artist extends AggregateRoot<ArtistProps> {
     super(props, id);
   }
 
+  public set updateName(name: ArtistName) {
+    this.props.name = name;
+  }
+
+  public set updateBiography(bio: ArtistBiography) {
+    this.props.biography = bio;
+  }
+
   public static create(
     props: ArtistProps,
     id?: UniqueEntityID

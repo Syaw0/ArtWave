@@ -7,6 +7,7 @@ export interface ArtistRepoProps {
   exists(email: ArtistEmail): Promise<boolean>;
   save(artist: Artist): Promise<void>;
   findByEmail(artistEmail: ArtistEmail | string): Promise<Artist>;
+  updateArtist(artist: Artist): Promise<void>;
 }
 
 export class ArtistRepo implements ArtistRepoProps {
@@ -35,6 +36,13 @@ export class ArtistRepo implements ArtistRepoProps {
 
     return;
   }
+  async updateArtist(artist: Artist): Promise<void> {
+    const artistModel = this.models.artistModel;
+    const rawArtist = ArtistMapper.toPersistence(artist);
+    await artistModel.update(rawArtist, {
+      where: { artist_email: artist.email.value },
+    });
+  }
 
   async findByEmail(artistEmail: string | ArtistEmail): Promise<Artist> {
     const artistModel = this.models.artistModel;
@@ -44,7 +52,8 @@ export class ArtistRepo implements ArtistRepoProps {
     const artist = await artistModel.findOne({
       where: { artist_email: email },
     });
-    if (!!artist === false) throw new Error("Artist Not Found!");
+    if (!!artist === false || artist.length == 0)
+      throw new Error("Artist Not Found!");
     return ArtistMapper.toDomain(artist[0]) as Artist;
   }
 }

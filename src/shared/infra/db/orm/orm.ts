@@ -8,4 +8,5 @@ export abstract class ORM {
   ) {}
   abstract findOne({ where }: FindOneProps): Promise<any>;
   abstract create({}: any): Promise<any>;
+  abstract update({}: any, where: FindOneProps): Promise<any>;
 }
