@@ -1,4 +1,4 @@
-const artworkModel = {
+const artworkCommentModel = {
   column: {
     artwork_comment_id: {
       type: "varchar(200)",
@@ -31,4 +31,4 @@ const artworkModel = {
   databaseName: "art",
 };
 
-export default artworkModel;
+export default artworkCommentModel;

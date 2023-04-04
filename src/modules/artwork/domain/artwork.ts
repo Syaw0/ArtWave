@@ -15,9 +15,9 @@ interface ArtworkProps {
   owner: ArtistId;
   publishDate: Date;
   imageSrc: string;
-  votes: ArtworkVotes;
-  comments: Comments;
-  totalCommentsNum: number;
+  votes?: ArtworkVotes;
+  comments?: Comments;
+  totalCommentsNum?: number;
 }
 
 export class Artwork extends AggregateRoot<ArtworkProps> {
@@ -36,26 +36,32 @@ export class Artwork extends AggregateRoot<ArtworkProps> {
   get imageSrc(): string {
     return this.props.imageSrc;
   }
-  get Votes(): ArtworkVotes {
+  get Votes(): ArtworkVotes | undefined {
     return this.props.votes;
   }
 
-  get comments(): Comments {
+  get comments(): Comments | undefined {
     return this.props.comments;
   }
 
-  get totalCommentsNum(): number {
+  get totalCommentsNum(): number | undefined {
     return this.props.totalCommentsNum;
   }
 
   public addVote(vote: ArtworkVote): Result<void> {
-    this.props.votes.add(vote);
-    return Result.ok<void>();
+    if (this.props.votes != null) {
+      this.props.votes.add(vote);
+      return Result.ok<void>();
+    }
+    return Result.fail<void>("Votes Are Null");
   }
 
   public removeVote(vote: ArtworkVote): Result<void> {
-    this.props.votes.remove(vote);
-    return Result.ok<void>();
+    if (this.props.votes != null) {
+      this.props.votes.remove(vote);
+      return Result.ok<void>();
+    }
+    return Result.fail<void>("Votes Are Null");
   }
 
   static create(props: ArtworkProps, id?: UniqueEntityID): Result<Artwork> {
