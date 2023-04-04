@@ -11,8 +11,10 @@ export interface ArtworkRepoProps {
 
 export class ArtworkRepo implements ArtworkRepoProps {
   constructor(private model: OrmType) {}
+
   async findOneArtwork(artworkId: ArtworkId | string): Promise<Artwork> {
     const artworkModel = this.model.artworkModel;
+
     const id =
       typeof artworkId === "string" ? artworkId : artworkId.id.toString();
     const artwork = await artworkModel.findOne({ where: { artwork_id: id } });

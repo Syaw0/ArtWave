@@ -41,6 +41,10 @@ export class Comment extends Entity<CommentProps> {
     return this.props.parentComment;
   }
 
+  get publishDate(): Date {
+    return this.props.publishDate;
+  }
+
   static create(props: CommentProps, id?: UniqueEntityID): Result<Comment> {
     const checkNullity = Guard.againstNullOrUndefinedBulk([
       { argument: props.owner, argumentName: "Comment Owner" },
