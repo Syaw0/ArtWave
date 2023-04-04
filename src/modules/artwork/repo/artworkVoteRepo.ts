@@ -1,4 +1,4 @@
-import { OrmType } from "../../../shared/infra/db/orm/createModel";
+import models, { OrmType } from "../../../shared/infra/db/orm/createModel";
 import { ArtworkId } from "../domain/artworkId";
 import { ArtworkVote } from "../domain/artworkVote";
 import { ArtworkVoteMapper } from "../mapper/artworkVoteMapper";
@@ -46,3 +46,5 @@ export class ArtworkVoteRepo implements ArtworkVoteRepoProps {
     }
   }
 }
+
+export const artworkVoteRepo = new ArtworkVoteRepo(models);

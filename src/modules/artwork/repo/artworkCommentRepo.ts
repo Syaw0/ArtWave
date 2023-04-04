@@ -1,4 +1,4 @@
-import { OrmType } from "../../../shared/infra/db/orm/createModel";
+import models, { OrmType } from "../../../shared/infra/db/orm/createModel";
 import { ArtworkId } from "../domain/artworkId";
 import { Comment } from "../domain/comment";
 import { CommentId } from "../domain/commentId";
@@ -46,3 +46,5 @@ export class ArtworkCommentRepo implements ArtworkCommentRepoProps {
     }
   }
 }
+
+export const artworkCommentRepo = new ArtworkCommentRepo(models);
