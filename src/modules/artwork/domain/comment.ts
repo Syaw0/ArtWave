@@ -56,7 +56,7 @@ export class Comment extends Entity<CommentProps> {
       new Comment(
         {
           ...props,
-          publishDate: new Date(),
+          publishDate: props.publishDate ? props.publishDate : new Date(),
         },
         id
       )
