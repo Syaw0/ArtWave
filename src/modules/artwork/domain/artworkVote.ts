@@ -27,7 +27,7 @@ export class ArtworkVote extends Entity<ArtworkVoteProps> {
     return this.props.artistId;
   }
 
-  public create(
+  public static create(
     props: ArtworkVoteProps,
     id?: UniqueEntityID
   ): Result<ArtworkVote> {
