@@ -25,7 +25,7 @@ export class CreateArtworkUseCase
       {
         description: ArtworkDescription.create(request.description).getValue(),
         artworkId: artworkId,
-        imageSrc: `/v1/api/artwork/image/${artworkId.id.toString()}`,
+        imageSrc: `/api/v1/artwork/image/${artworkId.id.toString()}`,
         owner: ArtistId.create(new UniqueEntityID(request.artistId)).getValue(),
         publishDate: new Date(),
       },
