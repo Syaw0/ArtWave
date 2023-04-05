@@ -17,7 +17,9 @@ export class ArtworkRepo implements ArtworkRepoProps {
 
     const id =
       typeof artworkId === "string" ? artworkId : artworkId.id.toString();
+    console.log("heel", id);
     const artwork = await artworkModel.findOne({ where: { artwork_id: id } });
+    console.log(artwork);
     if (!!artwork === false || artwork.length == 0)
       throw new Error("Artist Not Found!");
     return ArtworkMapper.toDomain(artwork[0]) as Artwork; // we muse use mapper here

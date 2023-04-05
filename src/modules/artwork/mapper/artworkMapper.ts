@@ -15,7 +15,7 @@ export class ArtworkMapper implements Mapper<Artwork> {
         imageSrc: raw.artwork_image_source,
         publishDate: raw.artwork_publish_date,
       },
-      new UniqueEntityID(raw.raw.artwork_id)
+      new UniqueEntityID(raw.artwork_id)
     );
     if (artwork.isFailure) {
       console.error(artwork.getErrorValue());
