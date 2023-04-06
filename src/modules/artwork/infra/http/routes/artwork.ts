@@ -1,5 +1,6 @@
 import express from "express";
 import { createArtworkController } from "../../../usecase/artwork/createArtwork";
+import { getArtistArtworkController } from "../../../usecase/artwork/getArtistArtwork";
 import { getArtworkByIdController } from "../../../usecase/artwork/getArtworkById";
 import { getArtworkImageController } from "../../../usecase/artwork/getArtworkImage";
 
@@ -15,6 +16,10 @@ artworkRouter.get("/:artworkId", (req, res) =>
 
 artworkRouter.get("/image/:artworkId", (req, res) =>
   getArtworkImageController.execute(req, res)
+);
+
+artworkRouter.get("/artist/:artistId", (req, res) =>
+  getArtistArtworkController.execute(req, res)
 );
 
 export { artworkRouter };

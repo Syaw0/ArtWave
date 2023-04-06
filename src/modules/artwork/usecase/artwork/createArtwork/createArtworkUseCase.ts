@@ -5,6 +5,8 @@ import { ArtistId } from "../../../../artist/domain/artistId";
 import { Artwork } from "../../../domain/artwork";
 import { ArtworkDescription } from "../../../domain/artworkDescription";
 import { ArtworkId } from "../../../domain/artworkId";
+import { ArtworkVotes } from "../../../domain/artworkVotes";
+import { Comments } from "../../../domain/comments";
 import { ArtworkRepoProps } from "../../../repo/artworkRepo";
 import { ArtworkImageService } from "../../../service/artworkImage/artworkImageService";
 import { CreateArtworkDTO } from "./createArtworkDTO";
@@ -28,6 +30,9 @@ export class CreateArtworkUseCase
         imageSrc: `/api/v1/artwork/image/${artworkId.id.toString()}`,
         owner: ArtistId.create(new UniqueEntityID(request.artistId)).getValue(),
         publishDate: new Date(),
+        votes: ArtworkVotes.create([]),
+        comments: Comments.create([]),
+        totalCommentsNum: 0,
       },
       artworkId.id
     );

@@ -1,5 +1,6 @@
 import { ConnectionConfig, PoolConfig } from "mariadb";
 import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
 
 dotenv.config();
 
@@ -13,5 +14,6 @@ const config: PoolConfig | ConnectionConfig = {
   port: 3030,
   host: "localhost",
 };
+const mongodbClient = new MongoClient("mongodb://localhost:3131/", {});
 
 export default config;

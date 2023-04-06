@@ -8,6 +8,7 @@ import { ArtistPassword } from "../domain/artistPassword";
 import { ArtistProfilePicture } from "../domain/artistProfilePicture";
 import { ArtistDTO } from "../dto/artistDTO";
 import { Result } from "../../../shared/core/result";
+
 export class ArtistMapper implements Mapper<Artist> {
   public static toDTO(artist: Artist): ArtistDTO {
     return {

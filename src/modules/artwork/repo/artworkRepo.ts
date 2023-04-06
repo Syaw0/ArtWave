@@ -1,4 +1,5 @@
 import models, { OrmType } from "../../../shared/infra/db/orm/createModel";
+import { ArtistId } from "../../artist/domain/artistId";
 import { Artwork } from "../domain/artwork";
 import { ArtworkId } from "../domain/artworkId";
 import { ArtworkVotes } from "../domain/artworkVotes";
@@ -7,6 +8,7 @@ import { artworkVoteRepo } from "./artworkVoteRepo";
 
 export interface ArtworkRepoProps {
   findOneArtwork(artworkId: string | ArtworkId): Promise<Artwork>;
+  findArtistArtworks(artistId: string | ArtistId): Promise<Artwork[]>;
   save(artwork: Artwork): Promise<void>;
   exist(artworkId: string | ArtworkId): Promise<boolean>;
 }
@@ -25,11 +27,17 @@ export class ArtworkRepo implements ArtworkRepoProps {
     if (!!artwork === false || artwork.length == 0)
       throw new Error("Artist Not Found!");
 
-    const votes = ArtworkVotes.create(
-      await artworkVoteRepo.getArtworkVotes(artwork[0].artwork_id)
-    );
-    artwork[0].votes = votes;
-    return ArtworkMapper.toDomain(artwork[0]) as Artwork; // we muse use mapper here
+    return ArtworkMapper.toDomain(artwork[0]) as Artwork;
+  }
+
+  async findArtistArtworks(artistId: ArtworkId | string): Promise<Artwork[]> {
+    const artworkModel = this.model.artworkModel;
+
+    const id = typeof artistId === "string" ? artistId : artistId.id.toString();
+    const artworks = await artworkModel.findOne({
+      where: { artwork_owner_id: id },
+    });
+    return artworks.map((a: any) => ArtworkMapper.toDomain(a));
   }
 
   async exist(artworkId: string | ArtworkId): Promise<boolean> {

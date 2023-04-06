@@ -36,7 +36,7 @@ export class Artwork extends AggregateRoot<ArtworkProps> {
   get imageSrc(): string {
     return this.props.imageSrc;
   }
-  get Votes(): ArtworkVotes | undefined {
+  get votes(): ArtworkVotes | undefined {
     return this.props.votes;
   }
 
