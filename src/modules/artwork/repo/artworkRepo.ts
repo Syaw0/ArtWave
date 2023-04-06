@@ -2,9 +2,7 @@ import models, { OrmType } from "../../../shared/infra/db/orm/createModel";
 import { ArtistId } from "../../artist/domain/artistId";
 import { Artwork } from "../domain/artwork";
 import { ArtworkId } from "../domain/artworkId";
-import { ArtworkVotes } from "../domain/artworkVotes";
 import { ArtworkMapper } from "../mapper/artworkMapper";
-import { artworkVoteRepo } from "./artworkVoteRepo";
 
 export interface ArtworkRepoProps {
   findOneArtwork(artworkId: string | ArtworkId): Promise<Artwork>;
@@ -12,6 +10,7 @@ export interface ArtworkRepoProps {
   save(artwork: Artwork): Promise<void>;
   exist(artworkId: string | ArtworkId): Promise<boolean>;
   findLatestArtworks(): Promise<Artwork[]>;
+  findTopArtworks(): Promise<Artwork[]>;
 }
 
 export class ArtworkRepo implements ArtworkRepoProps {
@@ -63,6 +62,22 @@ export class ArtworkRepo implements ArtworkRepoProps {
     const artworks = await artworkModel.findAndSort({
       sort: { artwork_publish_date: -1 },
     });
+    return artworks;
+  }
+  async findTopArtworks(): Promise<Artwork[]> {
+    const artworkModel = this.model.artworkModel;
+    const artworks = await artworkModel.aggregate(
+      [
+        {
+          $addFields: {
+            answers_count: { $size: { $ifNull: ["$artwork_comments", []] } },
+          },
+        },
+        { $sort: { answers_count: -1 } },
+      ],
+      {}
+    );
+
     return artworks;
   }
 }

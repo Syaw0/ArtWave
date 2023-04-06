@@ -4,6 +4,7 @@ import { getArtistArtworkController } from "../../../usecase/artwork/getArtistAr
 import { getArtworkByIdController } from "../../../usecase/artwork/getArtworkById";
 import { getArtworkImageController } from "../../../usecase/artwork/getArtworkImage";
 import { getLatestArtworkController } from "../../../usecase/artwork/getLatestArtworks";
+import { getTopArtworkController } from "../../../usecase/artwork/getTopArtworks";
 
 const artworkRouter = express.Router();
 
@@ -13,6 +14,10 @@ artworkRouter.post("/create", (req, res) =>
 
 artworkRouter.get("/latest", (req, res) =>
   getLatestArtworkController.execute(req, res)
+);
+
+artworkRouter.get("/top", (req, res) =>
+  getTopArtworkController.execute(req, res)
 );
 
 artworkRouter.get("/image/:artworkId", (req, res) =>

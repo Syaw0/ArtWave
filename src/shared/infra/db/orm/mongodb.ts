@@ -1,6 +1,6 @@
 import { ORM } from "./orm";
 import { FindOneProps } from "./types";
-import { MongoClient } from "mongodb";
+import { Document, MongoClient } from "mongodb";
 
 export class Mongodb extends ORM {
   private client: MongoClient;
@@ -40,5 +40,15 @@ export class Mongodb extends ORM {
     const db = this.client.db(this.database);
     const col = db.collection(this.table);
     await col.updateOne(where ? where : {}, { $set: raw });
+  }
+
+  async aggregate(pipeline: Document[], { sort }: FindOneProps): Promise<any> {
+    const db = this.client.db(this.database);
+    const col = db.collection(this.table);
+    const list: any = [];
+    const cursor = col.aggregate(pipeline);
+    sort ? cursor.sort(sort) : null;
+    await cursor.forEach((c) => list.push(c));
+    return list;
   }
 }
