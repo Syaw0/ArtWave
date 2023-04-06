@@ -84,7 +84,6 @@ export class ArtworkRepo implements ArtworkRepoProps {
 
   async updateArtwork(artwork: Artwork): Promise<void> {
     const artworkModel = this.model.artworkModel;
-    console.log(artwork.artworkId);
     await artworkModel.update(ArtworkMapper.toPersistence(artwork), {
       where: {
         artwork_id: artwork.artworkId.id.toString(),

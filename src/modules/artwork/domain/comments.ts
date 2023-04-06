@@ -23,4 +23,10 @@ export class Comments extends WatchedList<Comment> {
       }
     });
   }
+  public isExistByCommentId(commentId: string): boolean {
+    return (
+      this.currentItems.filter((c) => c.commentId.id.toString() === commentId)
+        .length !== 0
+    );
+  }
 }
