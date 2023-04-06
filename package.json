@@ -4,11 +4,14 @@
   "description": "The Art Social Media .",
   "main": "index.js",
   "scripts": {
-    "server": "ts-node --esm ./src/shared/infra/http/app.ts",
+    "server": "ts-node-esm --esm -P ./tsconfig.script.json ./src/shared/infra/http/app.ts",
     "server:dev": "nodemon",
+    "server:build": "NODE_ENV=production npm run server",
     "db:container": "ts-node -e 'import(\"./scripts/prepareContainers\").then(m=>m.default())' ",
     "db:base": "ts-node -e 'import(\"./scripts/prepareDbBase\").then(m=>m.default())' ",
-    "db:prepare": "npm run db:container&&echo 'wait moment...⌛️'; sleep 5 && npm run db:base"
+    "db:prepare": "npm run db:container&&echo 'wait moment...⌛️'; sleep 5 && npm run db:base",
+    "next:dev": "next dev ./public/app",
+    "next:build": "next build ./public/app"
   },
   "repository": {
     "type": "git",
@@ -41,7 +44,13 @@
     "nodemailer": "^6.9.1",
     "rand-token": "^1.0.1",
     "redis": "^4.6.5",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "eslint": "8.37.0",
+    "eslint-config-next": "13.2.4",
+    "next": "13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.0.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -50,7 +59,10 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/nodemailer": "^6.4.7",
     "@types/uuid": "^9.0.1",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.33",
+    "@types/react-dom": "18.0.11"
   },
   "nodemonConfig": {
     "watch": [

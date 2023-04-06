@@ -3,20 +3,39 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { v1Router } from "./api/v1";
 import fileUpload from "express-fileupload";
+import next from "next";
 
-const origin = {
-  origin: "*",
-};
-const app = express();
-app.use(fileUpload());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(origin));
+const dev = process.env.NODE_ENV !== "production";
+const hostname = "localhost";
+const port = Number(process.env.PORT) || 5000;
 
-app.use("/api/v1", v1Router);
-
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-  console.log(`[App]: Listening on port ${port}`);
+const nextApp = next({
+  dev,
+  hostname,
+  port,
+  dir: process.cwd() + "/public/app",
 });
+const handler = nextApp.getRequestHandler();
+
+nextApp
+  .prepare()
+  .then(async () => {
+    const origin = {
+      origin: "*",
+    };
+    const app = express();
+    app.use(fileUpload());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(cors(origin));
+
+    app.use("/api/v1", v1Router);
+    app.get("*", (req, res) => handler(req, res));
+
+    app.listen(port, () => {
+      console.log(`[Server]: Listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
