@@ -22,6 +22,15 @@ export class Mongodb extends ORM {
     await cursor.forEach((c) => list.push(c));
     return list;
   }
+  async findAndSort({ where, sort }: FindOneProps): Promise<any> {
+    const db = this.client.db(this.database);
+    const col = db.collection(this.table);
+    const list: any = [];
+    const cursor = col.find(where ? where : {});
+    cursor.sort(sort ? sort : {});
+    await cursor.forEach((c) => list.push(c));
+    return list;
+  }
   async create(raw: any): Promise<any> {
     const db = this.client.db(this.database);
     const col = db.collection(this.table);
