@@ -3,6 +3,7 @@ import { createClient } from "redis";
 
 import dotenv from "dotenv";
 import config from "../src/shared/infra/db/config/dbconfig";
+import { MongoClient } from "mongodb";
 dotenv.config();
 
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
@@ -17,3 +18,5 @@ export const redisClient = createClient({
   },
   password: REDIS_PASSWORD,
 });
+
+export const mongoClient = new MongoClient("localhost:3131");

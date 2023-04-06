@@ -1,7 +1,9 @@
 import models, { OrmType } from "../../../shared/infra/db/orm/createModel";
 import { Artwork } from "../domain/artwork";
 import { ArtworkId } from "../domain/artworkId";
+import { ArtworkVotes } from "../domain/artworkVotes";
 import { ArtworkMapper } from "../mapper/artworkMapper";
+import { artworkVoteRepo } from "./artworkVoteRepo";
 
 export interface ArtworkRepoProps {
   findOneArtwork(artworkId: string | ArtworkId): Promise<Artwork>;
@@ -17,11 +19,16 @@ export class ArtworkRepo implements ArtworkRepoProps {
 
     const id =
       typeof artworkId === "string" ? artworkId : artworkId.id.toString();
-    console.log("heel", id);
+
     const artwork = await artworkModel.findOne({ where: { artwork_id: id } });
-    console.log(artwork);
+
     if (!!artwork === false || artwork.length == 0)
       throw new Error("Artist Not Found!");
+
+    const votes = ArtworkVotes.create(
+      await artworkVoteRepo.getArtworkVotes(artwork[0].artwork_id)
+    );
+    artwork[0].votes = votes;
     return ArtworkMapper.toDomain(artwork[0]) as Artwork; // we muse use mapper here
   }
 

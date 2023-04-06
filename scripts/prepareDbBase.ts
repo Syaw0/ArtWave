@@ -1,4 +1,4 @@
-import { pool } from "./dbConnectors";
+import { mongoClient, pool } from "./dbConnectors";
 import artistModel from "../src/shared/infra/db/models/artist";
 import artworkModel from "../src/shared/infra/db/models/artwork";
 import artworkVoteModel from "../src/shared/infra/db/models/artworkVote";
@@ -165,10 +165,10 @@ const prepareArtworkCommentModel = async () => {
 };
 
 const prepareDbBase = async () => {
-  await prepareArtistModel();
-  await prepareArtworkModel();
-  await prepareArtworkVoteModel();
-  await prepareArtworkCommentModel();
+  // await prepareArtistModel();
+  // await prepareArtworkModel();
+  // await prepareArtworkVoteModel();
+  // await prepareArtworkCommentModel();
   process.exit();
 };
 

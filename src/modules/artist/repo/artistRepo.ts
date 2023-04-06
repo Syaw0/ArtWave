@@ -53,6 +53,7 @@ export class ArtistRepo implements ArtistRepoProps {
     const artist = await artistModel.findOne({
       where: { artist_email: email },
     });
+    console.log(artist);
     if (!!artist === false || artist.length == 0)
       throw new Error("Artist Not Found!");
     return ArtistMapper.toDomain(artist[0]) as Artist;

@@ -20,9 +20,15 @@ export class ArtistMapper implements Mapper<Artist> {
     const artistPasswordOrError = ArtistPassword.create(raw.artist_password);
     const artistProfilePictureOrError = ArtistProfilePicture.create(
       raw.artist_profile_picture
+        ? raw.artist_profile_picture
+        : "/api/v1/artist/getProf"
     );
-    const artistNameOrError = ArtistName.create(raw.artist_name);
-    const artistBiographyOrError = ArtistBiography.create(raw.artist_biography);
+    const artistNameOrError = ArtistName.create(
+      raw.artist_name ? raw.artist_name : ""
+    );
+    const artistBiographyOrError = ArtistBiography.create(
+      raw.artist_biography ? raw.artist_biography : ""
+    );
     const check = Result.combine([
       artistBiographyOrError,
       artistEmailOrError,

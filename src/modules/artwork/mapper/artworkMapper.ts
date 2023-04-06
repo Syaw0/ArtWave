@@ -14,6 +14,7 @@ export class ArtworkMapper implements Mapper<Artwork> {
         ).getValue(),
         imageSrc: raw.artwork_image_source,
         publishDate: raw.artwork_publish_date,
+        votes: raw.votes,
       },
       new UniqueEntityID(raw.artwork_id)
     );
