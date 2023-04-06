@@ -81,4 +81,17 @@ export abstract class WatchedList<T> {
       this.removed.push(item);
     }
   }
+  public removeLs(item: T[]): void {
+    item.forEach((c) => {
+      this.removeFromCurrent(c);
+
+      if (this.isNewItem(c)) {
+        this.removeFromNew(c);
+        return;
+      }
+      if (!this.isRemovedItem(c)) {
+        this.removed.push(c);
+      }
+    });
+  }
 }
