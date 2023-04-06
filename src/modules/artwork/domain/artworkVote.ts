@@ -38,7 +38,7 @@ export class ArtworkVote extends Entity<ArtworkVoteProps> {
     if (guardResult.isFailure) {
       return Result.fail<ArtworkVote>(guardResult.getErrorValue());
     } else {
-      return Result.ok<ArtworkVote>(new ArtworkVote(props));
+      return Result.ok<ArtworkVote>(new ArtworkVote(props, id));
     }
   }
 }

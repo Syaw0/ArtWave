@@ -40,13 +40,15 @@ export abstract class WatchedList<T> {
   }
 
   private removeFromNew(item: T): void {
-    this.new.filter((i) => !this.compareItems(item, i));
+    this.new = this.new.filter((i) => !this.compareItems(item, i));
   }
   private removeFromCurrent(item: T): void {
-    this.currentItems.filter((i) => !this.compareItems(item, i));
+    this.currentItems = this.currentItems.filter(
+      (i) => !this.compareItems(item, i)
+    );
   }
   private removeFromRemoved(item: T): void {
-    this.removed.filter((i) => !this.compareItems(item, i));
+    this.removed = this.removed.filter((i) => !this.compareItems(item, i));
   }
 
   private wasAddedInitially(item: T): boolean {

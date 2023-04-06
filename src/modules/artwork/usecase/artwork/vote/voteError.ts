@@ -7,4 +7,9 @@ export namespace VoteError {
       super(false, `Error during create Vote:${msg}`);
     }
   }
+  export class VoteExist extends Result<UseCaseError> {
+    constructor() {
+      super(false, "Artist vote is exist");
+    }
+  }
 }

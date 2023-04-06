@@ -13,4 +13,10 @@ export class ArtworkVotes extends WatchedList<ArtworkVote> {
   public static create(initialVotes?: ArtworkVote[]) {
     return new ArtworkVotes(initialVotes ? initialVotes : []);
   }
+
+  public getByArtistId(artistId: string): ArtworkVote {
+    return this.currentItems.filter(
+      (i) => i.artistId.id.toString() === artistId
+    )[0];
+  }
 }

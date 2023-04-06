@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { BaseController } from "../../../../../shared/infra/http/models/baseController";
-import { VoteDTO } from "./voteDTO";
-import { VoteError } from "./voteError";
-import { VoteUseCase } from "./voteUseCase";
+import { RemoveVoteDTO } from "./removeVoteDTO";
+import { RemoveVoteError } from "./removeVoteError";
+import { RemoveVoteUseCase } from "./removeVoteUseCase";
 
 export class VoteController extends BaseController {
-  constructor(private usecase: VoteUseCase) {
+  constructor(private usecase: RemoveVoteUseCase) {
     super();
   }
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    const dto: VoteDTO = req.body;
+    const dto: RemoveVoteDTO = req.body;
     try {
       const result = await this.usecase.execute(dto);
       if (result.isLeft() == true) {
@@ -17,7 +17,7 @@ export class VoteController extends BaseController {
         const errorMsg = error.getErrorValue().message || error.getErrorValue();
 
         switch (error.constructor) {
-          case VoteError.ErrorDuringCreateVote:
+          case RemoveVoteError.NotFound:
             return this.conflict(res, errorMsg);
             break;
           default:

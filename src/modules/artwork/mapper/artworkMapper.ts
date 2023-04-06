@@ -3,12 +3,12 @@ import { Mapper } from "../../../shared/infra/mapper";
 import { ArtistId } from "../../artist/domain/artistId";
 import { Artwork } from "../domain/artwork";
 import { ArtworkDescription } from "../domain/artworkDescription";
+import { ArtworkVote } from "../domain/artworkVote";
 import { ArtworkVotes } from "../domain/artworkVotes";
 import { Comments } from "../domain/comments";
-
+import { ArtworkVoteMapper } from "./artworkVoteMapper";
 export class ArtworkMapper implements Mapper<Artwork> {
   public static toDomain(raw: any): Artwork | null {
-    console.log(raw);
     const artwork = Artwork.create(
       {
         owner: ArtistId.create(
@@ -19,7 +19,9 @@ export class ArtworkMapper implements Mapper<Artwork> {
         ).getValue(),
         imageSrc: raw.artwork_image_source,
         publishDate: raw.artwork_publish_date,
-        votes: ArtworkVotes.create(raw.artwork_votes),
+        votes: ArtworkVotes.create(
+          raw.artwork_votes.map((v: any) => ArtworkVoteMapper.toDomain(v))
+        ),
         comments: Comments.create(raw.artwork_comments),
         totalCommentsNum: raw.artwork_comments
           ? raw.artwork_comments.length
@@ -41,7 +43,11 @@ export class ArtworkMapper implements Mapper<Artwork> {
       artwork_description: artwork.description.props.description,
       artwork_publish_date: artwork.publishDate,
       artwork_image_source: artwork.imageSrc,
-      artwork_votes: artwork.votes ? artwork.votes.getItems() : [], //?using mapper
+      artwork_votes: artwork.votes
+        ? artwork.votes
+            .getItems()
+            .map((i) => ArtworkVoteMapper.toPersistence(i))
+        : [],
       artwork_comments: artwork.comments ? artwork.comments.getItems() : [],
     };
   }

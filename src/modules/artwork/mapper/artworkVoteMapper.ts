@@ -1,13 +1,19 @@
 import { UniqueEntityID } from "../../../shared/domain/uniqueEntityID";
 import { Mapper } from "../../../shared/infra/mapper";
+import { ArtistId } from "../../artist/domain/artistId";
+import { ArtworkId } from "../domain/artworkId";
 import { ArtworkVote } from "../domain/artworkVote";
 
 export class ArtworkVoteMapper implements Mapper<ArtworkVote> {
   static toDomain(raw: any): ArtworkVote | null {
     const vote = ArtworkVote.create(
       {
-        artistId: raw.artwork_vote_artist_id,
-        artworkId: raw.artwork_vote_artwork_id,
+        artistId: ArtistId.create(
+          new UniqueEntityID(raw.artwork_vote_artist_id)
+        ).getValue(),
+        artworkId: ArtworkId.create(
+          new UniqueEntityID(raw.artwork_vote_artwork_id)
+        ).getValue(),
       },
       new UniqueEntityID(raw.artwork_vote_id)
     );

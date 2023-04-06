@@ -13,7 +13,11 @@ export class VoteUseCase implements UseCase<VoteDTO, VoteResponse> {
 
   async execute(request: VoteDTO): Promise<VoteResponse> {
     const artwork = await this.artworkRepo.findOneArtwork(request.artworkId);
-    // ? i think we must check if vote for this artist and artwork is not exist first
+
+    const isVoteExist = artwork.votes?.getByArtistId(request.artistId);
+    if (isVoteExist != null) {
+      return left(new VoteError.VoteExist());
+    }
 
     const voteOrError = ArtworkVote.create({
       artistId: ArtistId.create(
