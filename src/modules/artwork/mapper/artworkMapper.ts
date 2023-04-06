@@ -6,6 +6,7 @@ import { ArtworkDescription } from "../domain/artworkDescription";
 import { ArtworkVote } from "../domain/artworkVote";
 import { ArtworkVotes } from "../domain/artworkVotes";
 import { Comments } from "../domain/comments";
+import { ArtworkCommentMapper } from "./artworkCommentMapper";
 import { ArtworkVoteMapper } from "./artworkVoteMapper";
 export class ArtworkMapper implements Mapper<Artwork> {
   public static toDomain(raw: any): Artwork | null {
@@ -22,7 +23,9 @@ export class ArtworkMapper implements Mapper<Artwork> {
         votes: ArtworkVotes.create(
           raw.artwork_votes.map((v: any) => ArtworkVoteMapper.toDomain(v))
         ),
-        comments: Comments.create(raw.artwork_comments),
+        comments: Comments.create(
+          raw.artwork_comments.map((c: any) => ArtworkCommentMapper.toDomain(c))
+        ),
         totalCommentsNum: raw.artwork_comments
           ? raw.artwork_comments.length
           : 0,
@@ -48,7 +51,11 @@ export class ArtworkMapper implements Mapper<Artwork> {
             .getItems()
             .map((i) => ArtworkVoteMapper.toPersistence(i))
         : [],
-      artwork_comments: artwork.comments ? artwork.comments.getItems() : [],
+      artwork_comments: artwork.comments
+        ? artwork.comments
+            .getItems()
+            .map((c) => ArtworkCommentMapper.toPersistence(c))
+        : [],
     };
   }
 }

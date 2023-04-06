@@ -8,7 +8,7 @@ import { CommentId } from "./commentId";
 import { CommentText } from "./commentText";
 
 interface CommentProps {
-  commentId: CommentId;
+  commentId?: CommentId;
   text: CommentText;
   owner: ArtistId;
   place: ArtworkId;
