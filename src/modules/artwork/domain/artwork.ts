@@ -10,7 +10,7 @@ import { ArtworkVotes } from "./artworkVotes";
 import { Comments } from "./comments";
 
 interface ArtworkProps {
-  artworkId: ArtworkId;
+  artworkId?: ArtworkId;
   description: ArtworkDescription;
   owner: ArtistId;
   publishDate: Date;
@@ -21,6 +21,9 @@ interface ArtworkProps {
 }
 
 export class Artwork extends AggregateRoot<ArtworkProps> {
+  private constructor(props: ArtworkProps, id?: UniqueEntityID) {
+    super(props, id);
+  }
   get artworkId(): ArtworkId {
     return ArtworkId.create(this._id).getValue();
   }

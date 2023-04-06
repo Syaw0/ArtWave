@@ -1,5 +1,6 @@
 import { UniqueEntityID } from "../../../shared/domain/uniqueEntityID";
 import { Mapper } from "../../../shared/infra/mapper";
+import { ArtistId } from "../../artist/domain/artistId";
 import { Artwork } from "../domain/artwork";
 import { ArtworkDescription } from "../domain/artworkDescription";
 import { ArtworkVotes } from "../domain/artworkVotes";
@@ -7,10 +8,12 @@ import { Comments } from "../domain/comments";
 
 export class ArtworkMapper implements Mapper<Artwork> {
   public static toDomain(raw: any): Artwork | null {
+    console.log(raw);
     const artwork = Artwork.create(
       {
-        artworkId: raw.artwork_id,
-        owner: raw.artwork_owner_id,
+        owner: ArtistId.create(
+          new UniqueEntityID(raw.artwork_owner_id)
+        ).getValue(),
         description: ArtworkDescription.create(
           raw.artwork_description
         ).getValue(),
@@ -38,7 +41,7 @@ export class ArtworkMapper implements Mapper<Artwork> {
       artwork_description: artwork.description.props.description,
       artwork_publish_date: artwork.publishDate,
       artwork_image_source: artwork.imageSrc,
-      artwork_votes: artwork.votes ? artwork.votes.getItems() : [],
+      artwork_votes: artwork.votes ? artwork.votes.getItems() : [], //?using mapper
       artwork_comments: artwork.comments ? artwork.comments.getItems() : [],
     };
   }

@@ -11,6 +11,7 @@ export interface ArtworkRepoProps {
   exist(artworkId: string | ArtworkId): Promise<boolean>;
   findLatestArtworks(): Promise<Artwork[]>;
   findTopArtworks(): Promise<Artwork[]>;
+  updateArtwork(artwork: Artwork): Promise<void>;
 }
 
 export class ArtworkRepo implements ArtworkRepoProps {
@@ -62,7 +63,7 @@ export class ArtworkRepo implements ArtworkRepoProps {
     const artworks = await artworkModel.findAndSort({
       sort: { artwork_publish_date: -1 },
     });
-    return artworks;
+    return artworks.map((a: any) => ArtworkMapper.toDomain(a));
   }
   async findTopArtworks(): Promise<Artwork[]> {
     const artworkModel = this.model.artworkModel;
@@ -78,7 +79,17 @@ export class ArtworkRepo implements ArtworkRepoProps {
       {}
     );
 
-    return artworks;
+    return artworks.map((a: any) => ArtworkMapper.toDomain(a));
+  }
+
+  async updateArtwork(artwork: Artwork): Promise<void> {
+    const artworkModel = this.model.artworkModel;
+    console.log(artwork.artworkId);
+    await artworkModel.update(ArtworkMapper.toPersistence(artwork), {
+      where: {
+        artwork_id: artwork.artworkId.id.toString(),
+      },
+    });
   }
 }
 
