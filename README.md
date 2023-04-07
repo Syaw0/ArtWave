@@ -1,2 +1,2 @@
-# Art.me
+# Art Wave
 The Art Social Media .
