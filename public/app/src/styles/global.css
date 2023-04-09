@@ -7,8 +7,11 @@
 a {
   color: inherit;
   text-decoration: none;
+  display: flex;
 }
-
+a > * {
+  width: 100%;
+}
 .MuiButton-root {
   border-radius: 20px;
 }

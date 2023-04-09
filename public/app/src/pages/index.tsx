@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
 
       <div className={style.con}>
-        <Navbar isLogin={true} />
+        <Navbar isLogin={true} profileImage={null} />
       </div>
     </>
   );

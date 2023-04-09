@@ -2,9 +2,10 @@
   color: var(--md-sys-color-on-background);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 16px 160px;
-  border-bottom: 1px solid var(--joy-palette-neutral-800, #25252d);
 }
+
 .searchIcon {
   display: none;
 }
@@ -17,6 +18,24 @@
 }
 .right > * {
   margin-left: 0.5rem;
+}
+
+.menuPaper {
+  overflow: visible;
+  filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
+  margin-top: 1.5px;
+}
+.menuPaper::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 14px;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-50%) rotate(45deg);
+  z-index: 0;
+  background-color: inherit;
 }
 
 @media (max-width: 1000px) {
