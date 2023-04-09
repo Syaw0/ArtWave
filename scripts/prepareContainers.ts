@@ -54,16 +54,16 @@ const initialDbContainer = async () => {
     console.log("Stop and Remove redis db container");
     execSync(stopContainerCmd(REDIS_CONTAINER_NAME));
   } catch (err) {}
-  // try {
-  //   console.log("Stop and Remove mariadb db container");
-  //   execSync(stopContainerCmd(MARIADB_CONTAINER_NAME));
-  // } catch (err) {}
+  try {
+    console.log("Stop and Remove mariadb db container");
+    execSync(stopContainerCmd(MARIADB_CONTAINER_NAME));
+  } catch (err) {}
 
   try {
     console.log("Stop and Remove mongodb db container");
     execSync(stopContainerCmd(MONGODB_CONTAINER_NAME));
   } catch (err) {}
-  // prepareRedisDBContainer();
+  prepareRedisDBContainer();
   // prepareMariaDBContainer();
   prepareMongoDBContainer();
   return { killContainers };

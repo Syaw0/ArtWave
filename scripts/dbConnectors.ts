@@ -19,4 +19,4 @@ export const redisClient = createClient({
   password: REDIS_PASSWORD,
 });
 
-export const mongoClient = new MongoClient("localhost:3131");
+export const mongoClient = new MongoClient("mongodb://localhost:3131/");
