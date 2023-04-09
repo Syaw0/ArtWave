@@ -1,5 +1,7 @@
 import Head from "next/head";
+import style from "../styles/pageStyles/home.module.css";
 import { GetServerSideProps } from "next";
+import Navbar from "src/shared/components/navbar/navbar";
 
 export default function Home() {
   return (
@@ -8,6 +10,10 @@ export default function Home() {
         <title>ArtWave 🌊</title>
         <meta name="description" content="ArtWave Home Page." />
       </Head>
+
+      <div className={style.con}>
+        <Navbar isLogin={true} />
+      </div>
     </>
   );
 }
