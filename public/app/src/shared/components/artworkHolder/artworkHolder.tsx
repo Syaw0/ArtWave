@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import ArtworkCard from "../artworkCard/artworkCard";
 import style from "./artworkHolder.module.css";
-const ArtworkHolder = ({ artworks }: { artworks: string[] }) => {
+const ArtworkHolder = ({ artworks }: { artworks: any }) => {
   const [colNumber, setColNumber] = useState(3);
   const [cols, setCols] = useState<any>([]);
   useEffect(() => {
@@ -41,8 +42,8 @@ const ArtworkHolder = ({ artworks }: { artworks: string[] }) => {
       {cols.map((c: any, i: number) => {
         return (
           <div className={style.cols} key={i}>
-            {c.map((item: any, index: number) => {
-              return <img className={style.img} src={item} key={item} />;
+            {c.map((item: any) => {
+              return <ArtworkCard key={item.artworkId} {...item} />;
             })}
           </div>
         );
