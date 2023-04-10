@@ -43,6 +43,7 @@ const ArtworkHolder = ({ artworks }: { artworks: any }) => {
         return (
           <div className={style.cols} key={i}>
             {c.map((item: any) => {
+              console.log(item);
               return <ArtworkCard key={item.artworkId} {...item} />;
             })}
           </div>

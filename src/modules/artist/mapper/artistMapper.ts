@@ -12,7 +12,11 @@ import { Result } from "../../../shared/core/result";
 export class ArtistMapper implements Mapper<Artist> {
   public static toDTO(artist: Artist): ArtistDTO {
     return {
-      email: artist.email.value,
+      artistEmail: artist.email.value,
+      artistId: artist.artistId.id.toString(),
+      artistProfile: artist.profilePicture?.props.profileUrl ?? "",
+      artistName: artist.name?.props.name ?? "",
+      artistBiography: artist.biography?.props.biography ?? "",
     };
   }
 

@@ -1,12 +1,12 @@
 declare global {
   interface ArtworkCardProps {
-    imageSource: string;
+    artworkImage: string;
     artworkName: string;
     artworkId: string;
-    artistId: string;
+    artworkOwner: any;
     artistProfile: string;
     artistName: string;
-    votes: any;
+    artworkVotes: any;
   }
 }
 export {};

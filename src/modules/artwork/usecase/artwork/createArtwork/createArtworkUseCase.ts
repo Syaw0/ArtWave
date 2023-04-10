@@ -5,6 +5,7 @@ import { ArtistId } from "../../../../artist/domain/artistId";
 import { Artwork } from "../../../domain/artwork";
 import { ArtworkDescription } from "../../../domain/artworkDescription";
 import { ArtworkId } from "../../../domain/artworkId";
+import { ArtworkName } from "../../../domain/artworkName";
 import { ArtworkVotes } from "../../../domain/artworkVotes";
 import { Comments } from "../../../domain/comments";
 import { ArtworkRepoProps } from "../../../repo/artworkRepo";
@@ -27,6 +28,7 @@ export class CreateArtworkUseCase
       {
         description: ArtworkDescription.create(request.description).getValue(),
         artworkId: artworkId,
+        name: ArtworkName.create({ text: request.name }).getValue(),
         imageSrc: `/api/v1/artwork/image/${artworkId.id.toString()}`,
         owner: ArtistId.create(new UniqueEntityID(request.artistId)).getValue(),
         publishDate: new Date(),

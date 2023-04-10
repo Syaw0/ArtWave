@@ -3,11 +3,12 @@ import { Artist } from "../domain/artist";
 import { ArtistEmail } from "../domain/artistEmail";
 import { ArtistMapper } from "../mapper/artistMapper";
 
-export interface ArtistRepoProps {
+interface ArtistRepoProps {
   exists(email: ArtistEmail | string): Promise<boolean>;
   save(artist: Artist): Promise<void>;
   findByEmail(artistEmail: ArtistEmail | string): Promise<Artist>;
   updateArtist(artist: Artist): Promise<void>;
+  findById(artistId: string): Promise<Artist>;
 }
 
 export class ArtistRepo implements ArtistRepoProps {
@@ -53,7 +54,15 @@ export class ArtistRepo implements ArtistRepoProps {
     const artist = await artistModel.findOne({
       where: { artist_email: email },
     });
-    console.log(artist);
+    if (!!artist === false || artist.length == 0)
+      throw new Error("Artist Not Found!");
+    return ArtistMapper.toDomain(artist[0]) as Artist;
+  }
+  async findById(artistId: string): Promise<Artist> {
+    const artistModel = this.models.artistModel;
+    const artist = await artistModel.findOne({
+      where: { artist_id: artistId },
+    });
     if (!!artist === false || artist.length == 0)
       throw new Error("Artist Not Found!");
     return ArtistMapper.toDomain(artist[0]) as Artist;
@@ -62,3 +71,4 @@ export class ArtistRepo implements ArtistRepoProps {
 
 const artistRepo = new ArtistRepo(orm);
 export { artistRepo };
+export type { ArtistRepoProps };

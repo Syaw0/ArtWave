@@ -1,3 +1,7 @@
 export interface ArtistDTO {
-  email: string;
+  artistEmail: string;
+  artistId: string;
+  artistProfile: string;
+  artistName: string;
+  artistBiography: string;
 }

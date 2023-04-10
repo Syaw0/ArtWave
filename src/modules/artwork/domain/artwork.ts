@@ -5,11 +5,13 @@ import { UniqueEntityID } from "../../../shared/domain/uniqueEntityID";
 import { ArtistId } from "../../artist/domain/artistId";
 import { ArtworkDescription } from "./artworkDescription";
 import { ArtworkId } from "./artworkId";
+import { ArtworkName } from "./artworkName";
 import { ArtworkVote } from "./artworkVote";
 import { ArtworkVotes } from "./artworkVotes";
 import { Comments } from "./comments";
 
 interface ArtworkProps {
+  name: ArtworkName;
   artworkId?: ArtworkId;
   description: ArtworkDescription;
   owner: ArtistId;
@@ -24,6 +26,11 @@ export class Artwork extends AggregateRoot<ArtworkProps> {
   private constructor(props: ArtworkProps, id?: UniqueEntityID) {
     super(props, id);
   }
+
+  get name(): ArtworkName {
+    return this.props.name;
+  }
+
   get artworkId(): ArtworkId {
     return ArtworkId.create(this._id).getValue();
   }
