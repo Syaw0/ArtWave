@@ -3,4 +3,22 @@
   width: 100%;
   background-color: var(--md-sys-color-background);
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.artworksCon {
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  padding: 24px 160px;
+}
+
+.artworksCon > img {
+  height: auto;
+  width: calc(100% / 4);
+  /* object-fit: contain; */
+  border: 1px solid black;
 }
