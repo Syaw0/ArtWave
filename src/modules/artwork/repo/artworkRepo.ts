@@ -12,6 +12,7 @@ export interface ArtworkRepoProps {
   findLatestArtworks(): Promise<Artwork[]>;
   findTopArtworks(): Promise<Artwork[]>;
   updateArtwork(artwork: Artwork): Promise<void>;
+  search(query: string): Promise<Artwork[]>;
 }
 
 export class ArtworkRepo implements ArtworkRepoProps {
@@ -89,6 +90,19 @@ export class ArtworkRepo implements ArtworkRepoProps {
         artwork_id: artwork.artworkId.id.toString(),
       },
     });
+  }
+
+  async search(query: string): Promise<Artwork[]> {
+    const artworkModel = this.model.artworkModel;
+    const regex = new RegExp(`^${query}`, "gi");
+    const artworks = await artworkModel.findOne({
+      where: { artwork_name: { $regex: regex } },
+    });
+
+    if (!!artworks === false || artworks.length == 0)
+      throw new Error("Artwork Not Found!");
+
+    return artworks.map((a: Artwork) => ArtworkMapper.toDomain(a));
   }
 }
 
