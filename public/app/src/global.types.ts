@@ -7,6 +7,7 @@ declare global {
     artistProfile: string;
     artistName: string;
     artworkVotes: any;
+    hideBottom: boolean;
   }
 
   interface HomePageProps {
