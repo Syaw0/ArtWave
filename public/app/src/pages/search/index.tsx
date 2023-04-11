@@ -27,8 +27,6 @@ export default Search;
 export const getServerSideProps: GetServerSideProps = async ({
   query,
 }): Promise<GetServerSidePropsResult<SearchPageProps>> => {
-  console.log(query);
-
   const props: HomePageProps = {
     isLogin: false,
     artist: {

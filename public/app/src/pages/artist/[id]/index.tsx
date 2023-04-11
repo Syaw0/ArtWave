@@ -12,7 +12,11 @@ const ArtistId = (props: ArtistIdPageProps) => {
   return (
     <>
       <Head>
-        <title>{props.artist.artistName}</title>
+        <title>
+          {props.artist.artistName == ""
+            ? "ArtWave 🌊"
+            : props.artist.artistName}
+        </title>
         <meta name="description" content={`${props.artist.artistName} Page.`} />
       </Head>
 

@@ -29,6 +29,13 @@ declare global {
     artistArtworks: Artwork[];
     artistVoted: Artwork[];
   }
+
+  interface ArtworkIdPageProps {
+    isLogin: boolean;
+    loggedArtist: Artist;
+    artwork: Artwork;
+  }
+
   interface Artist {
     artistEmail: string;
     artistId: string;
@@ -41,8 +48,8 @@ declare global {
     artworkId: string;
     artworkImage: string;
     artworkName: string;
-    artworkVotes: Vote;
-    artworkComments: Comment;
+    artworkVotes: Vote[];
+    artworkComments: Comment[];
     artworkOwner: Artist;
   }
 
