@@ -8,5 +8,32 @@ declare global {
     artistName: string;
     artworkVotes: any;
   }
+
+  interface HomePageProps {
+    isLogin: boolean;
+    artist: Artist;
+    artworks: Artwork[];
+  }
+
+  interface Artist {
+    artistEmail: string;
+    artistId: string;
+    artistProfile: string;
+    artistName: string;
+    artistBiography: string;
+  }
+
+  interface Artwork {
+    artworkId: string;
+    artworkImage: string;
+    artworkName: string;
+    artworkVotes: Vote;
+    artworkComments: Comment;
+    artworkOwner: Artist;
+  }
+
+  interface Comment {}
+
+  interface Vote {}
 }
 export {};

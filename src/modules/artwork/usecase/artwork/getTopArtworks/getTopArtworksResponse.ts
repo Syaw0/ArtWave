@@ -1,8 +1,8 @@
 import { AppError } from "../../../../../shared/core/appError";
 import { Either, Result } from "../../../../../shared/core/result";
-import { Artwork } from "../../../domain/artwork";
+import { ArtworkDTO } from "../../../dto/artworkDTO";
 
 export type GetTopArtworksResponse = Either<
   AppError.UnexpectedError | Result<any>,
-  Result<Artwork[]>
+  Result<ArtworkDTO[]>
 >;

@@ -5,10 +5,10 @@ import { AuthenticationService } from "../../../../../../src/modules/artist/serv
 export abstract class BaseApi {
   protected baseUrl: string;
   private axiosInstance: AxiosInstance | any;
-  public authService: AuthenticationService;
+  // public authService: AuthenticationService;
 
-  constructor(authService: AuthenticationService) {
-    this.authService = authService;
+  constructor() {
+    // this.authService = authService;
     this.baseUrl = apiConfig.baseUrl;
     this.axiosInstance = axios.create({});
   }

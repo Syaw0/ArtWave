@@ -1,21 +1,14 @@
 import Head from "next/head";
-import style from "../styles/pageStyles/home.module.css";
 import { GetServerSideProps, GetServerSidePropsResult } from "next";
-import Navbar from "src/shared/components/navbar/navbar";
-import ArtworkHolder from "src/shared/components/artworkHolder/artworkHolder";
-import { artworks } from "src/shared/fakeData";
 import { artistRepo } from "../../../../src/modules/artist/repo/artistRepo";
 import { ArtistMapper } from "../../../../src/modules/artist/mapper/artistMapper";
 import { artworkRepo } from "../../../../src/modules/artwork/repo/artworkRepo";
 import { ArtworkMapper } from "../../../../src/modules/artwork/mapper/artworkMapper";
+import HomePage from "src/shared/components/pages/home/homePage";
+import { Provider } from "react-redux";
+import { makeStore } from "src/shared/infra/store/home/homeStore";
 
-interface HomePageProps {
-  isLogin: boolean;
-  artist: any;
-  artworks: any;
-}
-
-export default function Home({ isLogin, artist, artworks }: HomePageProps) {
+export default function Home(props: HomePageProps) {
   return (
     <>
       <Head>
@@ -23,10 +16,9 @@ export default function Home({ isLogin, artist, artworks }: HomePageProps) {
         <meta name="description" content="ArtWave Home Page." />
       </Head>
 
-      <div className={style.con}>
-        <Navbar isLogin={isLogin} profileImage={artist.artistProfile} />
-        <ArtworkHolder artworks={artworks} />
-      </div>
+      <Provider store={makeStore(props)}>
+        <HomePage />
+      </Provider>
     </>
   );
 }
@@ -40,8 +32,14 @@ export const getServerSideProps: GetServerSideProps = async ({
   // i used fake data
   const props: HomePageProps = {
     isLogin: false,
-    artist: {},
-    artworks: {},
+    artist: {
+      artistBiography: "",
+      artistEmail: "",
+      artistId: "",
+      artistName: "",
+      artistProfile: "",
+    },
+    artworks: [],
   };
   const artist = await artistRepo.findByEmail("siaw@gmail.com");
   if (artist == null) {
