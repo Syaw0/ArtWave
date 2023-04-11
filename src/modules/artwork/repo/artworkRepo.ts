@@ -13,6 +13,7 @@ export interface ArtworkRepoProps {
   findTopArtworks(): Promise<Artwork[]>;
   updateArtwork(artwork: Artwork): Promise<void>;
   search(query: string): Promise<Artwork[]>;
+  // getArtistLikes(artistId: string): Promise<Artwork[]>;
 }
 
 export class ArtworkRepo implements ArtworkRepoProps {
@@ -103,6 +104,18 @@ export class ArtworkRepo implements ArtworkRepoProps {
       throw new Error("Artwork Not Found!");
 
     return artworks.map((a: Artwork) => ArtworkMapper.toDomain(a));
+  }
+  async getArtistLikes(artistId: string | ArtistId): Promise<Artwork[]> {
+    const artworkModel = this.model.artworkModel;
+    const id = typeof artistId === "string" ? artistId : artistId.id.toString();
+    const artworks = await artworkModel.findOne({
+      where: {
+        artwork_votes: { $elemMatch: { artwork_vote_artist_id: id } },
+      },
+    });
+    if (!!artworks === false || artworks.length == 0) return [];
+
+    return artworks.map((a: any) => ArtworkMapper.toDomain(a));
   }
 }
 

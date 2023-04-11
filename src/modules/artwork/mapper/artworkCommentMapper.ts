@@ -5,8 +5,22 @@ import { ArtworkId } from "../domain/artworkId";
 import { Comment } from "../domain/comment";
 import { CommentId } from "../domain/commentId";
 import { CommentText } from "../domain/commentText";
+import { CommentDTO } from "../dto/commentDTO";
 
 export class ArtworkCommentMapper implements Mapper<Comment> {
+  static toDTO(comment: Comment): CommentDTO | null {
+    return {
+      artistId: comment.owner.id.toString(),
+      commentId: comment.commentId.id.toString(),
+      parentComment:
+        comment.parentComment != null
+          ? comment.parentComment.id.toString()
+          : "",
+      publishDate: comment.publishDate,
+      text: comment.text.props.text,
+    };
+  }
+
   static toDomain(raw: any): Comment | null {
     const comment = Comment.create(
       {

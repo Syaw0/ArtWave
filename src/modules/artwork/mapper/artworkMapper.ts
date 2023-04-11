@@ -18,8 +18,12 @@ export class ArtworkMapper implements Mapper<Artwork> {
       artworkId: artwork.artworkId.id.toString(),
       artworkImage: artwork.imageSrc,
       artworkName: artwork.name.props.text,
-      artworkComments: artwork.comments?.currentItems,
-      artworkVotes: artwork.votes?.currentItems,
+      artworkComments: artwork.comments?.currentItems.map((a) =>
+        ArtworkCommentMapper.toDTO(a)
+      ),
+      artworkVotes: artwork.votes?.currentItems.map((a) =>
+        ArtworkVoteMapper.toDTO(a)
+      ),
       artworkOwner: ArtistMapper.toDTO(
         await artistRepo.findById(artwork.owner.id.toString())
       ),

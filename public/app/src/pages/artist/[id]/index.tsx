@@ -9,7 +9,6 @@ import { artworkRepo } from "../../../../../../src/modules/artwork/repo/artworkR
 import { ArtworkMapper } from "../../../../../../src/modules/artwork/mapper/artworkMapper";
 
 const ArtistId = (props: ArtistIdPageProps) => {
-  console.log(props);
   return (
     <>
       <Head>
@@ -29,6 +28,9 @@ export default ArtistId;
 export const getServerSideProps: GetServerSideProps = async ({
   params,
 }): Promise<GetServerSidePropsResult<ArtistIdPageProps>> => {
+  const e404 = {
+    redirect: { destination: "/404", permanent: false },
+  };
   if (params == null || params.id == null) {
     return { redirect: { destination: "/404", permanent: false } };
   }
@@ -62,19 +64,29 @@ export const getServerSideProps: GetServerSideProps = async ({
   const artistDTO = ArtistMapper.toDTO(loggedArtist);
   props.loggedArtist = artistDTO;
 
-  const artist = await artistRepo.findById(params.id as string);
-  if (artist == null) {
-    return {
-      redirect: { destination: "/404", permanent: false },
-    };
+  try {
+    const artist = await artistRepo.findById(params.id as string);
+    if (artist == null) {
+      return e404;
+    }
+    props.artist = ArtistMapper.toDTO(artist);
+
+    const artistArtworks = await artworkRepo.findArtistArtworks(
+      artist.artistId
+    );
+
+    props.artistArtworks = await Promise.all(
+      artistArtworks.map((a) => ArtworkMapper.toDTO(a))
+    );
+
+    const artistLikes = await artworkRepo.getArtistLikes(artist.artistId);
+    props.artistVoted = await Promise.all(
+      artistLikes.map((a) => ArtworkMapper.toDTO(a))
+    );
+  } catch (err) {
+    return e404;
   }
-  props.artist = ArtistMapper.toDTO(artist);
-
-  const artistArtworks = await artworkRepo.findArtistArtworks(artist.artistId);
-  props.artistArtworks = await Promise.all(
-    artistArtworks.map((a) => ArtworkMapper.toDTO(a))
-  );
-
+  console.log(props);
   return {
     props,
   };

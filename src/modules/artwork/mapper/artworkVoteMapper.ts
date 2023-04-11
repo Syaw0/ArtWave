@@ -3,8 +3,20 @@ import { Mapper } from "../../../shared/infra/mapper";
 import { ArtistId } from "../../artist/domain/artistId";
 import { ArtworkId } from "../domain/artworkId";
 import { ArtworkVote } from "../domain/artworkVote";
+import { ArtworkVoteDTO } from "../dto/artworkVoteDTO";
 
 export class ArtworkVoteMapper implements Mapper<ArtworkVote> {
+
+
+  static toDTO(vote:ArtworkVote):ArtworkVoteDTO|null{
+    return{
+      artistId:vote.artistId.id.toString(),
+      artworkId:vote.artworkId.id.toString(),
+      voteId:vote.id.toString()
+    }
+  }
+
+
   static toDomain(raw: any): ArtworkVote | null {
     const vote = ArtworkVote.create(
       {
