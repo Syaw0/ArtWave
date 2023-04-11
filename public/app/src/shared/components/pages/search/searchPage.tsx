@@ -1,51 +1,75 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Search } from "@mui/icons-material";
+import {
+  Divider,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getLatestArtworks } from "src/modules/artwork/redux/getLatestArtworks";
-import { getPopularArtworks } from "src/modules/artwork/redux/getPopularArtworks";
 import { useSearchStore } from "src/shared/infra/store/search/searchStoreHooks";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Navbar from "../../navbar/navbar";
 import style from "./searchPage.module.css";
+import { searchArtwork } from "src/modules/artwork/redux/searchArtwork";
 
 const SearchPage = () => {
   const { artist, artworks, isLogin } = useSearchStore((s) => s);
-  const [selectValue, setSelectValue] = useState("Latest");
+  const [searchType, setSearchType] = useState<"Artwork" | "Artist">("Artwork");
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (selectValue == "Latest") {
-      getLatest();
-    } else {
-      getPopular();
-    }
-  }, [selectValue]);
-
-  const getLatest = async () => {
-    await getLatestArtworks(dispatch, "home/updateArtworksList");
-  };
-
-  const getPopular = async () => {
-    await getPopularArtworks(dispatch, "home/updateArtworksList");
-  };
-
   const selectChangeHandler = (e: SelectChangeEvent<string>) => {
-    setSelectValue(e.target.value);
+    setSearchType(e.target.value as "Artwork" | "Artist");
+  };
+
+  const startSearch = async (e: any) => {
+    if (e.key != null) {
+      if (e.key !== "Enter") return;
+    }
+    if (searchQuery.trim() == "") return;
+    await searchArtwork(dispatch, "search/updateArtworksList", searchQuery);
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearchQuery(e.currentTarget.value);
   };
 
   return (
     <div className={style.con}>
       <Navbar isLogin={isLogin} profileImage={artist.artistProfile} />
-      <div className={style.selectHolder}>
-        <Select
-          color="primary"
-          value={selectValue}
-          onChange={selectChangeHandler}
+      <div className={style.searchHolder}>
+        <Paper
+          component={"form"}
+          className={style.search}
+          onKeyDown={startSearch}
         >
-          <MenuItem value={"Latest"}>Latest</MenuItem>
-          <MenuItem value={"Papular"}>Popular</MenuItem>
-        </Select>
+          <IconButton onClick={startSearch}>
+            <Search />
+          </IconButton>
+          <InputBase
+            value={searchQuery}
+            onChange={handleInputChange}
+            className={style.searchInput}
+            placeholder="Search Through 10k arts"
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <Select
+            onChange={selectChangeHandler}
+            className={style.searchSelect}
+            value={searchType}
+          >
+            <MenuItem value="Artwork">Artwork</MenuItem>
+            <MenuItem value="Artist">Artist</MenuItem>
+          </Select>
+        </Paper>
       </div>
+
       <ArtworkHolder artworks={artworks} />
     </div>
   );

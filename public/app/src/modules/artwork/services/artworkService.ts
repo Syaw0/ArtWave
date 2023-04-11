@@ -20,4 +20,12 @@ export class ArtworkService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+  async searchArtwork(query: string) {
+    try {
+      const artworks = await this.get(`/artwork/search?q=${query}`);
+      return right(Result.ok(artworks.data));
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
 }

@@ -7,11 +7,16 @@ import { getLatestArtworkController } from "../../../usecase/artwork/getLatestAr
 import { getTopArtworkController } from "../../../usecase/artwork/getTopArtworks";
 import { removeVoteController } from "../../../usecase/artwork/removeVote";
 import { voteController } from "../../../usecase/artwork/vote";
+import { searchArtworkController } from "../../../usecase/artwork/searchArtwork";
 
 const artworkRouter = express.Router();
 
 artworkRouter.post("/create", (req, res) =>
   createArtworkController.execute(req, res)
+);
+
+artworkRouter.get("/search", (req, res) =>
+  searchArtworkController.execute(req, res)
 );
 
 artworkRouter.get("/latest", (req, res) =>
