@@ -21,6 +21,13 @@ declare global {
     artworks: Artwork[];
   }
 
+  interface ArtistIdPageProps {
+    isLogin: boolean;
+    loggedArtist: Artist;
+    artist: Artist;
+    artistArtworks: Artwork[];
+    artistVoted: Artwork[];
+  }
   interface Artist {
     artistEmail: string;
     artistId: string;

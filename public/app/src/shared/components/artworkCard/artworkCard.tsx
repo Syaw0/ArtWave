@@ -19,7 +19,7 @@ const ArtworkCard = ({
         <img alt={artworkName} className={style.img} src={artworkImage} />
       </Link>
       <div className={style.info}>
-        <Link href={`/artist/${artworkOwner.artistEmail}`}>
+        <Link href={`/artist/${artworkOwner.artistId}`}>
           <div className={style.avatarAndName}>
             <Avatar src={artistProfile} />
             <Typography variant="body1">{artistName}</Typography>
