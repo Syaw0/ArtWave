@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialState: ArtworkIdPageProps = {
   isLogin: false,
+  more: [],
   isArtistLikeArtwork: false,
   loggedArtist: {
     artistBiography: "",
@@ -16,6 +17,7 @@ const initialState: ArtworkIdPageProps = {
     artworkId: "",
     artworkImage: "",
     artworkName: "",
+    artworkText: "",
     artworkOwner: {
       artistBiography: "",
       artistEmail: "",

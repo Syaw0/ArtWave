@@ -7,4 +7,5 @@ export interface ArtworkDTO {
   artworkVotes: any;
   artworkComments: any;
   artworkOwner: ArtistDTO;
+  artworkText: string;
 }

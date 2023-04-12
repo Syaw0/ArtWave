@@ -35,6 +35,7 @@ declare global {
     loggedArtist: Artist;
     artwork: Artwork;
     isArtistLikeArtwork: boolean;
+    more: Artwork[];
   }
 
   interface Artist {
@@ -52,6 +53,7 @@ declare global {
     artworkVotes: Vote[];
     artworkComments: Comment[];
     artworkOwner: Artist;
+    artworkText: string;
   }
 
   interface Comment {}

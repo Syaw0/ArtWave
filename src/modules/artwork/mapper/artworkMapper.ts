@@ -18,6 +18,8 @@ export class ArtworkMapper implements Mapper<Artwork> {
       artworkId: artwork.artworkId.id.toString(),
       artworkImage: artwork.imageSrc,
       artworkName: artwork.name.props.text,
+
+      artworkText: artwork.description.props.description,
       artworkComments: artwork.comments?.currentItems.map((a) =>
         ArtworkCommentMapper.toDTO(a)
       ),

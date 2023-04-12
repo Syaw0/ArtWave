@@ -6,7 +6,6 @@ import style from "./artworkCard.module.css";
 
 const ArtworkCard = ({
   artworkImage,
-  artistProfile,
   artistName,
   artworkVotes,
   artworkName,
@@ -23,7 +22,7 @@ const ArtworkCard = ({
         <div className={style.info}>
           <Link href={`/artist/${artworkOwner.artistId}`}>
             <div className={style.avatarAndName}>
-              <Avatar src={artistProfile} />
+              <Avatar src={artworkOwner.artistProfile} />
               <Typography variant="body1">{artistName}</Typography>
             </div>
           </Link>

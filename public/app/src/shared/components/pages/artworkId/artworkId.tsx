@@ -2,7 +2,14 @@
 import { useArtworkIdStore } from "src/shared/infra/store/artworkId/artworkIdStore";
 import style from "./artworkId.module.css";
 import Navbar from "../../navbar/navbar";
-import { Avatar, Button, Chip, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import {
   Chat,
   Favorite,
@@ -13,9 +20,11 @@ import { useDispatch } from "react-redux";
 import { like } from "src/modules/artwork/redux/like";
 import { useRouter } from "next/router";
 import { unlike } from "src/modules/artwork/redux/unlike";
+import ArtworkHolder from "../../artworkHolder/artworkHolder";
+import Link from "next/link";
 
 const ArtworkIdPage = () => {
-  const { isLogin, artwork, loggedArtist, isArtistLikeArtwork } =
+  const { isLogin, artwork, loggedArtist, isArtistLikeArtwork, more } =
     useArtworkIdStore((s) => s);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -88,6 +97,64 @@ const ArtworkIdPage = () => {
           src={artwork.artworkImage}
           alt={artwork.artworkName}
         />
+
+        <div className={style.bottomBar}>
+          <IconButton
+            onClick={isArtistLikeArtwork ? unlikeArtwork : likeArtwork}
+            color={isArtistLikeArtwork ? "primary" : "default"}
+          >
+            <Favorite />
+          </IconButton>
+          <IconButton color="default">
+            <Chat />
+          </IconButton>
+
+          <IconButton color="default">
+            <Info />
+          </IconButton>
+        </div>
+
+        <Divider />
+
+        <Typography className={style.artworkText}>
+          {artwork.artworkText}
+        </Typography>
+
+        <div className={style.bottomAvatarHolder}>
+          <div>
+            <Avatar
+              src={artwork.artworkOwner.artistProfile}
+              className={style.bottomAvatar}
+            />
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              {artwork.artworkOwner.artistName == ""
+                ? "unNamed"
+                : artwork.artworkOwner.artistName}
+            </Typography>
+          </div>
+        </div>
+
+        {more.length != 0 && (
+          <div className={style.more}>
+            <div className={style.moreTop}>
+              <Typography variant="h6">
+                More on{" "}
+                {artwork.artworkOwner.artistName == ""
+                  ? "unNamed"
+                  : artwork.artworkOwner.artistName}
+              </Typography>
+
+              <Link href={`/artist/${artwork.artworkOwner.artistId}`}>
+                <Button size="small">View Profile</Button>
+              </Link>
+            </div>
+            <ArtworkHolder
+              className={style.moreImgHolder}
+              artworks={more.slice(0, 4)}
+              hideBottom
+            />
+          </div>
+        )}
       </div>
 
       <div className={style.float}>

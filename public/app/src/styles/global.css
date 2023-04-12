@@ -5,12 +5,13 @@
 }
 
 a {
+  all: unset;
   color: inherit;
   text-decoration: none;
   display: flex;
 }
 a > * {
-  width: 100%;
+  width: auto;
 }
 .MuiButton-root {
   border-radius: 20px;

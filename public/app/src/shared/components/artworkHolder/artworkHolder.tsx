@@ -5,11 +5,13 @@ import style from "./artworkHolder.module.css";
 interface ArtworkHolderProps {
   artworks: Artwork[];
   hideBottom?: boolean;
+  className?: string;
 }
 
 const ArtworkHolder = ({
   artworks,
   hideBottom = false,
+  className = "",
 }: ArtworkHolderProps) => {
   const [colNumber, setColNumber] = useState(3);
   const [cols, setCols] = useState<any>([]);
@@ -47,7 +49,7 @@ const ArtworkHolder = ({
   }, [artworks, colNumber]);
 
   return (
-    <div className={style.con}>
+    <div className={`${style.con} ${className}`}>
       {cols.map((c: any, i: number) => {
         return (
           <div className={style.cols} key={i}>
