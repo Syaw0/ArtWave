@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       artistProfile: "",
     },
     artwork: {
+      artworkPublishDate: "",
       artworkComments: [],
       artworkVotes: [],
       artworkId: "",

@@ -12,6 +12,7 @@ export class CreateArtworkController extends BaseController {
   }
 
   protected async executeImpl(req: Request, res: Response): Promise<any> {
+    console.log(req.files, req.body);
     const files: any = req.files;
     const dto: CreateArtworkDTO = {
       ...req.body,

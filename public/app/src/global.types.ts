@@ -38,6 +38,11 @@ declare global {
     more: Artwork[];
   }
 
+  interface NewArtworkPageProps {
+    isLogin: boolean;
+    loggedArtist: Artist;
+  }
+
   interface Artist {
     artistEmail: string;
     artistId: string;

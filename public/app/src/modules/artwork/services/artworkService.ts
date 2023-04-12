@@ -72,4 +72,22 @@ export class ArtworkService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+  async create(
+    image: File,
+    artistId: string,
+    description: string,
+    name: string
+  ) {
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("artistId", artistId);
+      formData.append("description", description);
+      formData.append("name", name);
+      await this.post("/artwork/create", formData);
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
 }

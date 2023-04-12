@@ -12,6 +12,7 @@ const initialState: ArtworkIdPageProps = {
     artistProfile: "",
   },
   artwork: {
+    artworkPublishDate: "",
     artworkComments: [],
     artworkVotes: [],
     artworkId: "",
