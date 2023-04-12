@@ -1,7 +1,9 @@
+import { ArtistDTO } from "../../artist/dto/artistDTO";
+
 export interface CommentDTO {
-  artistId: string;
+  artist: ArtistDTO;
   commentId: string;
   parentComment: string | null;
   text: string;
-  publishDate: Date;
+  publishDate: string;
 }

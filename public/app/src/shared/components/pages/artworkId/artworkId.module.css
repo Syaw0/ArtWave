@@ -101,6 +101,36 @@
   padding: 18px 0px;
 }
 
+.drawer {
+  width: 300px;
+  padding: 1rem;
+  height: 100%;
+}
+
+.text {
+  padding: 0.5rem 0px;
+}
+
+.drawerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+.sendBtnHolder {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0.4rem 0px;
+}
+.commentsHolder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (min-width: 1200px) {
   .artworkHolder {
     padding: 8px 160px;

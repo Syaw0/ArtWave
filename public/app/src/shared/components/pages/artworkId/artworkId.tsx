@@ -7,7 +7,9 @@ import {
   Button,
   Chip,
   Divider,
+  Drawer,
   IconButton,
+  TextField,
   Typography,
 } from "@mui/material";
 import {
@@ -22,10 +24,14 @@ import { useRouter } from "next/router";
 import { unlike } from "src/modules/artwork/redux/unlike";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Link from "next/link";
+import { useState } from "react";
+import CommentCard from "../../comment/comment";
 
 const ArtworkIdPage = () => {
   const { isLogin, artwork, loggedArtist, isArtistLikeArtwork, more } =
     useArtworkIdStore((s) => s);
+
+  const [drawer, setDrawer] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const likeArtwork = async () => {
@@ -105,7 +111,7 @@ const ArtworkIdPage = () => {
           >
             <Favorite />
           </IconButton>
-          <IconButton color="default">
+          <IconButton color="default" onClick={() => setDrawer(true)}>
             <Chat />
           </IconButton>
 
@@ -114,7 +120,7 @@ const ArtworkIdPage = () => {
           </IconButton>
         </div>
 
-        <Divider />
+        <Divider className={style.bottomBar} />
 
         <Typography className={style.artworkText}>
           {artwork.artworkText}
@@ -166,7 +172,7 @@ const ArtworkIdPage = () => {
           >
             <Favorite />
           </IconButton>
-          <IconButton color="default">
+          <IconButton color="default" onClick={() => setDrawer(true)}>
             <Chat />
           </IconButton>
 
@@ -175,6 +181,48 @@ const ArtworkIdPage = () => {
           </IconButton>
         </div>
       </div>
+
+      <Drawer anchor="right" open={drawer} onClose={() => setDrawer(false)}>
+        <div className={style.drawer}>
+          <div className={style.drawerTop}>
+            <span>
+              <IconButton
+                onClick={isArtistLikeArtwork ? unlikeArtwork : likeArtwork}
+                color={isArtistLikeArtwork ? "primary" : "default"}
+              >
+                <Favorite />
+              </IconButton>
+              <IconButton color="default" onClick={() => setDrawer(false)}>
+                <Chat />
+              </IconButton>
+            </span>
+            <Button variant="outlined" color="info" startIcon={<Info />}>
+              Info
+            </Button>
+          </div>
+          <Typography variant="h6" className={style.text}>
+            Feedback
+          </Typography>
+
+          <TextField
+            fullWidth
+            multiline
+            rows={4}
+            placeholder="what do you think about this artwork...?"
+          />
+          <div className={style.sendBtnHolder}>
+            <Button>Send</Button>
+          </div>
+
+          <Divider />
+
+          <div className={style.commentsHolder}>
+            {artwork.artworkComments.map((comment) => {
+              return <CommentCard key={comment.commentId} {...comment} />;
+            })}
+          </div>
+        </div>
+      </Drawer>
     </div>
   );
 };

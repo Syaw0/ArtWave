@@ -44,4 +44,31 @@ export class ArtworkService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+
+  async getArtwork(artworkId: string) {
+    try {
+      const artwork = await this.get(`/artwork/${artworkId}`);
+      return right(Result.ok(artwork.data));
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
+
+  async comment(artistId: string, artworkId: string, text: string) {
+    try {
+      await this.post("/comment/add", { artistId, artworkId, text });
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
+
+  async removeComment(commentId: string, artworkId: string, text: string) {
+    try {
+      await this.post("/comment/remove", { commentId, artworkId, text });
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
 }

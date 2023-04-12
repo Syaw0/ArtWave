@@ -51,13 +51,23 @@ declare global {
     artworkImage: string;
     artworkName: string;
     artworkVotes: Vote[];
-    artworkComments: Comment[];
+    artworkComments: ArtworkComment[];
     artworkOwner: Artist;
     artworkText: string;
   }
 
-  interface Comment {}
+  interface ArtworkComment {
+    artist: Artist;
+    commentId: string;
+    parentComment: string | null;
+    text: string;
+    publishDate: string;
+  }
 
-  interface Vote {}
+  interface Vote {
+    artistId: string;
+    voteId: string;
+    artworkId: string;
+  }
 }
 export {};

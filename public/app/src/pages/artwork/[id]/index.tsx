@@ -93,6 +93,5 @@ export const getServerSideProps: GetServerSideProps = async ({
   } catch (err) {
     return e404;
   }
-
   return { props };
 };

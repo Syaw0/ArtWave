@@ -14,15 +14,17 @@ import { ArtworkCommentMapper } from "./artworkCommentMapper";
 import { ArtworkVoteMapper } from "./artworkVoteMapper";
 export class ArtworkMapper implements Mapper<Artwork> {
   public static async toDTO(artwork: Artwork): Promise<ArtworkDTO> {
+    const comments = await Promise.all(
+      // @ts-ignore
+      artwork.comments?.currentItems.map((a) => ArtworkCommentMapper.toDTO(a))
+    );
     return {
       artworkId: artwork.artworkId.id.toString(),
       artworkImage: artwork.imageSrc,
       artworkName: artwork.name.props.text,
 
       artworkText: artwork.description.props.description,
-      artworkComments: artwork.comments?.currentItems.map((a) =>
-        ArtworkCommentMapper.toDTO(a)
-      ),
+      artworkComments: comments.reverse(),
       artworkVotes: artwork.votes?.currentItems.map((a) =>
         ArtworkVoteMapper.toDTO(a)
       ),

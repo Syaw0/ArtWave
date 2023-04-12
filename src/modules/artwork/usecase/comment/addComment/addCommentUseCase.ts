@@ -17,7 +17,7 @@ export class AddCommentUseCase
     const artwork = await this.artworkRepo.findOneArtwork(request.artworkId);
     const cmOrError = Comment.create({
       owner: ArtistId.create(new UniqueEntityID(request.artistId)).getValue(),
-      place: ArtworkId.create(new UniqueEntityID(request.artistId)).getValue(),
+      place: ArtworkId.create(new UniqueEntityID(request.artworkId)).getValue(),
       publishDate: new Date(),
       text: CommentText.create({ text: request.text }).getValue(),
     });
