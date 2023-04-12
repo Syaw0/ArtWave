@@ -28,4 +28,20 @@ export class ArtworkService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+  async like(artistId: string, artworkId: string) {
+    try {
+      await this.post("/artwork/vote", { artistId, artworkId });
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
+  async unlike(artistId: string, artworkId: string) {
+    try {
+      await this.post("/artwork/removeVote", { artistId, artworkId });
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
 }

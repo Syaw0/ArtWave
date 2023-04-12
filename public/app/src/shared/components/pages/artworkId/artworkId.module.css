@@ -5,4 +5,81 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.artworkHolder {
+  margin-top: 1rem;
+}
+
+.artworkTop {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.artworkTopLeft {
+  display: flex;
+  align-items: center;
+}
+.artworkTopRight {
+}
+
+.artworkInfo {
+  margin-left: 8px;
+}
+
+.artworkArtistName {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+}
+
+.artworkImg {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+
+.float {
+  position: fixed;
+  right: 2rem;
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.floatItems {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1200px) {
+  .artworkHolder {
+    padding: 8px 160px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .artworkHolder {
+    padding: 8px 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .artworkHolder {
+    padding: 8px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .artworkHolder {
+    padding: 8px 8px;
+  }
 }

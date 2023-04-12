@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialState: ArtworkIdPageProps = {
   isLogin: false,
+  isArtistLikeArtwork: false,
   loggedArtist: {
     artistBiography: "",
     artistEmail: "",
@@ -26,9 +27,22 @@ const initialState: ArtworkIdPageProps = {
 };
 
 const artworkIdSlice = createSlice({
-  name: "artwork",
+  name: "artworkId",
   initialState: {},
-  reducers: {},
+  reducers: {
+    like(preState) {
+      return {
+        ...preState,
+        isArtistLikeArtwork: true,
+      };
+    },
+    unlike(preState) {
+      return {
+        ...preState,
+        isArtistLikeArtwork: false,
+      };
+    },
+  },
 });
 
 export const makeStore = (preState: Partial<ArtworkIdPageProps>) => {

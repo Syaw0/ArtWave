@@ -34,6 +34,7 @@ declare global {
     isLogin: boolean;
     loggedArtist: Artist;
     artwork: Artwork;
+    isArtistLikeArtwork: boolean;
   }
 
   interface Artist {

@@ -40,6 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const props: ArtworkIdPageProps = {
     isLogin: false,
+    isArtistLikeArtwork: false,
     loggedArtist: {
       artistBiography: "",
       artistEmail: "",
@@ -75,6 +76,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   try {
     const artwork = await artworkRepo.findOneArtwork(params.id as string);
     props.artwork = await ArtworkMapper.toDTO(artwork);
+
+    const isArtistLikeArtwork = await artworkRepo.isArtistLikeArtwork(
+      artist.artistId,
+      artwork.artworkId
+    );
+    props.isArtistLikeArtwork = isArtistLikeArtwork;
   } catch (err) {
     return e404;
   }

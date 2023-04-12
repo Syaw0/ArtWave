@@ -13,7 +13,8 @@ export interface ArtworkRepoProps {
   findTopArtworks(): Promise<Artwork[]>;
   updateArtwork(artwork: Artwork): Promise<void>;
   search(query: string): Promise<Artwork[]>;
-  // getArtistLikes(artistId: string): Promise<Artwork[]>;
+  getArtistLikes(artistId: string): Promise<Artwork[]>;
+  isArtistLikeArtwork(artistId: string, artworkId: string): Promise<boolean>;
 }
 
 export class ArtworkRepo implements ArtworkRepoProps {
@@ -116,6 +117,29 @@ export class ArtworkRepo implements ArtworkRepoProps {
     if (!!artworks === false || artworks.length == 0) return [];
 
     return artworks.map((a: any) => ArtworkMapper.toDomain(a));
+  }
+
+  async isArtistLikeArtwork(
+    artistId: string | ArtistId,
+    artworkId: string | ArtworkId
+  ): Promise<boolean> {
+    const artworkModel = this.model.artworkModel;
+    const artistID =
+      typeof artistId === "string" ? artistId : artistId.id.toString();
+    const artworkID =
+      typeof artworkId === "string" ? artworkId : artworkId.id.toString();
+
+    const artwork = await artworkModel.findOne({
+      where: {
+        artwork_votes: {
+          $elemMatch: {
+            artwork_vote_artist_id: artistID,
+            artwork_vote_artwork_id: artworkID,
+          },
+        },
+      },
+    });
+    return artwork !== null && artwork.length !== 0;
   }
 }
 
