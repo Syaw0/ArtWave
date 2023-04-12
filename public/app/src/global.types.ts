@@ -62,6 +62,7 @@ declare global {
     parentComment: string | null;
     text: string;
     publishDate: string;
+    artworkId: string;
   }
 
   interface Vote {

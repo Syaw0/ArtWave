@@ -26,14 +26,15 @@ import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Link from "next/link";
 import { useState } from "react";
 import CommentCard from "../../comment/comment";
+import { comment } from "src/modules/artwork/redux/comment";
 
 const ArtworkIdPage = () => {
   const { isLogin, artwork, loggedArtist, isArtistLikeArtwork, more } =
     useArtworkIdStore((s) => s);
-
   const [drawer, setDrawer] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [commentText, setCommentText] = useState("");
   const likeArtwork = async () => {
     if (!isLogin) {
       return router.replace("/login");
@@ -56,6 +57,18 @@ const ArtworkIdPage = () => {
       loggedArtist.artistId,
       artwork.artworkId
     );
+  };
+
+  const sendComment = async () => {
+    if (commentText.trim() == "") return;
+    await comment(
+      dispatch,
+      "artworkId/updateArtwork",
+      loggedArtist.artistId,
+      artwork.artworkId,
+      commentText
+    );
+    setCommentText("");
   };
 
   return (
@@ -205,20 +218,31 @@ const ArtworkIdPage = () => {
           </Typography>
 
           <TextField
+            value={commentText}
+            onChange={(e) => setCommentText(e.currentTarget.value)}
             fullWidth
             multiline
             rows={4}
             placeholder="what do you think about this artwork...?"
           />
           <div className={style.sendBtnHolder}>
-            <Button>Send</Button>
+            <Button onClick={sendComment}>Send</Button>
           </div>
 
           <Divider />
 
           <div className={style.commentsHolder}>
             {artwork.artworkComments.map((comment) => {
-              return <CommentCard key={comment.commentId} {...comment} />;
+              return (
+                <CommentCard
+                  isArtistsComment={
+                    artwork.artworkOwner.artistId === loggedArtist.artistId ||
+                    loggedArtist.artistId === comment.artist.artistId
+                  }
+                  key={comment.commentId}
+                  {...comment}
+                />
+              );
             })}
           </div>
         </div>

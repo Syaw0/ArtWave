@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialState: ArtworkIdPageProps = {
   isLogin: false,
@@ -30,7 +30,7 @@ const initialState: ArtworkIdPageProps = {
 
 const artworkIdSlice = createSlice({
   name: "artworkId",
-  initialState: {},
+  initialState: initialState,
   reducers: {
     like(preState) {
       return {
@@ -42,6 +42,12 @@ const artworkIdSlice = createSlice({
       return {
         ...preState,
         isArtistLikeArtwork: false,
+      };
+    },
+    updateArtwork(preState, payload: PayloadAction<Artwork>) {
+      return {
+        ...preState,
+        artwork: payload.payload,
       };
     },
   },

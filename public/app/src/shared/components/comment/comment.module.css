@@ -1,9 +1,7 @@
 .con {
   display: flex;
   margin: 1rem 0px;
-}
-
-.avatar {
+  position: relative;
 }
 
 .right {
@@ -17,5 +15,10 @@
 }
 .date {
   opacity: 60%;
-  /* margin: 0.2rem 0px; */
+}
+
+.moreIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
 }

@@ -6,4 +6,5 @@ export interface CommentDTO {
   parentComment: string | null;
   text: string;
   publishDate: string;
+  artworkId: string;
 }

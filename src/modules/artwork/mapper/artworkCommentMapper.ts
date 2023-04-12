@@ -22,6 +22,7 @@ export class ArtworkCommentMapper implements Mapper<Comment> {
           : "",
       publishDate: comment.publishDate.toISOString(),
       text: comment.text.props.text,
+      artworkId: comment.place.id.toString(),
     };
   }
 
