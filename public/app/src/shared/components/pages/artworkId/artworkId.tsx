@@ -6,6 +6,9 @@ import {
   Avatar,
   Button,
   Chip,
+  Dialog,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Drawer,
   IconButton,
@@ -32,6 +35,7 @@ const ArtworkIdPage = () => {
   const { isLogin, artwork, loggedArtist, isArtistLikeArtwork, more } =
     useArtworkIdStore((s) => s);
   const [drawer, setDrawer] = useState(false);
+  const [dialog, setDialog] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const [commentText, setCommentText] = useState("");
@@ -128,11 +132,10 @@ const ArtworkIdPage = () => {
             <Chat />
           </IconButton>
 
-          <IconButton color="default">
+          <IconButton color="default" onClick={() => setDialog(true)}>
             <Info />
           </IconButton>
         </div>
-
         <Divider className={style.bottomBar} />
 
         <Typography className={style.artworkText}>
@@ -189,7 +192,7 @@ const ArtworkIdPage = () => {
             <Chat />
           </IconButton>
 
-          <IconButton color="default">
+          <IconButton color="default" onClick={() => setDialog(true)}>
             <Info />
           </IconButton>
         </div>
@@ -209,7 +212,12 @@ const ArtworkIdPage = () => {
                 <Chat />
               </IconButton>
             </span>
-            <Button variant="outlined" color="info" startIcon={<Info />}>
+            <Button
+              onClick={() => setDialog(true)}
+              variant="outlined"
+              color="info"
+              startIcon={<Info />}
+            >
               Info
             </Button>
           </div>
@@ -247,6 +255,29 @@ const ArtworkIdPage = () => {
           </div>
         </div>
       </Drawer>
+
+      <Dialog
+        className={style.dialog}
+        open={dialog}
+        onClose={() => setDialog(false)}
+      >
+        <DialogTitle>Artwork Detail</DialogTitle>
+        <DialogContentText>
+          Posted On {new Date(artwork.artworkPublishDate).toDateString()}
+        </DialogContentText>
+
+        <div className={style.information}>
+          <div className={style.infos}>
+            <Typography>Likes</Typography>
+            <Typography>{artwork.artworkVotes.length}</Typography>
+          </div>
+
+          <div className={style.infos}>
+            <Typography>comments</Typography>
+            <Typography>{artwork.artworkComments.length}</Typography>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 };

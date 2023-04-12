@@ -8,4 +8,5 @@ export interface ArtworkDTO {
   artworkComments: any;
   artworkOwner: ArtistDTO;
   artworkText: string;
+  artworkPublishDate: string;
 }

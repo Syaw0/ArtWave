@@ -54,6 +54,7 @@ declare global {
     artworkComments: ArtworkComment[];
     artworkOwner: Artist;
     artworkText: string;
+    artworkPublishDate: string;
   }
 
   interface ArtworkComment {

@@ -31,6 +31,7 @@ export class ArtworkMapper implements Mapper<Artwork> {
       artworkOwner: ArtistMapper.toDTO(
         await artistRepo.findById(artwork.owner.id.toString())
       ),
+      artworkPublishDate: artwork.publishDate.toUTCString(),
     };
   }
 
