@@ -20,6 +20,7 @@ declare global {
     isLogin: boolean;
     artist: Artist;
     artworks: Artwork[];
+    searchQuery: string;
   }
 
   interface ArtistIdPageProps {

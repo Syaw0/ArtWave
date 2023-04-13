@@ -10,16 +10,23 @@ const initialState: SearchPageProps = {
   },
   artworks: [],
   isLogin: false,
+  searchQuery: "",
 };
 
 const SearchSlice = createSlice({
   name: "search",
-  initialState: {},
+  initialState: initialState,
   reducers: {
     updateArtworksList(preState, action: PayloadAction<Artwork[]>) {
       return {
         ...preState,
         artworks: action.payload,
+      };
+    },
+    updateSearchQuery(preState, action: PayloadAction<string>) {
+      return {
+        ...preState,
+        searchQuery: action.payload,
       };
     },
   },

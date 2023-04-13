@@ -26,6 +26,8 @@ import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { apiConfig } from "src/config/apiConfig";
 import style from "./navbar.module.css";
+import { useSearchStore } from "src/shared/infra/store/search/searchStoreHooks";
+import { useDispatch } from "react-redux";
 
 interface NavbarProps {
   isLogin: boolean;
@@ -33,8 +35,10 @@ interface NavbarProps {
 }
 
 const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
+  const { searchQuery } = useSearchStore((s) => s);
   const [element, setElement] = useState<HTMLElement | null>();
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sQuery, setSearchQuery] = useState<string>(searchQuery ?? "");
+  const dispatch = useDispatch();
   const router = useRouter();
   const open = Boolean(element);
   const handleAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -45,6 +49,12 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
   };
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    if (searchQuery != null) {
+      return dispatch({
+        type: "search/updateSearchQuery",
+        payload: e.currentTarget.value,
+      });
+    }
     setSearchQuery(e.currentTarget.value);
   };
 
@@ -54,8 +64,13 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
         return;
       }
     }
-    if (searchQuery.trim().length === 0) return;
-    router.replace(`/search?q=${searchQuery}`);
+    if (searchQuery != null) {
+      if (searchQuery.trim().length === 0) return;
+      router.replace(`/search?q=${searchQuery}`);
+    } else {
+      if (sQuery.trim().length === 0) return;
+      router.replace(`/search?q=${sQuery}`);
+    }
   };
   return (
     <>
@@ -64,6 +79,7 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
           <Typography variant="h5">ArtWave 🌊</Typography>
         </Link>
         <OutlinedInput
+          value={searchQuery ?? sQuery}
           onChange={handleChangeInput}
           onKeyDown={startSearch}
           className={style.searchInput}

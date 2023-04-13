@@ -27,7 +27,7 @@ export default Search;
 export const getServerSideProps: GetServerSideProps = async ({
   query,
 }): Promise<GetServerSidePropsResult<SearchPageProps>> => {
-  const props: HomePageProps = {
+  const props: SearchPageProps = {
     isLogin: false,
     artist: {
       artistBiography: "",
@@ -36,6 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       artistName: "",
       artistProfile: "",
     },
+    searchQuery: "",
     artworks: [],
   };
 
@@ -51,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   if (query.q == null) {
     props.artworks = [];
   } else {
+    props.searchQuery = query.q as string;
     try {
       const artworks = await artworkRepo.search(query.q as string);
       const artworksDTO = await Promise.all(

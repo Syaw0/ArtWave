@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button, Divider, TextField, Tooltip, Typography } from "@mui/material";
 import style from "./newArtwork.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { artworkService } from "src/modules/artwork/services";
 import { useNewArtworkStore } from "src/shared/infra/store/newArtwork/newArtworkStoreHooks";
 import { useRouter } from "next/router";

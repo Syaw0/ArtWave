@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
 import { BaseController } from "../../../../../shared/infra/http/models/baseController";
 import { CreateArtworkDTO } from "./createArtworkDTO";
 import { CreateArtworkError } from "./createArtworkError";
@@ -12,7 +10,6 @@ export class CreateArtworkController extends BaseController {
   }
 
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    console.log(req.files, req.body);
     const files: any = req.files;
     const dto: CreateArtworkDTO = {
       ...req.body,

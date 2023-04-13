@@ -8,7 +8,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchStore } from "src/shared/infra/store/search/searchStoreHooks";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
@@ -17,9 +17,8 @@ import style from "./searchPage.module.css";
 import { searchArtwork } from "src/modules/artwork/redux/searchArtwork";
 
 const SearchPage = () => {
-  const { artist, artworks, isLogin } = useSearchStore((s) => s);
+  const { artist, artworks, isLogin, searchQuery } = useSearchStore((s) => s);
   const [searchType, setSearchType] = useState<"Artwork" | "Artist">("Artwork");
-  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
 
   const selectChangeHandler = (e: SelectChangeEvent<string>) => {
@@ -37,7 +36,10 @@ const SearchPage = () => {
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSearchQuery(e.currentTarget.value);
+    dispatch({
+      type: "search/updateSearchQuery",
+      payload: e.currentTarget.value,
+    });
   };
 
   return (
