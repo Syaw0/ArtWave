@@ -3,6 +3,7 @@ import { Favorite } from "@mui/icons-material";
 import { Avatar, Typography } from "@mui/material";
 import Link from "next/link";
 import style from "./artworkCard.module.css";
+import { apiConfig } from "src/config/apiConfig";
 
 const ArtworkCard = ({
   artworkImage,
@@ -22,7 +23,9 @@ const ArtworkCard = ({
         <div className={style.info}>
           <Link href={`/artist/${artworkOwner.artistId}`}>
             <div className={style.avatarAndName}>
-              <Avatar src={artworkOwner.artistProfile} />
+              <Avatar
+                src={`${apiConfig.baseUrl}${artworkOwner.artistProfile}`}
+              />
               <Typography variant="body1">{artistName}</Typography>
             </div>
           </Link>

@@ -59,6 +59,20 @@
     padding: 8px 32px;
   }
 }
+@media (max-width: 700px) {
+  .tabHolder {
+    flex-direction: column;
+  }
+  .tabsHold {
+    padding-top: 0rem;
+    position: relative;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0px 0 0;
+  }
+}
 
 @media (max-width: 600px) {
   .top,

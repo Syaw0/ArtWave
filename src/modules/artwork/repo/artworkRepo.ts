@@ -78,7 +78,7 @@ export class ArtworkRepo implements ArtworkRepoProps {
       [
         {
           $addFields: {
-            answers_count: { $size: { $ifNull: ["$artwork_comments", []] } },
+            answers_count: { $size: { $ifNull: ["$artwork_votes", []] } },
           },
         },
         { $sort: { answers_count: -1 } },

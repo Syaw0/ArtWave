@@ -35,4 +35,15 @@ export class ArtistService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+
+  async logout(artistEmail: string) {
+    try {
+      await this.post(`/artist/logout`, {
+        artistEmail,
+      });
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
 }

@@ -28,6 +28,7 @@ import { apiConfig } from "src/config/apiConfig";
 import style from "./navbar.module.css";
 import { useSearchStore } from "src/shared/infra/store/search/searchStoreHooks";
 import { useDispatch } from "react-redux";
+import { logout } from "src/modules/artist/redux/logout";
 
 interface NavbarProps {
   isLogin: boolean;
@@ -46,6 +47,11 @@ const Navbar = ({ isLogin, loggedArtist }: NavbarProps) => {
   };
   const handleClose = () => {
     setElement(null);
+  };
+
+  const logoutHandle = async () => {
+    await logout(loggedArtist.artistEmail);
+    router.reload();
   };
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -163,16 +169,14 @@ const Navbar = ({ isLogin, loggedArtist }: NavbarProps) => {
                 </Link>
                 <Divider sx={{ my: 1 }} />
 
-                <Link href={"/logout"}>
-                  <MenuItem>
-                    <ListItemIcon>
-                      <Logout fontSize="small" />
-                    </ListItemIcon>
-                    Logout
-                  </MenuItem>
-                </Link>
+                <MenuItem onClick={logoutHandle}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
               </Menu>
-              <Link href={"/add"}>
+              <Link href={"/artwork/new"}>
                 <Fab color="primary" className={style.fab}>
                   <AddAPhoto />
                 </Fab>

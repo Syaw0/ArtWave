@@ -5,6 +5,7 @@ import { Avatar, Button, Divider, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Link from "next/link";
+import { apiConfig } from "src/config/apiConfig";
 
 const ArtistIdPage = () => {
   const { artist, artistArtworks, artistVoted, isLogin, loggedArtist } =
@@ -25,13 +26,16 @@ const ArtistIdPage = () => {
       <Navbar isLogin={isLogin} loggedArtist={loggedArtist} />
 
       <div className={style.top}>
-        <Avatar className={style.avatar} src={artist.artistProfile} />
+        <Avatar
+          className={style.avatar}
+          src={`${apiConfig.baseUrl}${artist.artistProfile}`}
+        />
         <div className={style.info}>
           <Typography variant="body1">
             {artist.artistName == "" ? "UnNamed" : artist.artistName}
           </Typography>
           {artist.artistId === loggedArtist.artistId && (
-            <Link href={"me/setting"}>
+            <Link href={"/setting"}>
               <Button variant="text" size="small">
                 Edit Profile
               </Button>

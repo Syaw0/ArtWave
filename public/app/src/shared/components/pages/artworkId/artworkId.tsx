@@ -30,6 +30,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CommentCard from "../../comment/comment";
 import { comment } from "src/modules/artwork/redux/comment";
+import { apiConfig } from "src/config/apiConfig";
 
 const ArtworkIdPage = () => {
   const { isLogin, artwork, loggedArtist, isArtistLikeArtwork, more } =
@@ -64,6 +65,9 @@ const ArtworkIdPage = () => {
   };
 
   const sendComment = async () => {
+    if (!isLogin) {
+      return router.replace("/login");
+    }
     if (commentText.trim() == "") return;
     await comment(
       dispatch,
@@ -83,7 +87,7 @@ const ArtworkIdPage = () => {
           <div className={style.artworkTopLeft}>
             <Avatar
               className={style.avatar}
-              src={artwork.artworkOwner.artistProfile}
+              src={`${apiConfig.baseUrl}${artwork.artworkOwner.artistProfile}`}
             />
             <div className={style.artworkInfo}>
               <Typography variant="h6">{artwork.artworkName}</Typography>
@@ -145,7 +149,7 @@ const ArtworkIdPage = () => {
         <div className={style.bottomAvatarHolder}>
           <div>
             <Avatar
-              src={artwork.artworkOwner.artistProfile}
+              src={`${apiConfig.baseUrl}${artwork.artworkOwner.artistProfile}`}
               className={style.bottomAvatar}
             />
             <Typography variant="body2" sx={{ mt: 1 }}>

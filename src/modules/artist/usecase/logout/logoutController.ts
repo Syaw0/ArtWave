@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
 import { BaseController } from "../../../../shared/infra/http/models/baseController";
 import { LogoutDTO } from "./logoutDTO";
 import { LogoutError } from "./logoutError";
@@ -11,7 +9,10 @@ export class LogoutController extends BaseController {
     super();
   }
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    const dto: LogoutDTO = req.body as LogoutDTO;
+    const dto: LogoutDTO = {
+      ...req.body,
+      refreshToken: req.body.refreshToken ?? (req.cookies.refresh as string),
+    } as LogoutDTO;
     try {
       const result = await this.logoutUseCase.execute(dto);
       if (result.isLeft() == true) {

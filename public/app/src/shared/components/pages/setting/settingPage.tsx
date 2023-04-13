@@ -11,8 +11,21 @@ import UnderDeveloping from "./underDeveloping";
 const SettingPage = () => {
   const { isLogin, loggedArtist } = useSettingStore((s) => s);
   const [tabIndex, setTabIndex] = useState(1);
+  const [tabOrientation, setTabOrientation] = useState("vertical");
+  useEffect(() => {
+    const resizeEvent = () => {
+      if (window.innerWidth > 700) {
+        return setTabOrientation("vertical");
+      }
+      return setTabOrientation("horizontal");
+    };
+    window.addEventListener("resize", resizeEvent);
+    resizeEvent();
+    return () => {
+      window.removeEventListener("resize", resizeEvent);
+    };
+  }, []);
 
-  useEffect(() => {}, [tabIndex]);
   return (
     <div className={style.con}>
       <Navbar isLogin={isLogin} loggedArtist={loggedArtist} />
@@ -40,10 +53,15 @@ const SettingPage = () => {
       <div className={style.tabHolder}>
         <div className={style.tabsHold}>
           <Tabs
-            sx={{ borderRight: 1, borderColor: "divider" }}
+            variant="scrollable"
+            sx={{
+              borderBottom: tabOrientation == "vertical" ? 0 : 1,
+              borderRight: tabOrientation == "vertical" ? 1 : 0,
+              borderColor: "divider",
+            }}
             onChange={(e, v) => setTabIndex(v)}
             value={tabIndex}
-            orientation="vertical"
+            orientation={tabOrientation as any}
           >
             <Tab
               sx={{ justifyContent: "flex-start", alignItems: "center" }}

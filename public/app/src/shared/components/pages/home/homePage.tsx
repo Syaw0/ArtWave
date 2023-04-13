@@ -39,6 +39,7 @@ const HomePage = () => {
       <Navbar isLogin={isLogin} loggedArtist={artist} />
       <div className={style.selectHolder}>
         <Select
+          variant="standard"
           color="primary"
           value={selectValue}
           onChange={selectChangeHandler}
