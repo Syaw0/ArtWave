@@ -1,3 +1,3 @@
 export interface GetProfDTO {
-  email: string;
+  artistId: string;
 }

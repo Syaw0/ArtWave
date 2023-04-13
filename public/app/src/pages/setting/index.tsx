@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (): Promise<
     },
   };
 
-  const artist = await artistRepo.findByEmail("siaw@gmail.com");
+  const artist = await artistRepo.findByEmail("siaw2@gmail.com");
   if (artist == null) {
     props.isLogin = false;
   } else {

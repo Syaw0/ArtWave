@@ -1,0 +1,49 @@
+.con {
+  padding-left: 60px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+}
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.avatarSectionButtons {
+  margin: 1rem 0 2rem 0;
+}
+.avatarSectionButtons button {
+  position: relative;
+}
+
+.fileInput {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  cursor: pointer;
+}
+
+.inputsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 3rem 0px;
+}
+
+.inputsSection > * {
+  margin-bottom: 1rem;
+}
+.updateButton {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}

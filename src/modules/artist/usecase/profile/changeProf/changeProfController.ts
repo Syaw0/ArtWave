@@ -9,9 +9,10 @@ export class ChangeProfController extends BaseController {
   }
 
   protected async executeImpl(req: Request, res: Response): Promise<any> {
-    const email = req.body.email as string;
+    console.log(req.body);
+    const artistId = req.body.artistId as string;
     const files = req.files as any;
-    const dto: ChangeProfDTO = { email, image: files.image.data };
+    const dto: ChangeProfDTO = { artistId, image: files.image.data };
     try {
       const result = await this.changeProfUseCase.execute(dto);
       if (result.isLeft() == true) {

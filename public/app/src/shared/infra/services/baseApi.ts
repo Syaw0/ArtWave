@@ -36,4 +36,34 @@ export abstract class BaseApi {
       headers: headers ? headers : null,
     });
   }
+
+  protected patch(
+    url: string,
+    data?: any,
+    params?: any,
+    headers?: any
+  ): Promise<any> {
+    return this.axiosInstance({
+      method: "PATCH",
+      url: `${this.baseUrl}${url}`,
+      data: data ? data : null,
+      params: params ? params : null,
+      headers: headers ? headers : null,
+    });
+  }
+
+  protected del(
+    url: string,
+    data?: any,
+    params?: any,
+    headers?: any
+  ): Promise<any> {
+    return this.axiosInstance({
+      method: "DELETE",
+      url: `${this.baseUrl}${url}`,
+      data: data ? data : null,
+      params: params ? params : null,
+      headers: headers ? headers : null,
+    });
+  }
 }

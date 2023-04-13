@@ -113,11 +113,7 @@ const Navbar = ({ isLogin, loggedArtist }: NavbarProps) => {
                 </Button>
               </Link>
               <Avatar
-                src={
-                  loggedArtist.artistProfile
-                    ? loggedArtist.artistProfile
-                    : `${apiConfig.baseUrl}/artist/getProf`
-                }
+                src={`${apiConfig.baseUrl}${loggedArtist.artistProfile}`}
                 sx={{ cursor: "pointer" }}
                 onClick={handleAvatarClick}
               ></Avatar>

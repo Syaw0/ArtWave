@@ -1,9 +1,11 @@
 import { AppError } from "../../../../../shared/core/appError";
 import { left, Result, right } from "../../../../../shared/core/result";
 import { UseCase } from "../../../../../shared/core/usecase";
+import { UniqueEntityID } from "../../../../../shared/domain/uniqueEntityID";
 import { Artist } from "../../../domain/artist";
 import { ArtistEmail } from "../../../domain/artistEmail";
 import { ArtistPassword } from "../../../domain/artistPassword";
+import { ArtistProfilePicture } from "../../../domain/artistProfilePicture";
 import { ArtistRepoProps } from "../../../repo/artistRepo";
 import { EmailVerificationService } from "../../../service/emailVerificationService";
 import { RedisAuthenticationService } from "../../../service/redis/redisAuthenticationService";
@@ -58,16 +60,23 @@ export class CheckTokenUseCase
     const password = artistPasswordOrError.getValue();
 
     try {
-      const artistOrError: Result<Artist> = Artist.create({
-        email,
-        password,
-      });
+      const artistId = new UniqueEntityID();
+      const artistOrError: Result<Artist> = Artist.create(
+        {
+          email,
+          password,
+          profilePicture: ArtistProfilePicture.create(
+            `/artist/getProf?artistId=${artistId.toString()}`
+          ).getValue(),
+        },
+        artistId
+      );
 
       if (artistOrError.isFailure) {
         return left(Result.fail<Artist>(String(artistOrError.getErrorValue())));
       }
       const artist: Artist = artistOrError.getValue();
-
+      artist.profilePicture;
       const accessToken = this.authService.signJWT({
         email: request.email,
         artistId: artist.artistId.id.toString(),

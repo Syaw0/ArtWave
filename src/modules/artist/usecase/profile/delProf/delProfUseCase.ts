@@ -10,7 +10,7 @@ export class DelProfUseCase implements UseCase<DelProfDTO, DelProfResponse> {
 
   async execute(request: DelProfDTO): Promise<DelProfResponse> {
     try {
-      await this.profService.del(request.email);
+      await this.profService.del(request.artistId);
     } catch (err: any) {
       if (err.code === "ENOENT") {
         return left(new DelProfError.ProfNotFound());

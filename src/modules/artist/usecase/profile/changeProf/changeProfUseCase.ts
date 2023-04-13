@@ -10,7 +10,7 @@ export class ChangeProfUseCase
   constructor(private profService: ProfileService) {}
 
   async execute(request: ChangeProfDTO): Promise<ChangeProfResponse> {
-    await this.profService.save(request.email, request.image);
+    await this.profService.save(request.artistId, request.image);
     return right(Result.ok<void>());
   }
 }

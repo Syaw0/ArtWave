@@ -2,22 +2,23 @@ import fs from "fs/promises";
 import path from "path";
 
 export interface IProfileService {
-  save(email: string, buffer: any): Promise<void>;
-  retrieve(email: string): Promise<Buffer>;
-  del(email: string): Promise<void>;
+  save(artistId: string, buffer: any): Promise<void>;
+  retrieve(artistId: string): Promise<Buffer>;
+  del(artistId: string): Promise<void>;
   retrieveDefault(): Promise<Buffer>;
 }
 
 export class ProfileService {
   basePath = path.join(__dirname, "repo");
 
-  async save(email: string, buffer: Buffer): Promise<void> {
-    const profPath = path.join(this.basePath, email);
+  async save(artistId: string, buffer: Buffer): Promise<void> {
+    console.log(artistId);
+    const profPath = path.join(this.basePath, artistId);
     await fs.writeFile(profPath, buffer);
   }
 
-  async retrieve(email: string): Promise<Buffer> {
-    const profPath = path.join(this.basePath, email ?? "");
+  async retrieve(artistId: string): Promise<Buffer> {
+    const profPath = path.join(this.basePath, artistId ?? "");
     try {
       return await fs.readFile(profPath);
     } catch (err) {
@@ -30,17 +31,9 @@ export class ProfileService {
     return await fs.readFile(defaultProfPath);
   }
 
-  async del(email: string): Promise<void> {
-    const profPath = path.join(this.basePath, email);
+  async del(artistId: string): Promise<void> {
+    const profPath = path.join(this.basePath, artistId);
+    console.log(artistId);
     await fs.unlink(profPath);
   }
 }
-
-// const func = async () => {
-//   const x = new ProfileService();
-//   console.log(x.basePath);
-//   console.log(await x.retrieve("siaw@gmail.com"));
-//   console.log("default : ", await x.retrieveDefault());
-//   await x.del("ss");
-// };
-// func();

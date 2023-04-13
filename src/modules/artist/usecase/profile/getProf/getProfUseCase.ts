@@ -8,7 +8,7 @@ export class GetProfUseCase implements UseCase<GetProfDTO, GetProfResponse> {
   constructor(private profService: ProfileService) {}
 
   async execute(request: GetProfDTO): Promise<GetProfResponse> {
-    const prof = await this.profService.retrieve(request.email);
+    const prof = await this.profService.retrieve(request.artistId);
     return right(Result.ok<Buffer>(prof));
   }
 }

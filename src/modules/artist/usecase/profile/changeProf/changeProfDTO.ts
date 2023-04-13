@@ -1,4 +1,4 @@
 export interface ChangeProfDTO {
-  email: string;
+  artistId: string;
   image: Buffer;
 }
