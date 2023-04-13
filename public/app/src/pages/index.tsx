@@ -7,6 +7,7 @@ import { ArtworkMapper } from "../../../../src/modules/artwork/mapper/artworkMap
 import HomePage from "src/shared/components/pages/home/homePage";
 import { Provider } from "react-redux";
 import { makeStore } from "src/shared/infra/store/home/homeStore";
+import { artistAuthService } from "src/modules/artist/services/artistAuthService";
 
 export default function Home(props: HomePageProps) {
   return (
@@ -25,11 +26,7 @@ export default function Home(props: HomePageProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
-  res,
 }): Promise<GetServerSidePropsResult<HomePageProps>> => {
-  // actually we must check the login credential with
-  // auth service (cookies) and pass isLogin and other information for now
-  // i used fake data
   const props: HomePageProps = {
     isLogin: false,
     artist: {
@@ -41,14 +38,31 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
     artworks: [],
   };
-  const artist = await artistRepo.findByEmail("siaw@gmail.com");
-  if (artist == null) {
+  const isLogged = artistAuthService.isArtistLoggedIn(req.cookies);
+  let artist;
+  if (!isLogged) {
     props.isLogin = false;
   } else {
-    props.isLogin = true;
+    const refresh = req.cookies.refresh as string;
+    const isRefreshTokenExist = await artistAuthService.isRefreshTokenExist(
+      refresh
+    );
+    if (!isRefreshTokenExist) {
+      props.isLogin = false;
+    } else {
+      props.isLogin = true;
+    }
+    const email = await artistAuthService.getEmailFromRefreshToken(refresh);
+
+    artist = await artistRepo.findByEmail(email);
+    if (artist == null) {
+      props.isLogin = false;
+    } else {
+      props.isLogin = true;
+    }
+    const artistDTO = ArtistMapper.toDTO(artist);
+    props.artist = artistDTO;
   }
-  const artistDTO = ArtistMapper.toDTO(artist);
-  props.artist = artistDTO;
 
   const artworks = await artworkRepo.findLatestArtworks();
   const artworksDTO = await Promise.all(

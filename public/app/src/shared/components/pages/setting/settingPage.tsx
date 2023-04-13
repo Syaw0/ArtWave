@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { Lock, Person, Settings } from "@mui/icons-material";
 import ProfileSetting from "./profile/profileSetting";
 import { apiConfig } from "src/config/apiConfig";
+import UnderDeveloping from "./underDeveloping";
 
 const SettingPage = () => {
   const { isLogin, loggedArtist } = useSettingStore((s) => s);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(1);
+
   useEffect(() => {}, [tabIndex]);
   return (
     <div className={style.con}>
@@ -64,9 +66,9 @@ const SettingPage = () => {
           </Tabs>
         </div>
         <Divider orientation="vertical" />
-        {tabIndex == 0 && <h2>0</h2>}
+        {tabIndex == 0 && <UnderDeveloping />}
         {tabIndex == 1 && <ProfileSetting loggedArtist={loggedArtist} />}
-        {tabIndex == 2 && <h2>2</h2>}
+        {tabIndex == 2 && <UnderDeveloping />}
       </div>
     </div>
   );

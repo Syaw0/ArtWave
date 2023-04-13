@@ -1,5 +1,5 @@
 export interface ChangeInformationDTO {
-  email: string;
+  artistId: string;
   name: string;
   biography: string;
 }

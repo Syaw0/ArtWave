@@ -5,6 +5,7 @@ import NewArtworkPage from "src/shared/components/pages/newArtwork/newArtwork";
 import { makeStore } from "src/shared/infra/store/newArtwork/newArtworkStore";
 import { artistRepo } from "../../../../../../src/modules/artist/repo/artistRepo";
 import { ArtistMapper } from "../../../../../../src/modules/artist/mapper/artistMapper";
+import { artistAuthService } from "src/modules/artist/services/artistAuthService";
 
 const NewArtwork = (props: NewArtworkPageProps) => {
   return (
@@ -23,9 +24,12 @@ const NewArtwork = (props: NewArtworkPageProps) => {
 
 export default NewArtwork;
 
-export const getServerSideProps: GetServerSideProps = async (): Promise<
-  GetServerSidePropsResult<NewArtworkPageProps>
-> => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+}): Promise<GetServerSidePropsResult<NewArtworkPageProps>> => {
+  const loginRedirect = {
+    redirect: { destination: "/login", permanent: false },
+  };
   const props: NewArtworkPageProps = {
     isLogin: false,
     loggedArtist: {
@@ -37,13 +41,33 @@ export const getServerSideProps: GetServerSideProps = async (): Promise<
     },
   };
 
-  const artist = await artistRepo.findByEmail("siaw@gmail.com");
-  if (artist == null) {
+  const isLogged = artistAuthService.isArtistLoggedIn(req.cookies);
+  let artist;
+  if (!isLogged) {
     props.isLogin = false;
+    return loginRedirect;
   } else {
-    props.isLogin = true;
+    const refresh = req.cookies.refresh as string;
+    const isRefreshTokenExist = await artistAuthService.isRefreshTokenExist(
+      refresh
+    );
+    if (!isRefreshTokenExist) {
+      props.isLogin = false;
+      return loginRedirect;
+    } else {
+      props.isLogin = true;
+    }
+    const email = await artistAuthService.getEmailFromRefreshToken(refresh);
+
+    artist = await artistRepo.findByEmail(email);
+    if (artist == null) {
+      props.isLogin = false;
+    } else {
+      props.isLogin = true;
+    }
+
+    const artistDTO = ArtistMapper.toDTO(artist);
+    props.loggedArtist = artistDTO;
   }
-  const artistDTO = ArtistMapper.toDTO(artist);
-  props.loggedArtist = artistDTO;
   return { props };
 };

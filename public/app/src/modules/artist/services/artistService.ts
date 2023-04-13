@@ -22,4 +22,17 @@ export class ArtistService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+
+  async updateInformation(artistId: string, name: string, biography: string) {
+    try {
+      await this.patch(`/artist/changeInformation`, {
+        name,
+        biography,
+        artistId,
+      });
+      return right(Result.ok());
+    } catch (err) {
+      return left(Result.fail(err as string));
+    }
+  }
 }

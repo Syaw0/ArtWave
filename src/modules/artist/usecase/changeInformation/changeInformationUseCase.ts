@@ -18,7 +18,7 @@ export class ChangeInformationUseCase
   ): Promise<ChangeInformationResponse> {
     let artist: Artist;
     try {
-      artist = await this.artistRepo.findByEmail(request.email);
+      artist = await this.artistRepo.findById(request.artistId);
     } catch (err) {
       return left(new ChangeInformationError.ArtistNotFound());
     }
