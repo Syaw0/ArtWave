@@ -36,7 +36,7 @@ const HomePage = () => {
 
   return (
     <div className={style.con}>
-      <Navbar isLogin={isLogin} profileImage={artist.artistProfile} />
+      <Navbar isLogin={isLogin} loggedArtist={artist} />
       <div className={style.selectHolder}>
         <Select
           color="primary"

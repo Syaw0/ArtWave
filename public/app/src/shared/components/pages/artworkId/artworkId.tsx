@@ -77,7 +77,7 @@ const ArtworkIdPage = () => {
 
   return (
     <div className={style.con}>
-      <Navbar isLogin={isLogin} profileImage={loggedArtist.artistProfile} />
+      <Navbar isLogin={isLogin} loggedArtist={loggedArtist} />
       <div className={style.artworkHolder}>
         <div className={style.artworkTop}>
           <div className={style.artworkTopLeft}>

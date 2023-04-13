@@ -31,10 +31,10 @@ import { useDispatch } from "react-redux";
 
 interface NavbarProps {
   isLogin: boolean;
-  profileImage: string | null;
+  loggedArtist: Artist;
 }
 
-const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
+const Navbar = ({ isLogin, loggedArtist }: NavbarProps) => {
   const { searchQuery } = useSearchStore((s) => s);
   const [element, setElement] = useState<HTMLElement | null>();
   const [sQuery, setSearchQuery] = useState<string>(searchQuery ?? "");
@@ -114,8 +114,8 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
               </Link>
               <Avatar
                 src={
-                  profileImage
-                    ? profileImage
+                  loggedArtist.artistProfile
+                    ? loggedArtist.artistProfile
                     : `${apiConfig.baseUrl}/artist/getProf`
                 }
                 sx={{ cursor: "pointer" }}
@@ -139,7 +139,7 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
                 }}
                 TransitionComponent={Fade}
               >
-                <Link href={"/me"}>
+                <Link href={`/artist/${loggedArtist.artistId}`}>
                   <MenuItem>
                     <ListItemIcon>
                       <Person fontSize="small" />
@@ -148,7 +148,7 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
                   </MenuItem>
                 </Link>
 
-                <Link href={"/me/edit"}>
+                <Link href={"/setting"}>
                   <MenuItem>
                     <ListItemIcon>
                       <ManageAccounts fontSize="small" />
@@ -157,7 +157,7 @@ const Navbar = ({ isLogin, profileImage }: NavbarProps) => {
                   </MenuItem>
                 </Link>
 
-                <Link href={"/me/likes"}>
+                <Link href={`/artist/${loggedArtist.artistId}?tab=1`}>
                   <MenuItem>
                     <ListItemIcon>
                       <Favorite fontSize="small" />

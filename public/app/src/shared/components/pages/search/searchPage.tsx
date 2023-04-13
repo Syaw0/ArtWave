@@ -44,7 +44,7 @@ const SearchPage = () => {
 
   return (
     <div className={style.con}>
-      <Navbar isLogin={isLogin} profileImage={artist.artistProfile} />
+      <Navbar isLogin={isLogin} loggedArtist={artist} />
       <div className={style.searchHolder}>
         <Paper
           component={"form"}

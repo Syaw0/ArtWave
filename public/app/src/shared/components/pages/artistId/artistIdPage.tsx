@@ -2,7 +2,7 @@ import { useArtistIdStore } from "src/shared/infra/store/artistId/artistIdStoreH
 import style from "./artistIdPage.module.css";
 import Navbar from "../../navbar/navbar";
 import { Avatar, Button, Divider, Tab, Tabs, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Link from "next/link";
 
@@ -11,9 +11,18 @@ const ArtistIdPage = () => {
     useArtistIdStore((s) => s);
 
   const [tabIndex, setTabIndex] = useState(0);
+  useEffect(() => {
+    const q = new URL(location.toString()).searchParams.get("tab");
+    console.log(q);
+    if (q != null && q == "1") {
+      setTabIndex(1);
+    } else {
+      setTabIndex(0);
+    }
+  }, []);
   return (
     <div className={style.con}>
-      <Navbar isLogin={isLogin} profileImage={loggedArtist.artistProfile} />
+      <Navbar isLogin={isLogin} loggedArtist={loggedArtist} />
 
       <div className={style.top}>
         <Avatar className={style.avatar} src={artist.artistProfile} />

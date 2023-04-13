@@ -23,6 +23,11 @@ declare global {
     searchQuery: string;
   }
 
+  interface SettingPageProps {
+    isLogin: boolean;
+    loggedArtist: Artist;
+  }
+
   interface ArtistIdPageProps {
     isLogin: boolean;
     loggedArtist: Artist;
