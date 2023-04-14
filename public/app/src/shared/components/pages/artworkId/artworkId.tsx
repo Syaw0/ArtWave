@@ -99,7 +99,7 @@ const ArtworkIdPage = () => {
             </div>
           </div>
           <div className={style.artworkTopRight}>
-            {!isArtistLikeArtwork && isLogin ? (
+            {!isArtistLikeArtwork && !isLogin ? (
               <Chip
                 icon={<FavoriteBorderOutlined fontSize="small" />}
                 onClick={likeArtwork}
@@ -184,7 +184,7 @@ const ArtworkIdPage = () => {
       </div>
 
       <div className={style.float}>
-        <Avatar src={artwork.artworkOwner.artistProfile} />
+        <Avatar src={`${apiConfig.baseUrl}${loggedArtist.artistProfile}`} />
         <div className={style.floatItems}>
           <IconButton
             onClick={isArtistLikeArtwork ? unlikeArtwork : likeArtwork}

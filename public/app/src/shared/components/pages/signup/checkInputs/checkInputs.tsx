@@ -22,6 +22,7 @@ import {
   updatePassword,
 } from "src/shared/infra/store/signup/signupStore";
 import { checkSignup } from "src/modules/artist/redux/checkSignup";
+import Link from "next/link";
 
 const CheckInputs = () => {
   const { email, password, name } = useSignupStore((s) => s);
@@ -133,6 +134,10 @@ const CheckInputs = () => {
         </FormControl>
       </div>
       <div className={style.buttonHolder}>
+        {" "}
+        <Link href={"/login"}>
+          <Button>Already a member? Login now</Button>
+        </Link>
         <Button onClick={startLogin} variant="contained">
           Signup
         </Button>

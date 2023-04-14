@@ -20,6 +20,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { checkLogin } from "src/modules/artist/redux/checkLogin";
 import { useSnackbar } from "notistack";
+import Link from "next/link";
 
 const CheckInputs = () => {
   const { email, password } = useLoginStore((s) => s);
@@ -112,6 +113,9 @@ const CheckInputs = () => {
         </FormControl>
       </div>
       <div className={style.buttonHolder}>
+        <Link href={"/signup"}>
+          <Button>Not a member? Join now</Button>
+        </Link>
         <Button onClick={startLogin} variant="contained">
           Login
         </Button>
