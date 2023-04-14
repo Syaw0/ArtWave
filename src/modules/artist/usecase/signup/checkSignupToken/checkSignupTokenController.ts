@@ -37,7 +37,7 @@ export class CheckTokenController extends BaseController {
         };
         res.cookie("access", value.accessToken, cookieConfig);
         res.cookie("refresh", value.refreshToken, cookieConfig);
-        this.ok(res, value);
+        this.ok(res, { status: true, message: "Its Okay" });
       }
     } catch (err) {
       this.fail(res, err);

@@ -22,6 +22,13 @@ declare global {
     password: string;
   }
 
+  interface SignupPageProps {
+    phase: "checkInputs" | "checkToken";
+    email: string;
+    password: string;
+    name: string;
+  }
+
   interface SearchPageProps {
     isLogin: boolean;
     artist: Artist;

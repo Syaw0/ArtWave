@@ -1,20 +1,22 @@
 import { Button, TextField, Typography } from "@mui/material";
-import style from "../loginPage.module.css";
+import style from "../signupPage.module.css";
 import { ChangeEvent, useState } from "react";
-import { checkLoginToken } from "src/modules/artist/redux/checkLoginToken";
-import { useLoginStore } from "src/shared/infra/store/login/loginStoreHooks";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
+import { checkSignupToken } from "src/modules/artist/redux/checkSignupToken";
+import { useSignupStore } from "src/shared/infra/store/signup/signupStoreHooks";
 
 const CheckToken = () => {
-  const { email } = useLoginStore((s) => s);
+  const { email, password, name } = useSignupStore((s) => s);
   const [token, setToken] = useState("");
   const [error, setError] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const startCheck = async () => {
     if (token.trim() === "") return setError(true);
-    const result = await checkLoginToken(email, token);
+    const result = await checkSignupToken(email, password, name, token);
+
+    console.log(result);
     if (!result.status) {
       enqueueSnackbar(result.message, { variant: "error" });
     } else {

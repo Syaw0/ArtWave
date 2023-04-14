@@ -4,6 +4,7 @@ import { UseCase } from "../../../../../shared/core/usecase";
 import { UniqueEntityID } from "../../../../../shared/domain/uniqueEntityID";
 import { Artist } from "../../../domain/artist";
 import { ArtistEmail } from "../../../domain/artistEmail";
+import { ArtistName } from "../../../domain/artistName";
 import { ArtistPassword } from "../../../domain/artistPassword";
 import { ArtistProfilePicture } from "../../../domain/artistProfilePicture";
 import { ArtistRepoProps } from "../../../repo/artistRepo";
@@ -47,10 +48,12 @@ export class CheckTokenUseCase
 
     const artistEmailOrError = ArtistEmail.create(request.email);
     const artistPasswordOrError = ArtistPassword.create(request.password);
+    const artistNameOrError = ArtistName.create(request.name);
 
     const dtoOrError = Result.combine([
       artistEmailOrError,
       artistPasswordOrError,
+      artistNameOrError,
     ]);
 
     if (dtoOrError.isFailure) {
@@ -58,13 +61,14 @@ export class CheckTokenUseCase
     }
     const email = artistEmailOrError.getValue();
     const password = artistPasswordOrError.getValue();
-
+    const name = artistNameOrError.getValue();
     try {
       const artistId = new UniqueEntityID();
       const artistOrError: Result<Artist> = Artist.create(
         {
           email,
           password,
+          name,
           profilePicture: ArtistProfilePicture.create(
             `/artist/getProf?artistId=${artistId.toString()}`
           ).getValue(),
@@ -76,7 +80,6 @@ export class CheckTokenUseCase
         return left(Result.fail<Artist>(String(artistOrError.getErrorValue())));
       }
       const artist: Artist = artistOrError.getValue();
-      artist.profilePicture;
       const accessToken = this.authService.signJWT({
         email: request.email,
         artistId: artist.artistId.id.toString(),
@@ -85,7 +88,7 @@ export class CheckTokenUseCase
       const refreshToken = this.authService.createRefreshToken();
       artist.setAccessToken(accessToken, refreshToken);
       await this.artistRepo.save(artist);
-
+      console.log();
       await this.authService.saveAuthenticateArtist(artist);
 
       return right(Result.ok<any>({ accessToken, refreshToken }));

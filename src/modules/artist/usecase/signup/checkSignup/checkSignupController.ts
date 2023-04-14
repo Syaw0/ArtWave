@@ -15,13 +15,12 @@ export class CheckSignupController extends BaseController {
     const dto: CheckSignupDTO = req.body as CheckSignupDTO;
     try {
       const result: any = await this.useCase.execute(dto);
-
-      if (result.isLeft()) {
+      console.log(result);
+      if (result.isLeft() == true) {
         const error = result.value;
-        console.log(error, result);
         switch (error.constructor) {
           case CheckSignupError.EmailExist:
-            return this.conflict(res, error.getErrorValue().message);
+            return this.conflict(res, "Email exist");
           default:
             return this.fail(
               res,
@@ -29,7 +28,7 @@ export class CheckSignupController extends BaseController {
             );
         }
       } else {
-        return this.ok(res, result.value.getValue());
+        return this.ok(res, { status: true, message: "Its okay" });
       }
     } catch (err) {
       this.fail(res, err);

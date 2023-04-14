@@ -1,6 +1,7 @@
 import { left, Result, right } from "../../../../../shared/core/result";
 import { UseCase } from "../../../../../shared/core/usecase";
 import { ArtistEmail } from "../../../domain/artistEmail";
+import { ArtistName } from "../../../domain/artistName";
 import { ArtistPassword } from "../../../domain/artistPassword";
 import { ArtistRepoProps } from "../../../repo/artistRepo";
 import { EmailVerificationService } from "../../../service/emailVerificationService";
@@ -24,10 +25,11 @@ export class CheckSignupUseCase
   async execute(request: CheckSignupDTO): Promise<CheckSignupResponse> {
     const artistEmailOrError = ArtistEmail.create(request.email);
     const artistPasswordOrError = ArtistPassword.create(request.password);
-
+    const artistNameOrError = ArtistName.create(request.name);
     const dtoOrError = Result.combine([
       artistEmailOrError,
       artistPasswordOrError,
+      artistNameOrError,
     ]);
 
     if (dtoOrError.isFailure) {
