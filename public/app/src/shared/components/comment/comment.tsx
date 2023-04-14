@@ -13,6 +13,7 @@ import { Delete, MoreVert } from "@mui/icons-material";
 import { useState } from "react";
 import { removeComment } from "src/modules/artwork/redux/removeComment";
 import { useDispatch } from "react-redux";
+import { apiConfig } from "src/config/apiConfig";
 
 interface CommentCard extends ArtworkComment {
   isArtistsComment: boolean;
@@ -53,7 +54,10 @@ const CommentCard = ({
   const open = Boolean(anchor);
   return (
     <div className={style.con}>
-      <Avatar src={artist.artistProfile} className={style.avatar} />
+      <Avatar
+        src={`${apiConfig.baseUrl}${artist.artistProfile}`}
+        className={style.avatar}
+      />
       <div className={style.right}>
         <Link href={`/artist/${artist.artistId}`}>
           <Typography variant="body2" className={style.name}>

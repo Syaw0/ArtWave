@@ -1,2 +1,2 @@
-# Art Wave
+# Art Wave 🌊
 The Art Social Media .
