@@ -46,4 +46,28 @@ export class ArtistService extends BaseApi {
       return left(Result.fail(err as string));
     }
   }
+
+  async checkLogin(email: string, password: string) {
+    try {
+      const result = await this.post(`/artist/checkLogin`, {
+        email,
+        password,
+      });
+      return right(Result.ok(result.data));
+    } catch (err: any) {
+      return left(Result.fail({ ...err.response.data, status: false }));
+    }
+  }
+
+  async checkLoginToken(email: string, token: string) {
+    try {
+      const result = await this.post(`/artist/checkLoginToken`, {
+        email,
+        token,
+      });
+      return right(Result.ok(result.data));
+    } catch (err: any) {
+      return left(Result.fail({ ...err.response.data, status: false }));
+    }
+  }
 }

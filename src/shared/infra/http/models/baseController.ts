@@ -105,7 +105,6 @@ export abstract class BaseController {
   }
 
   public fail(res: express.Response, error: Error | string | unknown) {
-    console.log(error);
     return res.status(500).json({
       message: String(error),
     });

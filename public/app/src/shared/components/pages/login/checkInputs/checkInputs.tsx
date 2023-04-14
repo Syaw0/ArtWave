@@ -13,15 +13,19 @@ import { useLoginStore } from "src/shared/infra/store/login/loginStoreHooks";
 import { useDispatch } from "react-redux";
 import { ChangeEvent, useState } from "react";
 import {
+  changePhase,
   updateEmail,
   updatePassword,
 } from "src/shared/infra/store/login/loginStore";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { checkLogin } from "src/modules/artist/redux/checkLogin";
+import { useSnackbar } from "notistack";
 
 const CheckInputs = () => {
   const { email, password } = useLoginStore((s) => s);
   const [error, setError] = useState({ email: false, password: false });
   const [showPassword, setShowPassword] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +55,16 @@ const CheckInputs = () => {
     }
     if (error) {
       return;
+    }
+
+    const result = await checkLogin(email, password);
+    if (!result.status || result == false) {
+      enqueueSnackbar(String(result.message), { variant: "error" });
+    } else {
+      enqueueSnackbar(result.message, { variant: "success" });
+      setTimeout(() => {
+        dispatch(changePhase("checkToken"));
+      }, 1500);
     }
   };
   return (

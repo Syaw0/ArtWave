@@ -10,14 +10,17 @@ export class LogoutUseCase implements UseCase<LogoutDTO, LogoutResponse> {
 
   async execute(request: LogoutDTO): Promise<LogoutResponse> {
     const isRefreshTokenExist = await this.authService.isSessionExist(
-      request.email,
+      request.artistEmail,
       request.refreshToken
     );
     if (!isRefreshTokenExist) {
       return left(new LogoutError.RefreshTokenIsNotProvided());
     }
     try {
-      await this.authService.clearToken(request.email, request.refreshToken);
+      await this.authService.clearToken(
+        request.artistEmail,
+        request.refreshToken
+      );
     } catch (err) {
       return left(Result.fail<any>(err as any));
     }

@@ -125,23 +125,3 @@ export class RedisAuthenticationService
     return keys.length;
   }
 }
-
-const func = async () => {
-  const x = new RedisAuthenticationService(redisClient as any);
-
-  const email = "siaw0@gmail.com";
-  const ss = x.signJWT({ artistId: "111", email });
-  const re = x.createRefreshToken();
-  // console.log(ss);
-
-  // const dd = x.decodeJWT("ss");
-  // console.log(dd);
-  // console.log(await x.addToken(email, re, ss));
-  // console.log(await x.isRefreshTokenExist(re));
-  // console.log(await x.getEmailFromRefreshToken(re));
-  // console.log(await x.deAuthenticateArtist(email));
-  // console.log(await x.isSessionExist(email, re));
-  console.log(await x.clearAllSession(email));
-  // process.exit(1);
-};
-func();

@@ -14,19 +14,16 @@ export class CheckTokenController extends BaseController {
       const result = await this.checkTokenUseCase.execute(dto);
       if (result.isLeft() == true) {
         const error = result.value;
-        console.log(error, result);
+        const errorMsg = error.getErrorValue().message || error.getErrorValue();
         switch (error.constructor) {
           case CheckTokenError.TokenIsBurned:
-            return this.conflict(res, error.getErrorValue().message);
+            return this.conflict(res, errorMsg);
           case CheckTokenError.TokenIsNotExist:
-            return this.conflict(res, error.getErrorValue().message);
+            return this.conflict(res, errorMsg);
           case CheckTokenError.WrongToken:
-            return this.conflict(res, error.getErrorValue().message);
+            return this.conflict(res, errorMsg);
           default:
-            return this.fail(
-              res,
-              error.getErrorValue().message || error.getErrorValue()
-            );
+            return this.fail(res, errorMsg);
         }
       } else {
         const value = result.value.getValue();
@@ -37,7 +34,7 @@ export class CheckTokenController extends BaseController {
         };
         res.cookie("access", value.accessToken, cookieConfig);
         res.cookie("refresh", value.refreshToken, cookieConfig);
-        this.ok(res, value);
+        this.ok(res, { status: true, message: "Its Okay" });
       }
     } catch (err) {
       this.fail(res, err);

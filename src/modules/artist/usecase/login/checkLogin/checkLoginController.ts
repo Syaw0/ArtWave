@@ -15,26 +15,23 @@ export class CheckLoginController extends BaseController {
     const dto: CheckLoginDTO = req.body as CheckLoginDTO;
     try {
       const result: any = await this.useCase.execute(dto);
-
       if (result.isLeft()) {
         const error = result.value;
-        console.log(error, result);
+        const errorMsg = error.getErrorValue().message || error.getErrorValue();
+        console.log(errorMsg);
         switch (error.constructor) {
           case CheckLoginError.NotFoundEmail:
-            return this.conflict(res, error.getErrorValue().message);
+            return this.fail(res, "NOt found email");
           case CheckLoginError.EmailAndPasswordDoesNotMatch:
-            return this.conflict(res, error.getErrorValue().message);
+            return this.fail(res, "Email and password not match");
           default:
-            return this.fail(
-              res,
-              error.getErrorValue().message || error.getErrorValue()
-            );
+            return this.fail(res, errorMsg);
         }
       } else {
-        return this.ok(res, result.value.getValue());
+        return this.ok(res, { status: true, message: "Its Okay" });
       }
     } catch (err) {
-      this.fail(res, err);
+      this.fail(res, "Error in server 500");
     }
   }
 }

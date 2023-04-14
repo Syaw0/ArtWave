@@ -42,4 +42,5 @@ export const makeStore = (preState: Partial<LoginPageProps>) => {
 
 export const updateEmail = loginSlice.actions.updateEmail;
 export const updatePassword = loginSlice.actions.updatePassword;
+export const changePhase = loginSlice.actions.changePhase;
 export type RootState = typeof initialState;

@@ -9,9 +9,10 @@ export class LogoutController extends BaseController {
     super();
   }
   protected async executeImpl(req: Request, res: Response): Promise<any> {
+    const refresh = req.cookies.refresh as string;
     const dto: LogoutDTO = {
       ...req.body,
-      refreshToken: req.body.refreshToken ?? (req.cookies.refresh as string),
+      refreshToken: refresh ?? req.body.refresh,
     } as LogoutDTO;
     try {
       const result = await this.logoutUseCase.execute(dto);

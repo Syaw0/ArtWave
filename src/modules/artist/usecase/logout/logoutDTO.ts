@@ -1,6 +1,6 @@
 import { RefreshToken } from "../../domain/jwt";
 
 export interface LogoutDTO {
-  email: string;
+  artistEmail: string;
   refreshToken: RefreshToken;
 }

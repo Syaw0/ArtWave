@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
 import LoginPage from "src/shared/components/pages/login/loginPage";
 import { makeStore } from "src/shared/infra/store/login/loginStore";
@@ -12,7 +13,9 @@ const Login = () => {
       </Head>
 
       <Provider store={makeStore({})}>
-        <LoginPage />
+        <SnackbarProvider maxSnack={3}>
+          <LoginPage />
+        </SnackbarProvider>
       </Provider>
     </>
   );

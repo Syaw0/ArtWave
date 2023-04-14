@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { v1Router } from "./api/v1";
 import fileUpload from "express-fileupload";
@@ -25,6 +26,7 @@ nextApp
     };
     const app = express();
     app.use(fileUpload());
+    app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cors(origin));
