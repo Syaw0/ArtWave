@@ -186,12 +186,17 @@ const Navbar = ({ isLogin, loggedArtist }: NavbarProps) => {
 
           {!isLogin && (
             <>
-              <Button size="small" variant="text" disableElevation>
-                Signin
-              </Button>
-              <Button size="small" variant="contained" disableElevation>
-                Signup
-              </Button>
+              <Link href={"/login"}>
+                <Button size="small" variant="text" disableElevation>
+                  Signin
+                </Button>
+              </Link>
+
+              <Link href={"/signup"}>
+                <Button size="small" variant="contained" disableElevation>
+                  Signup
+                </Button>
+              </Link>
             </>
           )}
         </div>

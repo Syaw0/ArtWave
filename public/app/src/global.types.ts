@@ -16,6 +16,12 @@ declare global {
     artworks: Artwork[];
   }
 
+  interface LoginPageProps {
+    phase: "checkInputs" | "checkToken";
+    email: string;
+    password: string;
+  }
+
   interface SearchPageProps {
     isLogin: boolean;
     artist: Artist;
