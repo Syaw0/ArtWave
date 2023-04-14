@@ -1,0 +1,24 @@
+.con {
+  display: flex;
+  margin: 1rem 0px;
+  position: relative;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
+
+.name {
+  opacity: 70%;
+}
+.date {
+  opacity: 60%;
+}
+
+.moreIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

@@ -1,0 +1,173 @@
+.con {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--md-sys-color-background);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.artworkHolder {
+  margin-top: 1rem;
+}
+
+.artworkTop {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.artworkTopLeft {
+  display: flex;
+  align-items: center;
+}
+
+.artworkInfo {
+  margin-left: 8px;
+}
+
+.artworkArtistName {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+}
+
+.artworkImg {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+
+.float {
+  position: fixed;
+  right: 2rem;
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.floatItems {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottomBar {
+  display: none;
+}
+
+.artworkText {
+  margin: 1rem 0px;
+}
+
+.bottomAvatarHolder {
+  border-bottom: 1px solid var(--md-sys-color-outline);
+  margin: 7rem 0;
+  position: relative;
+}
+
+.bottomAvatarHolder > div {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -40%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottomAvatar {
+  width: 100px;
+  height: 100px;
+}
+
+.moreTop {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moreImgHolder {
+  padding: 18px 0px;
+}
+
+.drawer {
+  width: 300px;
+  padding: 1rem;
+  height: 100%;
+}
+
+.text {
+  padding: 0.5rem 0px;
+}
+
+.drawerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+.sendBtnHolder {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0.4rem 0px;
+}
+.commentsHolder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.information {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.infos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1200px) {
+  .artworkHolder {
+    padding: 8px 160px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .artworkHolder {
+    padding: 8px 24px;
+  }
+  .float {
+    display: none;
+  }
+  .bottomBar {
+    display: flex;
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 900px) {
+  .artworkHolder {
+    padding: 8px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .artworkHolder {
+    padding: 8px 8px;
+  }
+}

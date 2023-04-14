@@ -1,0 +1,21 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+}
+a > * {
+  width: 100%;
+}
+.MuiButton-root {
+  border-radius: 20px;
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 20px;
+}

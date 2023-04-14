@@ -1,0 +1,30 @@
+.con {
+  width: 100%;
+  padding: 8px;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0px;
+}
+
+.votes {
+  display: flex;
+  align-items: center;
+}
+
+.avatarAndName {
+  display: flex;
+  align-items: center;
+}
+.avatarAndName p {
+  margin-left: 8px;
+}

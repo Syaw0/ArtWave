@@ -1,0 +1,50 @@
+.con {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--md-sys-color-background);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.selectHolder {
+  width: 100%;
+}
+
+.artworksCon {
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 24px 160px;
+}
+
+.artworksCon > img {
+  height: auto;
+  width: calc(100% / 4);
+  border: 1px solid black;
+}
+
+@media (min-width: 1200px) {
+  .selectHolder {
+    padding: 8px 160px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .selectHolder {
+    padding: 8px 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .selectHolder {
+    padding: 8px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .selectHolder {
+    padding: 8px 8px;
+  }
+}

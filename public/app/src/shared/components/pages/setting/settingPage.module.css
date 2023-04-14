@@ -1,0 +1,82 @@
+.con {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--md-sys-color-background);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+}
+.top p {
+  margin-left: 0.5rem;
+}
+
+.tabHolder {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+
+.tabsHold {
+  position: sticky;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding-top: 4rem;
+}
+
+.name {
+  display: flex;
+}
+
+@media (min-width: 1200px) {
+  .top,
+  .tabHolder {
+    padding: 8px 160px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .top,
+  .tabHolder {
+    padding: 8px 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .top,
+  .tabHolder {
+    padding: 8px 32px;
+  }
+}
+@media (max-width: 700px) {
+  .tabHolder {
+    flex-direction: column;
+  }
+  .tabsHold {
+    padding-top: 0rem;
+    position: relative;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0px 0 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .top,
+  .tabHolder {
+    padding: 8px 8px;
+  }
+}
