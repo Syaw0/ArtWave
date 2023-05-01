@@ -8,6 +8,8 @@ const initialState: NewArtworkPageProps = {
     artistId: "",
     artistName: "",
     artistProfile: "",
+    artistSubscribe: [],
+    artistSubscribers: [],
   },
 };
 

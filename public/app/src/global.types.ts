@@ -68,6 +68,8 @@ declare global {
     artistProfile: string;
     artistName: string;
     artistBiography: string;
+    artistSubscribers: string[];
+    artistSubscribe: string[];
   }
 
   interface Artwork {

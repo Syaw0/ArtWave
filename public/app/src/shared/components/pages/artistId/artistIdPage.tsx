@@ -10,7 +10,6 @@ import { apiConfig } from "src/config/apiConfig";
 const ArtistIdPage = () => {
   const { artist, artistArtworks, artistVoted, isLogin, loggedArtist } =
     useArtistIdStore((s) => s);
-
   const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     const q = new URL(location.toString()).searchParams.get("tab");

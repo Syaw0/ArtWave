@@ -49,6 +49,8 @@ export const getServerSideProps: GetServerSideProps = async ({
       artistId: "",
       artistName: "",
       artistProfile: "",
+      artistSubscribe: [],
+      artistSubscribers: [],
     },
     artist: {
       artistBiography: "",
@@ -56,6 +58,8 @@ export const getServerSideProps: GetServerSideProps = async ({
       artistId: "",
       artistName: "",
       artistProfile: "",
+      artistSubscribe: [],
+      artistSubscribers: [],
     },
     artistArtworks: [],
     artistVoted: [],

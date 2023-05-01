@@ -7,6 +7,8 @@ const initialState: SettingPageProps = {
     artistId: "",
     artistName: "",
     artistProfile: "",
+    artistSubscribe: [],
+    artistSubscribers: [],
   },
   isLogin: false,
 };

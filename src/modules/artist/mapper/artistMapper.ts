@@ -8,6 +8,8 @@ import { ArtistPassword } from "../domain/artistPassword";
 import { ArtistProfilePicture } from "../domain/artistProfilePicture";
 import { ArtistDTO } from "../dto/artistDTO";
 import { Result } from "../../../shared/core/result";
+import { ArtistSubscribe } from "../domain/artistSubscribe";
+import { ArtistSubscribers } from "../domain/artistSubscribers";
 
 export class ArtistMapper implements Mapper<Artist> {
   public static toDTO(artist: Artist): ArtistDTO {
@@ -17,6 +19,12 @@ export class ArtistMapper implements Mapper<Artist> {
       artistProfile: artist.profilePicture?.props.profileUrl ?? "",
       artistName: artist.name?.props.name ?? "",
       artistBiography: artist.biography?.props.biography ?? "",
+      artistSubscribe: artist.subscribe.currentItems.map((s) =>
+        s.id.toString()
+      ),
+      artistSubscribers: artist.subscribers.currentItems.map((s) =>
+        s.id.toString()
+      ),
     };
   }
 
@@ -34,6 +42,7 @@ export class ArtistMapper implements Mapper<Artist> {
     const artistBiographyOrError = ArtistBiography.create(
       raw.artist_biography ? raw.artist_biography : ""
     );
+
     const check = Result.combine([
       artistBiographyOrError,
       artistEmailOrError,
@@ -53,6 +62,8 @@ export class ArtistMapper implements Mapper<Artist> {
         profilePicture: artistProfilePictureOrError.getValue(),
         name: artistNameOrError.getValue(),
         biography: artistBiographyOrError.getValue(),
+        subscribe: ArtistSubscribe.create(raw.artist_subscribe),
+        subscribers: ArtistSubscribers.create(raw.artist_subscribers),
       },
       new UniqueEntityID(raw.artist_id)
     );
@@ -69,6 +80,8 @@ export class ArtistMapper implements Mapper<Artist> {
       artist_password: artist.password.props.password,
       artist_profile_picture: artist.profilePicture?.props.profileUrl,
       artist_biography: artist.biography?.props.biography,
+      artist_subscribers: artist.subscribers.currentItems,
+      artist_subscribe: artist.subscribe.currentItems,
     };
   }
 }

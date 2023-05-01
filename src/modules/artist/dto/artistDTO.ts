@@ -4,4 +4,6 @@ export interface ArtistDTO {
   artistProfile: string;
   artistName: string;
   artistBiography: string;
+  artistSubscribers: string[];
+  artistSubscribe: string[];
 }

@@ -8,6 +8,8 @@ import { ArtistId } from "./artistId";
 import { ArtistName } from "./artistName";
 import { ArtistPassword } from "./artistPassword";
 import { ArtistProfilePicture } from "./artistProfilePicture";
+import { ArtistSubscribe } from "./artistSubscribe";
+import { ArtistSubscribers } from "./artistSubscribers";
 
 import { JWTToken, RefreshToken } from "./jwt";
 
@@ -15,6 +17,8 @@ export interface ArtistProps {
   ArtistId?: ArtistId;
   password: ArtistPassword;
   email: ArtistEmail;
+  subscribers: ArtistSubscribers;
+  subscribe: ArtistSubscribe;
   name?: ArtistName;
   biography?: ArtistBiography;
   profilePicture?: ArtistProfilePicture;
@@ -48,6 +52,14 @@ export class Artist extends AggregateRoot<ArtistProps> {
     return this.props.profilePicture;
   }
 
+  get subscribe(): ArtistSubscribe {
+    return this.props.subscribe;
+  }
+
+  get subscribers(): ArtistSubscribers {
+    return this.props.subscribers;
+  }
+
   isLogged(): boolean {
     return !!this.props.accessToken && !!this.props.refreshToken;
   }
@@ -61,6 +73,22 @@ export class Artist extends AggregateRoot<ArtistProps> {
   get refreshToken(): string | undefined {
     return this.props.refreshToken;
   }
+
+  public follow(artistId: ArtistId): void {
+    this.subscribe.add(artistId);
+  }
+
+  public unFollow(artistId: ArtistId): void {
+    this.subscribe.remove(artistId);
+  }
+
+  public subscribeArtist(artistId: ArtistId): void {
+    this.subscribers.add(artistId);
+  }
+  public unSubscribeArtist(artistId: ArtistId): void {
+    this.subscribers.remove(artistId);
+  }
+
   public setAccessToken(token: JWTToken, refreshToken: RefreshToken): void {
     this.props.accessToken = token;
     this.props.refreshToken = refreshToken;

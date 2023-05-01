@@ -7,6 +7,8 @@ import { ArtistEmail } from "../../../domain/artistEmail";
 import { ArtistName } from "../../../domain/artistName";
 import { ArtistPassword } from "../../../domain/artistPassword";
 import { ArtistProfilePicture } from "../../../domain/artistProfilePicture";
+import { ArtistSubscribe } from "../../../domain/artistSubscribe";
+import { ArtistSubscribers } from "../../../domain/artistSubscribers";
 import { ArtistRepoProps } from "../../../repo/artistRepo";
 import { EmailVerificationService } from "../../../service/emailVerificationService";
 import { RedisAuthenticationService } from "../../../service/redis/redisAuthenticationService";
@@ -69,6 +71,8 @@ export class CheckTokenUseCase
           email,
           password,
           name,
+          subscribe: ArtistSubscribe.create(),
+          subscribers: ArtistSubscribers.create(),
           profilePicture: ArtistProfilePicture.create(
             `/artist/getProf?artistId=${artistId.toString()}`
           ).getValue(),

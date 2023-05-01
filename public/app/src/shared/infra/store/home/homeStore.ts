@@ -7,6 +7,8 @@ const initialState: HomePageProps = {
     artistId: "",
     artistName: "",
     artistProfile: "",
+    artistSubscribe: [],
+    artistSubscribers: [],
   },
   artworks: [],
   isLogin: false,

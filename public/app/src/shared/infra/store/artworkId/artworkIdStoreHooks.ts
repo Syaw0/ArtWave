@@ -10,6 +10,8 @@ const initialState: ArtworkIdPageProps = {
     artistId: "",
     artistName: "",
     artistProfile: "",
+    artistSubscribe: [],
+    artistSubscribers: [],
   },
   artwork: {
     artworkPublishDate: "",
@@ -25,6 +27,8 @@ const initialState: ArtworkIdPageProps = {
       artistId: "",
       artistName: "",
       artistProfile: "",
+      artistSubscribe: [],
+      artistSubscribers: [],
     },
   },
 };
