@@ -1,7 +1,5 @@
 import { Result, right } from "../../../../shared/core/result";
 import { UseCase } from "../../../../shared/core/usecase";
-import { UniqueEntityID } from "../../../../shared/domain/uniqueEntityID";
-import { ArtistId } from "../../domain/artistId";
 import { ArtistRepoProps } from "../../repo/artistRepo";
 import { SubscribeDTO } from "./subscribeDTO";
 import { SubscribeResponse } from "./subscribeResponse";
@@ -16,7 +14,7 @@ export class SubscribeUseCase
     const subscribedArtist = await this.artistRepo.findById(
       request.subscribedArtistId
     );
-    subscribedArtist.subscribeArtist(request.subscribedArtistId);
+    subscribedArtist.subscribeArtist(request.artistId);
     this.artistRepo.updateBulk([artist, subscribedArtist]);
     return right(
       Result.ok({
