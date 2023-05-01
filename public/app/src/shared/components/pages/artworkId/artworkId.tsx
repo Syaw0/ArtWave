@@ -78,7 +78,7 @@ const ArtworkIdPage = () => {
     );
     setCommentText("");
   };
-
+  console.log(!isArtistLikeArtwork && !isLogin ? "hello" : "bye");
   return (
     <div className={style.con}>
       <Navbar isLogin={isLogin} loggedArtist={loggedArtist} />
@@ -99,7 +99,7 @@ const ArtworkIdPage = () => {
             </div>
           </div>
           <div className={style.artworkTopRight}>
-            {!isArtistLikeArtwork && !isLogin ? (
+            {!isArtistLikeArtwork ? (
               <Chip
                 icon={<FavoriteBorderOutlined fontSize="small" />}
                 onClick={likeArtwork}
