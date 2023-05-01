@@ -74,18 +74,18 @@ export class Artist extends AggregateRoot<ArtistProps> {
     return this.props.refreshToken;
   }
 
-  public follow(artistId: ArtistId): void {
+  public follow(artistId: string): void {
     this.subscribe.add(artistId);
   }
 
-  public unFollow(artistId: ArtistId): void {
+  public unFollow(artistId: string): void {
     this.subscribe.remove(artistId);
   }
 
-  public subscribeArtist(artistId: ArtistId): void {
+  public subscribeArtist(artistId: string): void {
     this.subscribers.add(artistId);
   }
-  public unSubscribeArtist(artistId: ArtistId): void {
+  public unSubscribeArtist(artistId: string): void {
     this.subscribers.remove(artistId);
   }
 

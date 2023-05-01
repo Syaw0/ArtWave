@@ -6,6 +6,7 @@ import { ArtistMapper } from "../mapper/artistMapper";
 interface ArtistRepoProps {
   exists(email: ArtistEmail | string): Promise<boolean>;
   save(artist: Artist): Promise<void>;
+  updateBulk(artists: Artist[]): Promise<void>;
   findByEmail(artistEmail: ArtistEmail | string): Promise<Artist>;
   updateArtist(artist: Artist): Promise<void>;
   findById(artistId: string): Promise<Artist>;
@@ -42,7 +43,7 @@ export class ArtistRepo implements ArtistRepoProps {
     const artistModel = this.models.artistModel;
     const rawArtist = ArtistMapper.toPersistence(artist);
     await artistModel.update(rawArtist, {
-      where: { artist_email: artist.email.value },
+      where: { artist_id: artist.artistId.id.toString() },
     });
   }
 
@@ -69,6 +70,10 @@ export class ArtistRepo implements ArtistRepoProps {
     }
 
     return ArtistMapper.toDomain(artist[0]) as Artist;
+  }
+
+  async updateBulk(artists: Artist[]): Promise<void> {
+    await Promise.all(artists.map((artist) => this.updateArtist(artist)));
   }
 }
 

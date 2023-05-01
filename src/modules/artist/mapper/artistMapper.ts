@@ -19,12 +19,8 @@ export class ArtistMapper implements Mapper<Artist> {
       artistProfile: artist.profilePicture?.props.profileUrl ?? "",
       artistName: artist.name?.props.name ?? "",
       artistBiography: artist.biography?.props.biography ?? "",
-      artistSubscribe: artist.subscribe.currentItems.map((s) =>
-        s.id.toString()
-      ),
-      artistSubscribers: artist.subscribers.currentItems.map((s) =>
-        s.id.toString()
-      ),
+      artistSubscribe: artist.subscribe.currentItems,
+      artistSubscribers: artist.subscribers.currentItems,
     };
   }
 

@@ -9,8 +9,13 @@ import { delProfController } from "../../../usecase/profile/delProf";
 import { getProfController } from "../../../usecase/profile/getProf";
 import { checkSignupController } from "../../../usecase/signup/checkSignup";
 import { checkSignupTokenController } from "../../../usecase/signup/checkSignupToken";
+import { subscribeController } from "../../../usecase/subscribe";
 
 const artistRouter = express.Router();
+
+artistRouter.post("/subscribe", (req, res) =>
+  subscribeController.execute(req, res)
+);
 
 artistRouter.post("/checkSignup", (req, res) =>
   checkSignupController.execute(req, res)

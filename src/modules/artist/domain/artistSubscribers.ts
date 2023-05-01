@@ -1,16 +1,15 @@
 import { WatchedList } from "../../../shared/domain/watchedList";
-import { ArtistId } from "./artistId";
 
-export class ArtistSubscribers extends WatchedList<ArtistId> {
-  constructor(initialSubscriber: ArtistId[]) {
+export class ArtistSubscribers extends WatchedList<string> {
+  constructor(initialSubscriber: string[]) {
     super(initialSubscriber);
   }
 
-  compareItems(a: ArtistId, b: ArtistId): boolean {
-    return a.equals(b);
+  compareItems(a: string, b: string): boolean {
+    return a === b;
   }
 
-  public static create(initialSubscriber?: ArtistId[]): ArtistSubscribers {
+  public static create(initialSubscriber?: string[]): ArtistSubscribers {
     return new ArtistSubscribers(initialSubscriber ? initialSubscriber : []);
   }
 }
