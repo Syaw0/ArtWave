@@ -112,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       artistLikes.map((a) => ArtworkMapper.toDTO(a))
     );
     props.isFollowed =
-      props.loggedArtist.artistSubscribers.filter(
+      props.loggedArtist.artistSubscribe.filter(
         (s) => s === props.artist.artistId
       ).length != 0;
   } catch (err) {

@@ -1,12 +1,12 @@
 import { AppError } from "../../../../shared/core/appError";
 import { Either, Result } from "../../../../shared/core/result";
 
-interface SuccessResponse {
+export interface UnSubscribeSuccessResponse {
   loggedArtistSubscribes: string[];
   unSubscribedArtistSubscribers: string[];
 }
 
 export type UnSubscribeResponse = Either<
   AppError.UnexpectedError,
-  Result<SuccessResponse>
+  Result<UnSubscribeSuccessResponse>
 >;

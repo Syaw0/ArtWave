@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Link from "next/link";
 import { apiConfig } from "src/config/apiConfig";
+import { subscribe } from "src/modules/artist/redux/subscribe";
+import { useDispatch } from "react-redux";
+import { unSubscribe } from "src/modules/artist/redux/unSubscribe";
 
 const ArtistIdPage = () => {
   const {
@@ -16,16 +19,43 @@ const ArtistIdPage = () => {
     loggedArtist,
     isFollowed,
   } = useArtistIdStore((s) => s);
+  const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     const q = new URL(location.toString()).searchParams.get("tab");
-    console.log(q);
+
     if (q != null && q == "1") {
       setTabIndex(1);
     } else {
       setTabIndex(0);
     }
   }, []);
+
+  const follow = async () => {
+    if (!isLogin) {
+      return;
+    }
+    console.log("follow");
+    await subscribe(
+      dispatch,
+      "artist/updateSubscribeData",
+      loggedArtist.artistId,
+      artist.artistId
+    );
+  };
+
+  const unFollow = async () => {
+    if (!isLogin) {
+      return;
+    }
+    console.log("unfollow");
+    await unSubscribe(
+      dispatch,
+      "artist/updateUnSubscribeData",
+      loggedArtist.artistId,
+      artist.artistId
+    );
+  };
   return (
     <div className={style.con}>
       <Navbar isLogin={isLogin} loggedArtist={loggedArtist} />
@@ -46,7 +76,11 @@ const ArtistIdPage = () => {
               </Button>
             </Link>
           ) : (
-            <Button variant={"text"} size="small">
+            <Button
+              onClick={isFollowed ? unFollow : follow}
+              variant={"text"}
+              size="small"
+            >
               {isFollowed ? "UnFollow" : "Follow"}
             </Button>
           )}

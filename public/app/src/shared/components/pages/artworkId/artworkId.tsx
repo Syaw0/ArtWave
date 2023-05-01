@@ -85,10 +85,12 @@ const ArtworkIdPage = () => {
       <div className={style.artworkHolder}>
         <div className={style.artworkTop}>
           <div className={style.artworkTopLeft}>
-            <Avatar
-              className={style.avatar}
-              src={`${apiConfig.baseUrl}${artwork.artworkOwner.artistProfile}`}
-            />
+            <Link href={`/artist/${artwork.artworkOwner.artistId}`}>
+              <Avatar
+                className={style.avatar}
+                src={`${apiConfig.baseUrl}${artwork.artworkOwner.artistProfile}`}
+              />
+            </Link>
             <div className={style.artworkInfo}>
               <Typography variant="h6">{artwork.artworkName}</Typography>
               <Typography className={style.artworkArtistName} variant="caption">
@@ -148,10 +150,12 @@ const ArtworkIdPage = () => {
 
         <div className={style.bottomAvatarHolder}>
           <div>
-            <Avatar
-              src={`${apiConfig.baseUrl}${artwork.artworkOwner.artistProfile}`}
-              className={style.bottomAvatar}
-            />
+            <Link href={`/artist/${artwork.artworkOwner.artistId}`}>
+              <Avatar
+                src={`${apiConfig.baseUrl}${artwork.artworkOwner.artistProfile}`}
+                className={style.bottomAvatar}
+              />
+            </Link>
             <Typography variant="body2" sx={{ mt: 1 }}>
               {artwork.artworkOwner.artistName == ""
                 ? "unNamed"

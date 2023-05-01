@@ -19,6 +19,7 @@ export class UnSubscribeController extends BaseController {
         this.conflict(res, errMsg as string);
       }
     } catch (err) {
+      console.log(err);
       this.fail(res, err);
     }
   }

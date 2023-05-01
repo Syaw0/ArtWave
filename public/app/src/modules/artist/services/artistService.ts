@@ -102,4 +102,28 @@ export class ArtistService extends BaseApi {
       return left(Result.fail({ ...err.response.data, status: false }));
     }
   }
+
+  async subscribe(artistId: string, subscribedArtistId: string) {
+    try {
+      const result = await this.post(`/artist/subscribe`, {
+        artistId,
+        subscribedArtistId,
+      });
+      return right(Result.ok(result.data));
+    } catch (err: any) {
+      return left(Result.fail({ ...err.response.data, status: false }));
+    }
+  }
+
+  async unSubscribe(artistId: string, unSubscribedArtistId: string) {
+    try {
+      const result = await this.post(`/artist/unSubscribe`, {
+        artistId,
+        unSubscribedArtistId,
+      });
+      return right(Result.ok(result.data));
+    } catch (err: any) {
+      return left(Result.fail({ ...err.response.data, status: false }));
+    }
+  }
 }
