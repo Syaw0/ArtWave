@@ -47,6 +47,7 @@ declare global {
     artist: Artist;
     artistArtworks: Artwork[];
     artistVoted: Artwork[];
+    isFollowed: boolean;
   }
 
   interface ArtworkIdPageProps {

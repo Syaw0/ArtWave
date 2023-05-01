@@ -63,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
     artistArtworks: [],
     artistVoted: [],
+    isFollowed: false,
   };
 
   const isLogged = artistAuthService.isArtistLoggedIn(req.cookies);
@@ -110,6 +111,10 @@ export const getServerSideProps: GetServerSideProps = async ({
     props.artistVoted = await Promise.all(
       artistLikes.map((a) => ArtworkMapper.toDTO(a))
     );
+    props.isFollowed =
+      props.loggedArtist.artistSubscribers.filter(
+        (s) => s === props.artist.artistId
+      ).length != 0;
   } catch (err) {
     return e404;
   }

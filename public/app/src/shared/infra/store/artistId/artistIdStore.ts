@@ -22,6 +22,7 @@ const initialState: ArtistIdPageProps = {
   artistArtworks: [],
   artistVoted: [],
   isLogin: false,
+  isFollowed: false,
 };
 
 const artistIdSlice = createSlice({

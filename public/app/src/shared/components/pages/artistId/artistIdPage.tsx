@@ -1,15 +1,21 @@
 import { useArtistIdStore } from "src/shared/infra/store/artistId/artistIdStoreHooks";
 import style from "./artistIdPage.module.css";
 import Navbar from "../../navbar/navbar";
-import { Avatar, Button, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Avatar, Button, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ArtworkHolder from "../../artworkHolder/artworkHolder";
 import Link from "next/link";
 import { apiConfig } from "src/config/apiConfig";
 
 const ArtistIdPage = () => {
-  const { artist, artistArtworks, artistVoted, isLogin, loggedArtist } =
-    useArtistIdStore((s) => s);
+  const {
+    artist,
+    artistArtworks,
+    artistVoted,
+    isLogin,
+    loggedArtist,
+    isFollowed,
+  } = useArtistIdStore((s) => s);
   const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     const q = new URL(location.toString()).searchParams.get("tab");
@@ -33,12 +39,16 @@ const ArtistIdPage = () => {
           <Typography variant="body1">
             {artist.artistName == "" ? "UnNamed" : artist.artistName}
           </Typography>
-          {artist.artistId === loggedArtist.artistId && (
+          {artist.artistId === loggedArtist.artistId ? (
             <Link href={"/setting"}>
               <Button variant="text" size="small">
                 Edit Profile
               </Button>
             </Link>
+          ) : (
+            <Button variant={"text"} size="small">
+              {isFollowed ? "UnFollow" : "Follow"}
+            </Button>
           )}
         </div>
       </div>
@@ -50,8 +60,10 @@ const ArtistIdPage = () => {
             onChange={(e, v) => setTabIndex(v)}
             value={tabIndex}
           >
-            <Tab label="Artworks" />
-            <Tab label="Likes" />
+            <Tab label={`ARTWORKS (${artistArtworks.length})`} />
+            <Tab label={`Likes (${artistVoted.length})`} />
+            <Tab label={`Subscribes (${artist.artistSubscribe.length})`} />
+            <Tab label={`Subscribers (${artist.artistSubscribers.length})`} />
           </Tabs>
         </div>
         {tabIndex == 0 && (
